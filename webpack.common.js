@@ -46,7 +46,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['build']),
+        new CleanWebpackPlugin(['docs']),
         new ExtractTextPlugin("styles.css"),
         new Webpack.optimize.CommonsChunkPlugin({
             name: 'common' // Specify the common bundle's name.

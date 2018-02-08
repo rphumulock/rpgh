@@ -6,7 +6,7 @@ const Webpack = require('webpack');
 
 module.exports = merge(common, {
     output: {
-        path: Path.resolve(__dirname, 'build'),
+        path: Path.resolve(__dirname, 'docs'),
         filename: '[name].[chunkhash].js',
         publicPath: './'
     },

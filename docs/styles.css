@@ -36,7 +36,6 @@
   left: 0;
   height: 100%;
   width: 100%;
- 
 }
 
 img {
@@ -56,15 +55,16 @@ html {
 }
 
 body {
-  font-family: 'Press Start 2P';
+  font-family: 'Megrim';
   height: 100%;
   width: 100%;
 }
 
 #profile-pic {
-  height: 190px;
-  width: 150px;
-  border-radius: 50%;
+  height: 175px;
+  width: 175px;
+  box-shadow: 0 0 12px #5EF3FB;
+  border: solid 2px #5EF3FB;
 }
 
 .profile {
@@ -77,14 +77,12 @@ body {
 /* ---------- TITLE ---------- */
 
 #details {
-  margin-top: 10%;
   position: absolute;
   text-align: center;
   width: 100%;
-  color: #C26EFF;
   transition: margin-left .5s;
-  text-shadow: 2px 2px 2px #8453E3;
   z-index: 1;
+  top: 10%;
 }
 
 /* Fading animation */
@@ -140,25 +138,35 @@ body {
   position: absolute;
 }
 
+.name {
+  text-align: center;
+  color: #5EF3FB;
+}
+
 .sidenav {
   height: 100%;
   width: 0;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #111b21;
+  background-color: #111a1d;
   overflow-x: hidden;
   overflow-y: auto;
   transition: 0.5s;
-  padding: 60px 0;
+  padding: 30px 0;
 }
 
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 10px;
+  font-size: 18px;
   display: block;
   transition: 0.3s;
+  color: #5EF3FB;
+}
+
+.sidenav a:hover {
+  color: #FB89FB;
 }
 
 .link-anim {
@@ -170,98 +178,11 @@ body {
   .sidenav a {font-size: 18px;}
 }
 
-
-/*  
-
-/* SIDE NAVIGATION
-
-.sidenav a:hover {
-  text-shadow: 5px 5px 5px #61C3FF;
+@media screen and (max-width: 450px) {
+  #details {top: 20%;}
 }
 
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  overflow-y: auto;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-.slideshow-container {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
-position: relative;
-  height: 100%;
-  max-height: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  
-  
-  .img {
-  vertical-align: middle;
-}
-  
-
-
-
-#main {
-  transition: margin-left .5s;
-  
-}
-
-
-
-@media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
-  .sidenav a {
-    font-size: 18px;
-  }
-}
-
-
-
-
-/* Slideshow container 
-.slideshow-container { 
-  text-align: center;
-  max-width: 1000px;
-  position: relative;
-  margin: 20px;
-  .active {
-  background-color: #717171;
-}
-}
- .line {
-      background-color: #61C3FF;
-      height: 2.5px;
-      width: 100%;
-      position: static;
-      top: 0;
-      left: 0;
-  }
-*/
-
-
+/* ANIMATION */
 
 .line {
   width: 100%;
@@ -271,7 +192,22 @@ position: relative;
 .square {
   pointer-events: none;
   position: relative;
-  background-color: #8453E3;
+}
+
+.circle {
+  pointer-events: none;
+  position: relative;
+  border-right: 50%;
+}
+
+.triangle {
+pointer-events: none;
+position: relative;
+width: 0;
+height: 0;
+border-style: solid;
+border-width: 0 3.5px 5.5px 3.5px;
+border-color: transparent transparent #FF1461 transparent;
 }
 
 .small {
@@ -296,3 +232,16 @@ position: relative;
 .color-10 { color: #8453E3; } /* Purple */
 .color-11 { color: #C26EFF; } /* Lavender */
 .color-12 { color: #FB89FB; } /* Pink */
+
+.background-color-01 { background-color: #FF1461; } /* Red */
+.background-color-02 { background-color: #FF7C72; } /* Orange */
+.background-color-03 { background-color: #FBF38C; } /* Yellow */
+.background-color-04 { background-color: #A6FF8F; } /* Citrus */
+.background-color-05 { background-color: #18FF92; } /* Green */
+.background-color-06 { background-color: #1CE2B2; } /* Darkgreen */
+.background-color-07 { background-color: #5EF3FB; } /* Turquoise */
+.background-color-08 { background-color: #61C3FF; } /* Lightblue */
+.background-color-09 { background-color: #5A87FF; } /* Blue */
+.background-color-10 { background-color: #8453E3; } /* Purple */
+.background-color-11 { background-color: #C26EFF; } /* Lavender */
+.background-color-12 { background-color: #FB89FB; } /* Pink */

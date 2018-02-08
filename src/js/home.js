@@ -2,8 +2,8 @@ import 'materialize-css/dist/css/materialize.min.css'
 import anime from 'animejs'
 import '../css/style.css';
 import mountain from '../assets/mountain-min.png';
-import desert from '../assets/desert-min.png';
-import me from '../assets/me.png';
+import rmountain from '../assets/rmountain-min.png';
+import me from '../assets/me2.jpg';
 
 (function () {
     console.log(process.env.NODE_ENV);
@@ -14,7 +14,7 @@ import me from '../assets/me.png';
     window.showProfileSlides = showProfileSlides;
 
     document.getElementById('backgroundOne').style.backgroundImage = "url('" + mountain + "')";
-    document.getElementById('backgroundTwo').style.backgroundImage = "url('" + desert + "')";
+    document.getElementById('backgroundTwo').style.backgroundImage = "url('" + rmountain + "')";
     document.getElementById('profile-pic').setAttribute('src', me);
 
     var els = document.querySelectorAll('#nodeList .el');
@@ -68,6 +68,33 @@ import me from '../assets/me.png';
         loop: true
     });
 
+    var keyframes = anime({
+        targets: '#keyframes .el',
+        opacity: 1,
+        translateX: [
+            { value: 50, duration: 1000, delay: 500, elasticity: 0 },
+            { value: 0, duration: 1000, delay: 500, elasticity: 0 }
+        ],
+        translateY: [
+            { value: 15, duration: 500, delay: 1000, elasticity: 100 },
+            { value: 0, duration: 500, delay: 1000, elasticity: 100 }
+        ],
+        scaleX: [
+            { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
+            { value: 1, duration: 900, elasticity: 300 },
+            { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
+            { value: 1, duration: 900, elasticity: 300 }
+        ],
+        scaleY: [
+            { value: [1.75, 1], duration: 500 },
+            { value: 2, duration: 50, delay: 1000, easing: 'easeOutExpo' },
+            { value: 1, duration: 450 },
+            { value: 1.75, duration: 50, delay: 1000, easing: 'easeOutExpo' },
+            { value: 1, duration: 450 }
+        ]//,
+       // loop: loop
+    });
+
     window.enterToggle = enterToggle;
     window.leaveToggle = leaveToggle;
 
@@ -94,30 +121,19 @@ function leaveToggle() {
 
 function g(loop) {
     anime.remove('#keyframes .el');
-    var keyframes = anime({
-        targets: '#keyframes .el',
-        translateX: [
-            { value: 50, duration: 1000, delay: 500, elasticity: 0 },
-            { value: 0, duration: 1000, delay: 500, elasticity: 0 }
-        ],
-        translateY: [
-            { value: 15, duration: 500, delay: 1000, elasticity: 100 },
-            { value: 0, duration: 500, delay: 1000, elasticity: 100 }
-        ],
-        scaleX: [
-            { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
-            { value: 1, duration: 900, elasticity: 300 },
-            { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
-            { value: 1, duration: 900, elasticity: 300 }
-        ],
-        scaleY: [
-            { value: [1.75, 1], duration: 500 },
-            { value: 2, duration: 50, delay: 1000, easing: 'easeOutExpo' },
-            { value: 1, duration: 450 },
-            { value: 1.75, duration: 50, delay: 1000, easing: 'easeOutExpo' },
-            { value: 1, duration: 450 }
-        ],
-        loop: loop
+
+}
+
+function enterAnim(animation) {
+
+}
+
+function exitAnim(animation, target) {
+    animation = anime({
+        targets: target,
+        translateX: 0,
+        translateY: 0,
+        opacity: 0
     });
 }
 
