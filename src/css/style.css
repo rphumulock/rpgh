@@ -1,0 +1,282 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+ /* ---------- MAIN ---------- */
+
+.horizontal-line {
+  height: 100%;
+  width: 2px;
+}
+
+ #main {
+  transition: margin-left .5s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+ 
+}
+
+img {
+  vertical-align: middle;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Press Start 2P';
+  height: 100%;
+  width: 100%;
+}
+
+#profile-pic {
+  height: 190px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.profile {
+  margin: 0 auto;
+  text-align: center;
+  height: 200px;
+  width: 200px;
+}
+
+/* ---------- TITLE ---------- */
+
+#details {
+  margin-top: 10%;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  color: #C26EFF;
+  transition: margin-left .5s;
+  text-shadow: 2px 2px 2px #8453E3;
+  z-index: 1;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 12s;
+  animation-name: fade;
+  animation-duration: 12s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes fade {
+  0% { -webkit-transform: scale(1.0); }
+  50% { -webkit-transform: scale(1.02); }
+  100% { -webkit-transform: scale(1.0); }
+}
+
+@keyframes fade {
+  0% { transform: scale(1.0); }
+  50% { transform: scale(1.02); } 
+  100% { transform: scale(1.0); }
+}
+
+/* ---------- BACKGROUND ---------- */
+
+.myBackgroundSlides {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.background-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  z-index: -1;
+}
+
+.nav-links {
+  margin-top: 30px;
+}
+
+/* ----------TOGGLE NAVIGATION---------- */
+
+.togglenav {
+  z-index: 1;
+  height: 2rem;
+  width: 2rem;
+  margin: 2rem;
+  background-color: #FB89FB;
+  position: absolute;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111b21;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: 0.5s;
+  padding: 60px 0;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 10px;
+  display: block;
+  transition: 0.3s;
+}
+
+.link-anim {
+  padding: 7px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+/*  
+
+/* SIDE NAVIGATION
+
+.sidenav a:hover {
+  text-shadow: 5px 5px 5px #61C3FF;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.slideshow-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+position: relative;
+  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  
+  
+  .img {
+  vertical-align: middle;
+}
+  
+
+
+
+#main {
+  transition: margin-left .5s;
+  
+}
+
+
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+
+
+
+/* Slideshow container 
+.slideshow-container { 
+  text-align: center;
+  max-width: 1000px;
+  position: relative;
+  margin: 20px;
+  .active {
+  background-color: #717171;
+}
+}
+ .line {
+      background-color: #61C3FF;
+      height: 2.5px;
+      width: 100%;
+      position: static;
+      top: 0;
+      left: 0;
+  }
+*/
+
+
+
+.line {
+  width: 100%;
+  padding: 1px 0px;
+}
+
+.square {
+  pointer-events: none;
+  position: relative;
+  background-color: #8453E3;
+}
+
+.small {
+  width: 5px;
+  height: 5px;
+}
+
+.shadow {
+  position: absolute;
+  opacity: .2;
+}
+
+.color-01 { color: #FF1461; } /* Red */
+.color-02 { color: #FF7C72; } /* Orange */
+.color-03 { color: #FBF38C; } /* Yellow */
+.color-04 { color: #A6FF8F; } /* Citrus */
+.color-05 { color: #18FF92; } /* Green */
+.color-06 { color: #1CE2B2; } /* Darkgreen */
+.color-07 { color: #5EF3FB; } /* Turquoise */
+.color-08 { color: #61C3FF; } /* Lightblue */
+.color-09 { color: #5A87FF; } /* Blue */
+.color-10 { color: #8453E3; } /* Purple */
+.color-11 { color: #C26EFF; } /* Lavender */
+.color-12 { color: #FB89FB; } /* Pink */
