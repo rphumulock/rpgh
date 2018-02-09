@@ -131,10 +131,6 @@ body {
   color: #5EF3FB;
 }
 
-#sta {
-  width: 25rem;
-  height: 15rem;
-}
 
 .sidenav {
   height: 100%;
@@ -188,6 +184,11 @@ body {
     50% { -webkit-transform: scale(1.2); }
     100% { -webkit-transform: scale(1.0); }
   }
+
+  #sta {
+    width: 15rem;
+    height: 8rem;
+  }
   
   @keyframes fade {
     0% { transform: scale(1.0); }
@@ -196,12 +197,20 @@ body {
   }
 }
 
+
+
 @media screen and (min-width: 451px) {
   @-webkit-keyframes fade {
     0% { -webkit-transform: scale(1.0); }
     50% { -webkit-transform: scale(1.05); }
     100% { -webkit-transform: scale(1.0); }
   }
+
+  #sta {
+    width: 25rem;
+    height: 15rem;
+  }
+  
   
   @keyframes fade {
     0% { transform: scale(1.0); }
