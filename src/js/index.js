@@ -8,8 +8,10 @@ import me from '../assets/me2.jpg';
 (function () {
     console.log(process.env.NODE_ENV);
     window.toggleNav = toggleNav;
+
     window.enterButton = enterButton;
     window.leaveButton = leaveButton;
+
     window.showBackgroundSlides = showBackgroundSlides;
     window.showProfileSlides = showProfileSlides;
 
@@ -17,36 +19,134 @@ import me from '../assets/me2.jpg';
     document.getElementById('backgroundTwo').style.backgroundImage = "url('" + rmountain + "')";
     document.getElementById('profile-pic').setAttribute('src', me);
 
-    var els = document.querySelectorAll('#nodeList .el');
+    /* EVENT HANDLERS */
 
-    var nodeList = anime({
+    var buttonEl = document.querySelector('.togglenav');
+    buttonEl.addEventListener('mouseenter', enterButton, false);
+    buttonEl.addEventListener('mouseleave', leaveButton, false);
+    buttonEl.addEventListener('click', toggleNav, false);
+
+    /* ANIMATION HANDLERS */
+
+    var nodelist = document.querySelector('.nodelist');
+    nodelist.addEventListener('mouseenter', nodelistEnter, false);
+    nodelist.addEventListener('mouseleave', nodelistExit, false);
+
+    var functional = document.querySelector('.functional');
+    functional.addEventListener('mouseenter', functionalEnter, false);
+    functional.addEventListener('mouseleave', functionalExit, false);
+
+    var keyframes = document.querySelector('.keyframes');
+    keyframes.addEventListener('mouseenter', keyframesEnter, false);
+    keyframes.addEventListener('mouseleave', keyframesExit, false);
+
+    var combined = document.querySelector('.combined');
+    combined.addEventListener('mouseenter', combinedEnter, false);
+    combined.addEventListener('mouseleave', combinedExit, false);
+
+    /*var bezier = document.querySelector('.bezier');
+    bezier.addEventListener('mouseenter', bezierEnter, false);
+    bezier.addEventListener('mouseleave', bezierExit, false);*/
+
+    window.slideIndex = 0;
+    showBackgroundSlides();
+})();
+
+/* NODELIST */
+
+function nodelistEnter() {
+    var els = document.querySelectorAll('#nodeList .el');
+    anime.remove(els);
+    let nodeList = anime({
         targets: els,
         translateX: 50,
         loop: true,
         direction: 'alternate',
-        autoplay: true
+        opacity: 1,
     });
+}
 
+function nodelistExit() {
+    var els = document.querySelectorAll('#nodeList .el');
+    anime.remove(els);
+    let nodeList = anime({
+        targets: els,
+        translateX: 0,
+        opacity: 0
+    });
+}
 
+/* FUNCTION */
+
+function functionalEnter() {
+    anime.remove('#functionBasedDuration .el');
     var functionBasedDuration = anime({
         targets: '#functionBasedDuration .el',
         translateX: 50,
         direction: 'alternate',
+        opacity: 1,
         loop: true,
         duration: function (el, i, l) {
             return 400 + (i * 400);
         }
     });
+}
 
-    var customBezier = anime({
-        targets: '#customBezier .el',
-        translateX: 50,
-        direction: 'alternate',
-        easing: [.91, -0.54, 0.29, -0.56],
-        rotate: 180,
+function functionalExit() {
+    anime.remove('#functionBasedDuration .el');
+    var functionBasedDuration = anime({
+        targets: '#functionBasedDuration .el',
+        translateX: 0,
+        opacity: 0
+    });
+}
+
+/* KEYFRAMES */
+
+function keyframesEnter() {
+    anime.remove('#keyframes .el');
+    let keyframes = anime({
+        targets: '#keyframes .el',
+        opacity: 1,
+        translateX: [
+            { value: 50, duration: 1000, delay: 500, elasticity: 0 },
+            { value: 0, duration: 1000, delay: 500, elasticity: 0 }
+        ],
+        translateY: [
+            { value: -15, duration: 500, delay: 1000, elasticity: 100 },
+            { value: 0, duration: 500, delay: 1000, elasticity: 100 }
+        ],
+        scaleX: [
+            { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
+            { value: 1, duration: 900, elasticity: 300 },
+            { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
+            { value: 1, duration: 900, elasticity: 300 }
+        ],
+        scaleY: [
+            { value: [1.75, 1], duration: 500 },
+            { value: 2, duration: 50, delay: 1000, easing: 'easeOutExpo' },
+            { value: 1, duration: 450 },
+            { value: 1.75, duration: 50, delay: 1000, easing: 'easeOutExpo' },
+            { value: 1, duration: 450 }
+        ],
         loop: true
     });
+}
 
+function keyframesExit() {
+    anime.remove('#keyframes .el');
+    let keyframes = anime({
+        targets: '#keyframes .el',
+        translateX: 0,
+        translateY: 0,
+        opacity: 0
+    });
+}
+
+/* COMBINED */
+
+function combinedEnter() {
+    anime.remove('#combinedFunctionBasedProp .el');
     var combinedFunctionBasedProp = anime({
         targets: '#combinedFunctionBasedProp .el',
         translateX: 50,
@@ -65,74 +165,40 @@ import me from '../assets/me2.jpg';
             return 200 + ((totalTargets - index) * 200);
         },
         direction: 'alternate',
-        loop: true
+        loop: true,
+        opacity: 1
     });
-
-    var keyframes = anime({
-        targets: '#keyframes .el',
-        opacity: 1,
-        translateX: [
-            { value: 50, duration: 1000, delay: 500, elasticity: 0 },
-            { value: 0, duration: 1000, delay: 500, elasticity: 0 }
-        ],
-        translateY: [
-            { value: 15, duration: 500, delay: 1000, elasticity: 100 },
-            { value: 0, duration: 500, delay: 1000, elasticity: 100 }
-        ],
-        scaleX: [
-            { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
-            { value: 1, duration: 900, elasticity: 300 },
-            { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
-            { value: 1, duration: 900, elasticity: 300 }
-        ],
-        scaleY: [
-            { value: [1.75, 1], duration: 500 },
-            { value: 2, duration: 50, delay: 1000, easing: 'easeOutExpo' },
-            { value: 1, duration: 450 },
-            { value: 1.75, duration: 50, delay: 1000, easing: 'easeOutExpo' },
-            { value: 1, duration: 450 }
-        ]//,
-       // loop: loop
-    });
-
-    window.enterToggle = enterToggle;
-    window.leaveToggle = leaveToggle;
-
-    var buttonEl = document.querySelector('.togglenav');
-    buttonEl.addEventListener('mouseenter', enterButton, false);
-    buttonEl.addEventListener('mouseleave', leaveButton, false);
-    buttonEl.addEventListener('click', toggleNav, false);
-
-    var buttonEl = document.querySelector('.toggle');
-    buttonEl.addEventListener('mouseenter', enterToggle, false);
-    buttonEl.addEventListener('mouseleave', leaveToggle, false);
-
-    window.slideIndex = 0;
-    showBackgroundSlides();
-})();
-
-function enterToggle() {
-    g(true);
 }
 
-function leaveToggle() {
-    g(false);
-}
-
-function g(loop) {
-    anime.remove('#keyframes .el');
-
-}
-
-function enterAnim(animation) {
-
-}
-
-function exitAnim(animation, target) {
-    animation = anime({
-        targets: target,
+function combinedExit() {
+    anime.remove('#combinedFunctionBasedProp .el');
+    var combinedFunctionBasedProp = anime({
+        targets: '#combinedFunctionBasedProp .el',
         translateX: 0,
-        translateY: 0,
+        opacity: 0
+    });
+}
+
+/* BEZIER */
+
+function bezierEnter() {
+    anime.remove('#customBezier .el');
+    var customBezier = anime({
+        targets: '#customBezier .el',
+        translateX: 50,
+        direction: 'alternate',
+        easing: [.91, -0.94, 0.60, -0.2],
+        rotate: 180,
+        loop: true,
+        opacity: 1
+    });
+}
+
+function bezierExit() {
+    anime.remove('#customBezier .el');
+    var customBezier = anime({
+        targets: '#customBezier .el',
+        translateX: 0,
         opacity: 0
     });
 }
