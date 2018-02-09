@@ -3,7 +3,9 @@ import anime from 'animejs'
 import '../css/style.css';
 import mountain from '../assets/mountain-min.png';
 import rmountain from '../assets/rmountain-min.png';
-import me from '../assets/Static.gif';
+import me from '../assets/me2.jpg';
+import me2 from '../assets/Static.gif';
+
 
 (function () {
     console.log(process.env.NODE_ENV);
@@ -18,6 +20,7 @@ import me from '../assets/Static.gif';
     document.getElementById('backgroundOne').style.backgroundImage = "url('" + mountain + "')";
     document.getElementById('backgroundTwo').style.backgroundImage = "url('" + rmountain + "')";
     document.getElementById('profile-pic').setAttribute('src', me);
+    document.getElementById('sta').setAttribute('src', me2);
 
     /* EVENT HANDLERS */
 

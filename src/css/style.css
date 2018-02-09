@@ -115,6 +115,11 @@ body {
   color: #5EF3FB;
 }
 
+#sta {
+  width: 25rem;
+  height: 15rem;
+}
+
 .sidenav {
   height: 100%;
   width: 0;
