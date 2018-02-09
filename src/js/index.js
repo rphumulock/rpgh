@@ -204,13 +204,13 @@ function bezierExit() {
 }
 
 function toggleNav() {
-    if (document.getElementById("mySidenav").style.width === "250px") {
+    if (document.getElementById("mySidenav").style.width === "300px") {
         document.getElementById("mySidenav").style.width = "0";
         document.getElementById("main").style.marginLeft = "0";
         document.getElementById("details").style.display = "block";
     } else {
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("mySidenav").style.width = "300px";
+        document.getElementById("main").style.marginLeft = "300px";
         document.getElementById("details").style.display = "none";
     }
 }
