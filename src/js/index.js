@@ -46,6 +46,10 @@ import me2 from '../assets/Static.gif';
     combined.addEventListener('mouseenter', combinedEnter, false);
     combined.addEventListener('mouseleave', combinedExit, false);
 
+    var segment = document.querySelector('.arrow-up');
+    segment.addEventListener('mouseenter', segmentEnter, false);
+    segment.addEventListener('mouseleave', segmentExit, false);
+
     /*var bezier = document.querySelector('.bezier');
     bezier.addEventListener('mouseenter', bezierEnter, false);
     bezier.addEventListener('mouseleave', bezierExit, false);*/
@@ -53,6 +57,29 @@ import me2 from '../assets/Static.gif';
     window.slideIndex = 0;
     showBackgroundSlides();
 })();
+
+
+function segmentEnter() {
+    anime.remove('.segment');
+    var functionBasedDuration = anime({
+        targets: '.segment',
+        translateY: -30,
+        opacity: 1,
+        elasticity: 500,
+        duration: 2000
+    });
+}
+
+function segmentExit() {
+    anime.remove('.segment');
+    var functionBasedDuration = anime({
+        targets: '.segment',
+        translateY: 30,
+        opacity: 0,
+        elasticity: 500,
+        duration: 2000
+    });
+}
 
 /* NODELIST */
 
