@@ -78,11 +78,11 @@ body {
 
 #details {
   position: absolute;
-  text-align: center;
-  width: 100%;
   transition: margin-left .5s;
   z-index: 1;
-  top: 10%;
+  top: 40%;
+  width: 100%;
+  opacity: .5;
 }
 
 /* Fading animation */
@@ -178,16 +178,10 @@ body {
 }
 
 @media screen and (max-width: 450px) {
-  #details {top: 20%;}
   @-webkit-keyframes fade {
     0% { -webkit-transform: scale(1.0); }
     50% { -webkit-transform: scale(1.2); }
     100% { -webkit-transform: scale(1.0); }
-  }
-
-  #sta {
-    width: 15rem;
-    height: 8rem;
   }
   
   @keyframes fade {
@@ -195,6 +189,15 @@ body {
     50% { transform: scale(1.2); } 
     100% { transform: scale(1.0); }
   }
+}
+
+.arrow-up {
+  width: 0; 
+  height: 0;
+  margin: 0 auto; 
+  border-left: 10rem solid transparent;
+  border-right: 10rem solid transparent;
+  border-bottom: 10rem solid #FF1461;
 }
 
 
@@ -205,12 +208,6 @@ body {
     50% { -webkit-transform: scale(1.05); }
     100% { -webkit-transform: scale(1.0); }
   }
-
-  #sta {
-    width: 25rem;
-    height: 15rem;
-  }
-  
   
   @keyframes fade {
     0% { transform: scale(1.0); }

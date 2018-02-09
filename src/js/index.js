@@ -20,7 +20,6 @@ import me2 from '../assets/Static.gif';
     document.getElementById('backgroundOne').style.backgroundImage = "url('" + mountain + "')";
     document.getElementById('backgroundTwo').style.backgroundImage = "url('" + rmountain + "')";
     document.getElementById('profile-pic').setAttribute('src', me);
-    document.getElementById('sta').setAttribute('src', me2);
 
     /* EVENT HANDLERS */
 
