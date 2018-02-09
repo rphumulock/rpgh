@@ -17,15 +17,6 @@
   width: 100%;
 }
 
-.segment {
-  color: #FF1461;
-  font-size: 18px;
-  text-align: center;
-  width: 100%;
-  opacity: 0;
-  z-index: 1;
-}
-
 img {
   vertical-align: middle;
 }
@@ -188,6 +179,15 @@ body {
     50% { transform: scale(1.2); } 
     100% { transform: scale(1.0); }
   }
+
+  .segment {
+    color: #FF1461;
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+    opacity: 0;
+    z-index: 1;
+  }
 }
 
 .arrow-up {
@@ -212,6 +212,15 @@ body {
     0% { transform: scale(1.0); }
     50% { transform: scale(1.05); } 
     100% { transform: scale(1.0); }
+  }
+
+  .segment {
+    color: #FF1461;
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
+    opacity: 0;
+    z-index: 1;
   }
 }
 
