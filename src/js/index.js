@@ -87,6 +87,7 @@ function functionalEnter() {
         translateX: 50,
         direction: 'alternate',
         opacity: 1,
+        rotate: 360,
         loop: true,
         duration: function (el, i, l) {
             return 400 + (i * 400);
@@ -152,7 +153,6 @@ function combinedEnter() {
     var combinedFunctionBasedProp = anime({
         targets: '#combinedFunctionBasedProp .el',
         translateX: 50,
-        rotate: 360,
         elasticity: 300,
         duration: function (target) {
             // Duration based on every div 'data-duration' attribute
