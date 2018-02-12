@@ -3,8 +3,7 @@ import anime from 'animejs'
 import '../css/style.css';
 import mountain from '../assets/mountain-min.png';
 import rmountain from '../assets/rmountain-min.png';
-import me from '../assets/me2.jpg';
-import me2 from '../assets/Static.gif';
+import me from '../assets/me-min.png';
 
 
 (function () {
