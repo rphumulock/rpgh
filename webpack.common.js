@@ -7,6 +7,7 @@ const Webpack = require('webpack');
 module.exports = {
     entry: {
         index: './src/js/index.js',
+        projects: './src/js/projects.js',
         common: [
             'materialize-css/dist/js/materialize.min.js'
         ]
@@ -56,6 +57,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: './index.html',
+            chunks: ['runtime', 'common', 'index']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/projects.html',
+            filename: './projects.html',
             chunks: ['runtime', 'common', 'index']
         }),
         new Webpack.ProvidePlugin({ // inject ES5 modules as global vars

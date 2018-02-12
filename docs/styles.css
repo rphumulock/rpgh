@@ -77,7 +77,6 @@ body {
   z-index: 1;
   top: 20%;
   width: 100%;
-  opacity: .5;
 }
 
 /* Fading animation */
@@ -107,7 +106,7 @@ body {
 }
 
 .nav-links {
-  margin: 30px auto;
+  margin: 30% auto;
 }
 
 /* ----------TOGGLE NAVIGATION---------- */
@@ -154,13 +153,11 @@ body {
 }
 
 .icon {
-  margin: 30px auto;
+  margin: 20% auto;
 }
 
 .icons {
   text-align: center;
-  margin: 20px;
-  padding: 15px;
 }
 
 .icons a {
@@ -168,6 +165,7 @@ body {
   display: inline-block;
   transition: 0.3s;
   color: inherit;
+  padding: 15px;
 }
 
 .nav-links a:hover {
@@ -197,8 +195,8 @@ body {
   }
 
   .segment {
-    color: #FF1461;
-    font-size: 12px;
+    color: #5EF3FB;
+    font-size: 16px;
     text-align: center;
     width: 100%;
     opacity: 0;
@@ -210,6 +208,7 @@ body {
   width: 0; 
   height: 0;
   margin: 0 auto; 
+  opacity: .5;
   border-left: 10rem solid transparent;
   border-right: 10rem solid transparent;
   border-bottom: 10rem solid #FF1461;
@@ -231,8 +230,8 @@ body {
   }
 
   .segment {
-    color: #FF1461;
-    font-size: 18px;
+    color: #5EF3FB;
+    font-size: 16px;
     text-align: center;
     width: 100%;
     opacity: 0;
