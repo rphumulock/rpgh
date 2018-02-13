@@ -90,7 +90,7 @@ body {
 }
 
 .nav-links {
-  margin: 30% auto;
+  margin: 20% auto;
 }
 
 /* ----------TOGGLE NAVIGATION---------- */
@@ -120,7 +120,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   transition: 0.5s;
-  padding: 30px 0;
+  padding: 2% 0;
 }
 
 .nav-links a {
@@ -136,11 +136,8 @@ body {
   display: inline-block;
 }
 
-.icon {
-  margin: 20% 0 0 0;
-}
-
 .icons {
+  margin: 30% 0 0 0;
   text-align: center;
 }
 
