@@ -133,14 +133,12 @@ body {
 }
 
 .nav-links {
-  height: 50%;
-  margin: 10% auto;
+  margin: 20px auto;
 }
 
 .icons {
-  margin: 10% auto;
+  margin: 20px auto;
   text-align: center;
-  height: 10%;
 }
 
 .icons a {
@@ -220,20 +218,17 @@ body {
     opacity: 0;
     z-index: 1;
   }
-}
 
-@media screen and (orientation: landscape) {
   .nav-links {
-    height: initial;
-    margin: 0 auto;
+    height: 50%;
+    margin: 20% auto;
   }
   
   .icons {
-    height: initial;
-    margin: 0 auto;
+    margin: 20% auto;
+    height: 10%;
   }
 }
-
 
 /* ANIMATION */
 
