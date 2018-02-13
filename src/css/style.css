@@ -89,10 +89,6 @@ body {
   z-index: -1;
 }
 
-.nav-links {
-  margin: 20% auto;
-}
-
 /* ----------TOGGLE NAVIGATION---------- */
 
 .togglenav {
@@ -137,7 +133,9 @@ body {
 }
 
 .icons {
-  margin: 30% 0 0 0;
+  position: absolute;
+  bottom: 0;
+  margin: 0 auto;
   text-align: center;
 }
 
