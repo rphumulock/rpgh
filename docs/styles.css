@@ -236,6 +236,14 @@ body {
     opacity: 0;
     z-index: 1;
   }
+
+  .nav-links {
+    height: 50%;
+  }
+  
+  .icons {
+    height: 10%;
+  }
 }
 
 /* ANIMATION */
