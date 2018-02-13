@@ -150,11 +150,11 @@ body {
 
 .nav-links {
   height: 50%;
-  margin: 20px auto;
+  margin: 10% auto;
 }
 
 .icons {
-  margin: 20px auto;
+  margin: 10% auto;
   text-align: center;
   height: 10%;
 }
@@ -241,10 +241,12 @@ body {
 @media screen and (orientation: landscape) {
   .nav-links {
     height: initial;
+    margin: 0 auto;
   }
   
   .icons {
     height: initial;
+    margin: 0 auto;
   }
 }
 
