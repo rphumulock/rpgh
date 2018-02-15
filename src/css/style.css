@@ -22,6 +22,7 @@ img {
 }
 
 html {
+  background-color: black;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -225,7 +226,7 @@ body {
   }
   
   .icons {
-    margin: 20% auto;
+    margin: 20% 0 0 0;
     height: 10%;
   }
 }
