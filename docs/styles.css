@@ -235,7 +235,7 @@ body {
     opacity: 0;
     z-index: 1;
   }
-
+/*
   .nav-links {
     height: 50%;
     margin: 20% auto;
@@ -244,7 +244,7 @@ body {
   .icons {
     margin: 20% 0 0 0;
     height: 10%;
-  }
+  }*/
 }
 
 /* ANIMATION */
