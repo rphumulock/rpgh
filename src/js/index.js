@@ -2,7 +2,7 @@ import 'materialize-css/dist/css/materialize.min.css'
 import anime from 'animejs'
 import '../css/style.css';
 import mountain from '../assets/mountain-min.png';
-import rmountain from '../assets/rmountain-min.png';
+import rmountain from '../assets/salt-min.png';
 import me from '../assets/me3.png';
 
 

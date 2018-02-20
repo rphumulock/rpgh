@@ -14,8 +14,8 @@
  }
 
 #name {
-  top: 18%;
-  color: #61C3FF;
+  top: 16%;
+  color: #FB89FB;
   text-shadow: 1px 1px 3px #A6FF8F
 }
 
@@ -117,11 +117,11 @@ img {
   animation-fill-mode: forwards;
 }
 @-webkit-keyframes fadein {
-  from { opacity: .1; transform: scale(1); }
+  from { opacity: 0; transform: scale(1); }
   to { opacity: 1; transform: scale(1.08); }
 }
 @keyframes fadein {
-  from { opacity: .1; transform: scale(1); }
+  from { opacity: 0; transform: scale(1); }
   to { opacity: 1; transform: scale(1.08); }
 }
 
@@ -167,11 +167,11 @@ img {
 }
 @-webkit-keyframes fadeout {
   from { opacity: 1; transform: scale(1.08); }
-  to { opacity: .1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1); }
 }
 @keyframes fadeout {
   from { opacity: 1; transform: scale(1.08); }
-  to { opacity: .1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1); }
 }
 
 /* ---------- BACKGROUND ---------- */
