@@ -22,6 +22,24 @@
  * Made By MaterializeCSS.com
  */
 
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Limelight';
+  height: 100%;
+  width: 100%;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
  /* ---------- MAIN ---------- */
 
  #main {
@@ -35,25 +53,6 @@
 
 img {
   vertical-align: middle;
-}
-
-html {
-  background-color: black;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  -webkit-box-sizing: inherit;
-  -moz-box-sizing: inherit;
-  box-sizing: inherit;
-}
-
-body {
-  font-family: 'Press Start 2P';
-  height: 100%;
-  width: 100%;
 }
 
 #profile-pic {
@@ -81,13 +80,38 @@ body {
 }
 
 /* Fading animation */
-.fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 12s;
-  animation-name: fade;
-  animation-duration: 12s;
-  animation-timing-function: ease-out;
-  animation-iteration-count: infinite;
+.fadein {
+  -webkit-animation-name: fadein;
+  -webkit-animation-duration: 6s;
+  animation-name: fadein;
+  animation-duration: 6;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+@-webkit-keyframes fadein {
+  from { opacity: .1; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.08); }
+}
+@keyframes fadein {
+  from { opacity: .1; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.08); }
+}
+
+.fadeout {
+  -webkit-animation-name: fadeout;
+  -webkit-animation-duration: 6s;
+  animation-name: fadeout;
+  animation-duration: 6;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+@-webkit-keyframes fadeout {
+  from { opacity: 1; transform: scale(1.08); }
+  to { opacity: .1; transform: scale(1); }
+}
+@keyframes fadeout {
+  from { opacity: 1; transform: scale(1.08); }
+  to { opacity: .1; transform: scale(1); }
 }
 
 /* ---------- BACKGROUND ---------- */
@@ -180,18 +204,6 @@ body {
 }
 
 @media screen and (max-width: 450px) {
-  @-webkit-keyframes fade {
-    0% { -webkit-transform: scale(1.0); }
-    50% { -webkit-transform: scale(1.2); }
-    100% { -webkit-transform: scale(1.0); }
-  }
-  
-  @keyframes fade {
-    0% { transform: scale(1.0); }
-    50% { transform: scale(1.2); } 
-    100% { transform: scale(1.0); }
-  }
-
   .segment {
     color: #18FF92;
     font-size: 16px;
@@ -215,18 +227,6 @@ body {
 
 
 @media screen and (min-width: 451px) {
-  @-webkit-keyframes fade {
-    0% { -webkit-transform: scale(1.0); }
-    50% { -webkit-transform: scale(1.05); }
-    100% { -webkit-transform: scale(1.0); }
-  }
-  
-  @keyframes fade {
-    0% { transform: scale(1.0); }
-    50% { transform: scale(1.05); } 
-    100% { transform: scale(1.0); }
-  }
-
   .segment {
     color: #18FF92;
     font-size: 16px;

@@ -70,7 +70,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/projects.html',
             filename: './projects.html',
-            chunks: ['runtime', 'common', 'index']
+            chunks: ['runtime', 'common', 'projects']
         }),
         new Webpack.ProvidePlugin({ // inject ES5 modules as global vars
             $: 'jquery',

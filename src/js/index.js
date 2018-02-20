@@ -3,18 +3,16 @@ import anime from 'animejs'
 import '../css/style.css';
 import mountain from '../assets/mountain-min.png';
 import rmountain from '../assets/rmountain-min.png';
-import me from '../assets/me-min.png';
+import me from '../assets/me3.png';
 
 
 (function () {
     console.log(process.env.NODE_ENV);
-    window.toggleNav = toggleNav;
 
+    window.toggleNav = toggleNav;
     window.enterButton = enterButton;
     window.leaveButton = leaveButton;
-
-    window.showBackgroundSlides = showBackgroundSlides;
-    window.showProfileSlides = showProfileSlides;
+    window.swap = true;
 
     document.getElementById('backgroundOne').style.backgroundImage = "url('" + mountain + "')";
     document.getElementById('backgroundTwo').style.backgroundImage = "url('" + rmountain + "')";
@@ -45,43 +43,10 @@ import me from '../assets/me-min.png';
     combined.addEventListener('mouseenter', combinedEnter, false);
     combined.addEventListener('mouseleave', combinedExit, false);
 
-    var segment = document.querySelector('.arrow-up');
-    segment.addEventListener('mouseenter', segmentEnter, false);
-    segment.addEventListener('mouseleave', segmentExit, false);
-
-    /*var bezier = document.querySelector('.bezier');
-    bezier.addEventListener('mouseenter', bezierEnter, false);
-    bezier.addEventListener('mouseleave', bezierExit, false);*/
-
-    window.slideIndex = 0;
-    showBackgroundSlides();
+    backgroundSlides();
 })();
 
-
-function segmentEnter() {
-    anime.remove('.segment');
-    var functionBasedDuration = anime({
-        targets: '.segment',
-        translateY: -30,
-        opacity: 1,
-        elasticity: 500,
-        duration: 2000
-    });
-}
-
-function segmentExit() {
-    anime.remove('.segment');
-    var functionBasedDuration = anime({
-        targets: '.segment',
-        translateY: 30,
-        opacity: 0,
-        elasticity: 500,
-        duration: 2000
-    });
-}
-
 /* NODELIST */
-
 function nodelistEnter() {
     var els = document.querySelectorAll('#nodeList .el');
     anime.remove(els);
@@ -93,7 +58,6 @@ function nodelistEnter() {
         opacity: 1,
     });
 }
-
 function nodelistExit() {
     var els = document.querySelectorAll('#nodeList .el');
     anime.remove(els);
@@ -105,7 +69,6 @@ function nodelistExit() {
 }
 
 /* FUNCTION */
-
 function functionalEnter() {
     anime.remove('#functionBasedDuration .el');
     var functionBasedDuration = anime({
@@ -120,7 +83,6 @@ function functionalEnter() {
         }
     });
 }
-
 function functionalExit() {
     anime.remove('#functionBasedDuration .el');
     var functionBasedDuration = anime({
@@ -131,7 +93,6 @@ function functionalExit() {
 }
 
 /* KEYFRAMES */
-
 function keyframesEnter() {
     anime.remove('#keyframes .el');
     let keyframes = anime({
@@ -161,7 +122,6 @@ function keyframesEnter() {
         loop: true
     });
 }
-
 function keyframesExit() {
     anime.remove('#keyframes .el');
     let keyframes = anime({
@@ -173,7 +133,6 @@ function keyframesExit() {
 }
 
 /* COMBINED */
-
 function combinedEnter() {
     anime.remove('#combinedFunctionBasedProp .el');
     var combinedFunctionBasedProp = anime({
@@ -197,35 +156,10 @@ function combinedEnter() {
         opacity: 1
     });
 }
-
 function combinedExit() {
     anime.remove('#combinedFunctionBasedProp .el');
     var combinedFunctionBasedProp = anime({
         targets: '#combinedFunctionBasedProp .el',
-        translateX: 0,
-        opacity: 0
-    });
-}
-
-/* BEZIER */
-
-function bezierEnter() {
-    anime.remove('#customBezier .el');
-    var customBezier = anime({
-        targets: '#customBezier .el',
-        translateX: 50,
-        direction: 'alternate',
-        easing: [.91, -0.94, 0.60, -0.2],
-        rotate: 180,
-        loop: true,
-        opacity: 1
-    });
-}
-
-function bezierExit() {
-    anime.remove('#customBezier .el');
-    var customBezier = anime({
-        targets: '#customBezier .el',
         translateX: 0,
         opacity: 0
     });
@@ -243,24 +177,20 @@ function toggleNav() {
     }
 }
 
-function showBackgroundSlides() {
-    var i;
-    var slides = document.getElementsByClassName("myBackgroundSlides");
-    for (i = 0; i < slides.length; i++) { slides[i].style.visibility = "hidden"; }
-    slideIndex++;
-    if (slideIndex > slides.length) { slideIndex = 1 }
-    slides[slideIndex - 1].style.visibility = "visible";
-    setTimeout(showBackgroundSlides, 12000);
-}
-
-function showProfileSlides() {
-    var i;
-    var slides = document.getElementsByClassName("myProfileSlides");
-    for (i = 0; i < slides.length; i++) { slides[i].style.visibility = "hidden"; }
-    slideIndex++;
-    if (slideIndex > slides.length) { slideIndex = 1 }
-    slides[slideIndex - 1].style.visibility = "visible";
-    setTimeout(showProfileSlides, 8000);
+function backgroundSlides() {
+    if (!window.swap) {
+        document.getElementById('backgroundOne').classList.add('fadeout');
+        document.getElementById('backgroundOne').classList.remove('fadein');
+        document.getElementById('backgroundTwo').classList.add('fadein');
+        document.getElementById('backgroundTwo').classList.remove('fadeout');
+    } else {
+        document.getElementById('backgroundOne').classList.add('fadein');
+        document.getElementById('backgroundOne').classList.remove('fadeout');
+        document.getElementById('backgroundTwo').classList.add('fadeout');
+        document.getElementById('backgroundTwo').classList.remove('fadein');
+    }
+    window.swap = !window.swap;
+    setTimeout(backgroundSlides, 10000);
 }
 
 function animateButton(scale, value, loop) {
@@ -283,80 +213,3 @@ function enterButton() {
 function leaveButton() {
     animateButton(1, 0, false);
 };
-
-
-
-
-
-
-
-
-
-    /*
-      //document.getElementById('background').style.backgroundImage = "url('" + gif + "')";
-
-    var timelineParameters = anime.timeline({
-        loop: true,
-        easing: 'easeInOutSine'
-    });
-
-    timelineParameters
-        .add({
-            targets: '#background',
-            scale: 1.2,
-            duration: 30000
-        })
-        .add({
-            targets: '#background',
-            scale: 1,
-            duration: 30000
-        })
-    
-    /* let divArr = [];
-     for (let i = 0; i < 30; i++) {
-         let div = document.createElement("div");
-         div.setAttribute('id', "div" + i);
-         div.style.width = "28px";
-         div.style.height = "28px";
-         div.style.backgroundColor = "#FF1461";
-         //div.style.opacity = 0;
-         div.style.position = "fixed";
-         divArr.push(div);
-     }
-   
-     divArr.forEach((div) => {
-         console.log(window.height);
-         let posX = Math.floor(Math.random() * (window.innerWidth / 10)) + 1;
-         let posY = Math.floor(Math.random() * (window.innerHeight / 10)) + 1;
-         div.style.left = posX + "%";
-         div.style.top = posY + "%";
-         document.getElementById("main").appendChild(div);
-     });
-   
-     background-size: cover;
-       background-position: center;
-       background-repeat: no-repeat;
-       document.getElementById('main').style.backgroundImage = "url('" + gif + "')";
-    
-    
-    
-    var relativeOffset = anime.timeline();
-
-    relativeOffset
-        .add({
-            targets: '#s0',
-            translateX: 250,
-            easing: 'easeOutExpo',
-        })
-        .add({
-            targets: '#s1',
-            opacity: 1,
-            easing: 'easeOutExpo',
-            offset: '-=600' // Starts 600ms before the previous animation ends
-        })
-        .add({
-            targets: '#s1',
-            opacity: 0,
-            easing: 'easeOutExpo',
-            offset: '-=800' // Starts 800ms before the previous animation ends
-        });*/
