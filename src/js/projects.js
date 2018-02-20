@@ -9,8 +9,8 @@ import me from '../assets/me3.png';
 (function () {
     console.log(process.env.NODE_ENV);
 
-    document.getElementById('backgroundOne').style.backgroundImage = "url('" + mountain + "')";
-    document.getElementById('backgroundTwo').style.backgroundImage = "url('" + rmountain + "')";
+    //document.getElementById('backgroundOne').style.backgroundImage = "url('" + mountain + "')";
+    //document.getElementById('backgroundTwo').style.backgroundImage = "url('" + rmountain + "')";
     $(document).ready(function () {
         $('.parallax').parallax();
     });

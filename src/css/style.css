@@ -6,8 +6,50 @@
  * Made By MaterializeCSS.com
  */
 
- .segmentOne, .segmentTwo {
+ #segmentOne, #segmentTwo {
    position: absolute;
+   z-index: 1;
+   text-align: center;
+   width: 100%;
+ }
+
+ #segmentOne {
+  color: #8453E3;
+  text-shadow: 1px 1px 3px #18FF92
+ }
+
+ #segmentTwo {
+  color: #A6FF8F;
+  text-shadow: 1px 1px 3px #FF1461;
+ }
+
+ .neat {
+   padding: 1rem 1rem 1rem 5rem;
+ }
+
+ .arrow-up {
+  /*width: 0; 
+  height: 0;*/
+  margin: 0 auto; 
+  border-left: 2rem solid transparent;
+  border-right: 2rem solid transparent;
+  border-bottom: 2rem solid #FF1461;
+  display: inline;
+}
+
+.circles {
+  /*width: 0; 
+  height: 0;*/
+  background-color: #5A87FF;
+  margin: 0 auto; 
+  border-radius: 50%;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+
+ #segmentTwo {
+
  }
 
 html {
@@ -17,7 +59,7 @@ html {
 }
 
 body {
-  font-family: 'Limelight';
+  font-family: 'Londrina Solid';
   height: 100%;
   width: 100%;
 }
@@ -59,14 +101,6 @@ img {
 
 /* ---------- TITLE ---------- */
 
-#details {
-  position: absolute;
-  transition: margin-left .5s;
-  z-index: 1;
-  top: 20%;
-  width: 100%;
-}
-
 /* Fading animation */
 .fadein {
   -webkit-animation-name: fadein;
@@ -85,21 +119,36 @@ img {
   to { opacity: 1; transform: scale(1.08); }
 }
 
+.up {
+  -webkit-animation-name: up;
+  -webkit-animation-duration: 6s;
+  animation-name: up;
+  animation-duration: 6;
+  animation-fill-mode: forwards;
+}
+@-webkit-keyframes up {
+  from { opacity: 1; top: 30% }
+  to { opacity: 0; top: -30% }
+}
+@keyframes up {
+  from { opacity: 1; top: 30% }
+  to { opacity: 0; top: -30% }
+}
+
 .down {
   -webkit-animation-name: down;
   -webkit-animation-duration: 6s;
   animation-name: down;
   animation-duration: 6;
-  animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
 }
 @-webkit-keyframes down {
-  from { top: -20% }
-  to { top: 20% }
+  from { opacity: 0; top: -30% }
+  to { opacity: 1; top: 30% }
 }
 @keyframes down {
-  from { top: -20% }
-  to { top: 20% }
+  from { opacity: 0; top: -30% }
+  to { opacity: 1; top: 30% }
 }
 
 .fadeout {
@@ -149,6 +198,7 @@ img {
 .name {
   text-align: center;
   color: #5EF3FB;
+  font-size: 30px;
 }
 
 
@@ -166,9 +216,8 @@ img {
 }
 
 .nav-links a {
-  padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 30px;
   display: inline-block;
   transition: 0.3s;
   color: #5EF3FB;

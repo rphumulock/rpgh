@@ -165,11 +165,9 @@ function toggleNav() {
     if (document.getElementById("mySidenav").style.width === "300px") {
         document.getElementById("mySidenav").style.width = "0";
         document.getElementById("main").style.marginLeft = "0";
-        document.getElementById("details").style.display = "block";
     } else {
         document.getElementById("mySidenav").style.width = "300px";
         document.getElementById("main").style.marginLeft = "300px";
-        document.getElementById("details").style.display = "none";
     }
 }
 
@@ -180,12 +178,18 @@ function backgroundSlides() {
         document.getElementById('backgroundTwo').classList.add('fadein');
         document.getElementById('backgroundTwo').classList.remove('fadeout');
         document.getElementById('segmentOne').classList.add('down');
+        document.getElementById('segmentOne').classList.remove('up');
+        document.getElementById('segmentTwo').classList.remove('down');
+        document.getElementById('segmentTwo').classList.add('up');
     } else {
         document.getElementById('backgroundOne').classList.add('fadein');
         document.getElementById('backgroundOne').classList.remove('fadeout');
         document.getElementById('backgroundTwo').classList.add('fadeout');
         document.getElementById('backgroundTwo').classList.remove('fadein');
+        document.getElementById('segmentOne').classList.add('up');
         document.getElementById('segmentOne').classList.remove('down');
+        document.getElementById('segmentTwo').classList.remove('up');
+        document.getElementById('segmentTwo').classList.add('down');
     }
     window.swap = !window.swap;
     setTimeout(backgroundSlides, 10000);
