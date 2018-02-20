@@ -80,32 +80,3 @@ module.exports = {
         })
     ]
 };
-
-
-
-/*               /* use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 40000
-                        }
-                    },
-                    'image-webpack-loader'
-                ]
-                
-                [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 4000000
-                        }
-                    },
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            optipng: {
-                                enabled: true,
-                            }
-                        }
-                    }
-                ]*/

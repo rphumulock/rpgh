@@ -6,6 +6,10 @@
  * Made By MaterializeCSS.com
  */
 
+ .segmentOne, .segmentTwo {
+   position: absolute;
+ }
+
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -79,6 +83,23 @@ img {
 @keyframes fadein {
   from { opacity: .1; transform: scale(1); }
   to { opacity: 1; transform: scale(1.08); }
+}
+
+.down {
+  -webkit-animation-name: down;
+  -webkit-animation-duration: 6s;
+  animation-name: down;
+  animation-duration: 6;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+@-webkit-keyframes down {
+  from { top: -20% }
+  to { top: 20% }
+}
+@keyframes down {
+  from { top: -20% }
+  to { top: 20% }
 }
 
 .fadeout {
@@ -187,39 +208,7 @@ img {
   .sidenav a {font-size: 18px;}
 }
 
-@media screen and (max-width: 450px) {
-  .segment {
-    color: #18FF92;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-    opacity: 0;
-    z-index: 1;
-  }
-}
-
-.arrow-up {
-  width: 0; 
-  height: 0;
-  margin: 0 auto; 
-  opacity: .5;
-  border-left: 10rem solid transparent;
-  border-right: 10rem solid transparent;
-  border-bottom: 10rem solid #FF1461;
-}
-
-
-
-@media screen and (min-width: 451px) {
-  .segment {
-    color: #18FF92;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-    opacity: 0;
-    z-index: 1;
-  }
-/*
+@media screen and (min-height: 451px) {
   .nav-links {
     height: 50%;
     margin: 20% auto;
@@ -228,7 +217,7 @@ img {
   .icons {
     margin: 20% 0 0 0;
     height: 10%;
-  }*/
+  }
 }
 
 /* ANIMATION */

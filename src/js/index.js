@@ -8,41 +8,37 @@ import me from '../assets/me3.png';
 
 (function () {
     console.log(process.env.NODE_ENV);
-
-    window.toggleNav = toggleNav;
-    window.enterButton = enterButton;
-    window.leaveButton = leaveButton;
     window.swap = true;
 
+    // Set image sources
     document.getElementById('backgroundOne').style.backgroundImage = "url('" + mountain + "')";
     document.getElementById('backgroundTwo').style.backgroundImage = "url('" + rmountain + "')";
     document.getElementById('profile-pic').setAttribute('src', me);
 
     /* EVENT HANDLERS */
-
     var buttonEl = document.querySelector('.togglenav');
     buttonEl.addEventListener('mouseenter', enterButton, false);
     buttonEl.addEventListener('mouseleave', leaveButton, false);
     buttonEl.addEventListener('click', toggleNav, false);
 
     /* ANIMATION HANDLERS */
-
+    //Home
     var nodelist = document.querySelector('.nodelist');
     nodelist.addEventListener('mouseenter', nodelistEnter, false);
     nodelist.addEventListener('mouseleave', nodelistExit, false);
-
+    //About
     var functional = document.querySelector('.functional');
     functional.addEventListener('mouseenter', functionalEnter, false);
     functional.addEventListener('mouseleave', functionalExit, false);
-
+    //Projects
     var keyframes = document.querySelector('.keyframes');
     keyframes.addEventListener('mouseenter', keyframesEnter, false);
     keyframes.addEventListener('mouseleave', keyframesExit, false);
-
+    //Contact
     var combined = document.querySelector('.combined');
     combined.addEventListener('mouseenter', combinedEnter, false);
     combined.addEventListener('mouseleave', combinedExit, false);
-
+    //Start slides
     backgroundSlides();
 })();
 
@@ -183,11 +179,13 @@ function backgroundSlides() {
         document.getElementById('backgroundOne').classList.remove('fadein');
         document.getElementById('backgroundTwo').classList.add('fadein');
         document.getElementById('backgroundTwo').classList.remove('fadeout');
+        document.getElementById('segmentOne').classList.add('down');
     } else {
         document.getElementById('backgroundOne').classList.add('fadein');
         document.getElementById('backgroundOne').classList.remove('fadeout');
         document.getElementById('backgroundTwo').classList.add('fadeout');
         document.getElementById('backgroundTwo').classList.remove('fadein');
+        document.getElementById('segmentOne').classList.remove('down');
     }
     window.swap = !window.swap;
     setTimeout(backgroundSlides, 10000);
