@@ -30,7 +30,7 @@
  }
 
 #name {
-  top: 16%;
+  top: 14%;
   color: #FB89FB;
   text-shadow: 1px 1px 3px #A6FF8F
 }
@@ -69,10 +69,6 @@
   height: 3rem;
   width: 3rem;
 }
-
- #segmentTwo {
-
- }
 
 html {
   -webkit-box-sizing: border-box;
