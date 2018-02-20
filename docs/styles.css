@@ -22,12 +22,18 @@
  * Made By MaterializeCSS.com
  */
 
- #segmentOne, #segmentTwo {
+ #name, #segmentOne, #segmentTwo {
    position: absolute;
    z-index: 1;
    text-align: center;
    width: 100%;
  }
+
+#name {
+  top: 18%;
+  color: #61C3FF;
+  text-shadow: 1px 1px 3px #A6FF8F
+}
 
  #segmentOne {
   color: #8453E3;
