@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"rpgh/config"
+	hostFeature "rpgh/features/host"
 	portfolioFeature "rpgh/features/portfolio"
 	resumeFeature "rpgh/features/resume"
 	"rpgh/web/resources"
@@ -26,6 +27,7 @@ func SetupRoutes(router chi.Router) (err error) {
 	if err := errors.Join(
 		portfolioFeature.SetupRoutes(router),
 		resumeFeature.SetupRoutes(router),
+		hostFeature.SetupRoutes(router),
 	); err != nil {
 		return fmt.Errorf("error setting up routes: %w", err)
 	}

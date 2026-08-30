@@ -3,6 +3,7 @@ package pages
 import (
 	"rpgh/features/common/components"
 	"rpgh/features/common/layouts"
+	hostcomponents "rpgh/features/host/components"
 	portfolio "rpgh/features/portfolio/components"
 	"rpgh/web/resources"
 )
@@ -150,8 +151,9 @@ templ PortfolioTabs() {
 }
 
 templ PortfolioFooter() {
-	<footer class="bg-base-100 opacity-60 py-3 px-4 shrink-0 border-t border-base-300">
-		<div class="max-w-5xl mx-auto">
+	<footer class="bg-base-100 py-3 px-4 shrink-0 border-t border-base-300">
+		<div class="max-w-5xl mx-auto flex flex-col gap-1">
+			@hostcomponents.Strip()
 			<p id="copyright"></p>
 		</div>
 	</footer>
