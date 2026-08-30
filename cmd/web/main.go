@@ -124,7 +124,21 @@ func run(ctx context.Context) error {
 // than by a header read at limit time. CanonicalizeIP groups IPv6 by /64, so a
 // single client cannot walk its own prefix for a fresh bucket per request.
 func clientIPKey(r *http.Request) (string, error) {
-	return httprate.CanonicalizeIP(middleware.GetClientIP(r.Context())), nil
+	if ip := middleware.GetClientIP(r.Context()); ip != "" {
+		return httprate.CanonicalizeIP(ip), nil
+	}
+
+	// ClientIPFromHeader fails closed: a request that did not carry the
+	// trusted header leaves no address behind. That is every caller which
+	// reached us without going through the edge -- a reverse proxy on the LAN,
+	// a health probe -- and keying them all on the empty string would put them
+	// in one shared bucket, where they would rate-limit each other. The peer
+	// is the honest answer for those, and is not forgeable.
+	host, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		host = r.RemoteAddr
+	}
+	return httprate.CanonicalizeIP(host), nil
 }
 
 // writeTimeout bounds how long a response may take to write. It has to stay
