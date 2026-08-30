@@ -8,8 +8,9 @@ import (
 )
 
 type PortfolioSignals struct {
-	Filter string `json:"filter"`
-	Tab    string `json:"tab"`
+	Filter   string `json:"filter"`
+	Tab      string `json:"tab"`
+	Playlist string `json:"playlist"`
 }
 
 // portfolioTabs are the panels under the About section. The label is what the
@@ -17,6 +18,7 @@ type PortfolioSignals struct {
 var portfolioTabs = []struct{ Key, Label string }{
 	{"projects", "projects"},
 	{"stack", "tech i've messed with"},
+	{"videos", "videos"},
 }
 
 // aboutLine and strengthsLine are the two lines under `$ whoami`. Placeholder
@@ -125,7 +127,7 @@ templ PortfolioProjects() {
 	</section>
 }
 
-// PortfolioTabs is the switcher between the projects grid and the stack tree.
+// PortfolioTabs is the switcher between the panels below the About section.
 templ PortfolioTabs() {
 	<nav class="bg-base-200 border-t border-base-300 shrink-0" aria-label="Sections">
 		<ul class="max-w-5xl mx-auto px-4 flex flex-wrap gap-1" role="tablist">
@@ -160,7 +162,11 @@ templ PortfolioPage() {
 		<div
 			data-theme="terminal"
 			class="crt flex flex-col w-full flex-1 min-h-0 overflow-hidden font-mono"
-			data-signals={ templ.JSONString(PortfolioSignals{Filter: "all", Tab: "projects"}) }
+			data-signals={ templ.JSONString(PortfolioSignals{
+				Filter:   "all",
+				Tab:      "projects",
+				Playlist: portfolio.DefaultPlaylist(),
+			}) }
 		>
 			@PortfolioHeader()
 			<main class="flex flex-col flex-1 min-h-0">
@@ -171,6 +177,9 @@ templ PortfolioPage() {
 				</div>
 				<div class="flex-1 min-h-0" data-show="$tab === 'stack'">
 					@portfolio.StackSection()
+				</div>
+				<div class="flex-1 min-h-0" data-show="$tab === 'videos'">
+					@portfolio.VideosSection()
 				</div>
 			</main>
 			@PortfolioFooter()

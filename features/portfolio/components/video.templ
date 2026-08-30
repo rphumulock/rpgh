@@ -1,0 +1,125 @@
+package components
+
+import common "rpgh/features/common/components"
+
+// VideoCard is one episode: YouTube's still, the episode number, and a link
+// out to the watch page. Nothing is embedded -- an iframe per card would pull
+// in YouTube's player on a tab most visitors never open, and the policy in
+// router/middleware.go allows i.ytimg.com for the still and nothing more.
+templ VideoCard(v Video) {
+	<article class="card bg-base-100 border border-base-300 overflow-hidden h-full">
+		<a
+			href={ templ.SafeURL(v.WatchURL()) }
+			title={ "Watch " + v.Label() + " on YouTube" }
+			class="group flex flex-col h-full hover:text-primary"
+		>
+			<figure class="relative border-b border-base-300">
+				<img
+					src={ v.ThumbURL() }
+					alt={ v.Label() }
+					width="320"
+					height="180"
+					loading="lazy"
+					referrerpolicy="no-referrer"
+					class="w-full aspect-video object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+				/>
+				<span
+					class="absolute inset-0 flex items-center justify-center text-primary opacity-70 group-hover:opacity-100 transition-opacity"
+					aria-hidden="true"
+				>
+					@common.Icon("lucide:play", "width", "40", "height", "40")
+				</span>
+				<span class="absolute bottom-2 right-2 bg-base-100 border border-base-300 px-1.5 py-0.5 text-xs">
+					{ "ep " + v.Episode }
+				</span>
+			</figure>
+			<div class="card-body gap-3">
+				<h3 class="card-title text-base">
+					<span class="text-secondary">$ </span>{ v.Title }
+				</h3>
+				<p class="text-sm opacity-60">{ v.Blurb }</p>
+				<p class="text-xs opacity-30 mt-auto">{ v.Published }</p>
+			</div>
+		</a>
+	</article>
+}
+
+// PlaylistTabs is the switcher across the section: one tab per playlist,
+// driving the $playlist signal the containers below watch.
+templ PlaylistTabs() {
+	<ul class="flex flex-wrap gap-1 border-b border-base-300" role="tablist">
+		for _, p := range PlaylistPanels() {
+			<li>
+				<button
+					type="button"
+					role="tab"
+					class="px-3 py-2 text-sm border-b-2 border-transparent -mb-px hover:text-primary transition-colors"
+					data-class={ PlaylistActiveExpr(p.Key()) }
+					data-attr:aria-selected={ PlaylistSelectedExpr(p.Key()) }
+					data-on:click={ SetPlaylistExpr(p.Key()) }
+				>
+					{ p.Series.Name }
+				</button>
+			</li>
+		}
+	</ul>
+}
+
+// PlaylistContainer is the one container a playlist gets: which channel it is
+// from and where to watch it whole, then its episodes in viewing order. It
+// shows only while its own tab is the selected one.
+templ PlaylistContainer(p PlaylistPanel) {
+	<article
+		class="border border-base-300 bg-base-100 flex flex-col"
+		role="tabpanel"
+		data-show={ PlaylistSelectedExpr(p.Key()) }
+	>
+		<header class="border-b border-base-300 px-4 py-3 flex flex-wrap items-baseline justify-between gap-3">
+			<div class="flex flex-col gap-1">
+				<h3 class="text-lg font-bold flex flex-wrap items-baseline gap-x-2">
+					<span><span class="text-secondary">$ </span>{ p.Series.Name }</span>
+					<span class="opacity-30 text-sm">{ plural(len(p.Series.Videos), "episode") }</span>
+				</h3>
+				<p class="text-sm opacity-60">{ p.Series.Blurb }</p>
+				<a
+					href={ templ.SafeURL(p.ChannelURL) }
+					title={ "Open " + p.Handle + " on YouTube" }
+					class="text-xs opacity-40 hover:opacity-100 hover:text-primary transition-opacity w-fit"
+				>
+					{ p.Handle }
+				</a>
+			</div>
+			<a
+				href={ templ.SafeURL(p.Series.PlaylistURL()) }
+				class="btn btn-sm btn-outline hover:text-primary"
+			>
+				@common.Icon("simple-icons:youtube", "width", "16", "height", "16")
+				watch the playlist
+			</a>
+		</header>
+		<div class="px-4 py-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			for _, v := range p.Series.Videos {
+				@VideoCard(v)
+			}
+		</div>
+	</article>
+}
+
+// VideosSection is the playlist tab bar and, under it, one container per
+// playlist.
+templ VideosSection() {
+	<section class="bg-base-200 py-6 px-4 h-full overflow-y-auto">
+		<div class="max-w-5xl mx-auto flex flex-col gap-4">
+			<h2 class="text-xl font-bold">
+				<span class="text-secondary">$ </span>ls ./videos
+			</h2>
+			@PlaylistTabs()
+			for _, p := range PlaylistPanels() {
+				@PlaylistContainer(p)
+			}
+			<p class="opacity-30 text-xs">
+				{ plural(len(PlaylistPanels()), "playlist") + ", " + plural(TotalVideoCount(), "episode") }
+			</p>
+		</div>
+	</section>
+}

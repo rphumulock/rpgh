@@ -39,7 +39,9 @@ func policy(nonce string) string {
 		// the component fails over between them, so allowlisting only the
 		// first one makes icons load or not depending on which it picks.
 		"connect-src 'self' https://api.iconify.design https://api.simplesvg.com https://api.unisvg.com",
-		"img-src 'self' data:",
+		// the videos tab shows YouTube's stills; they are the one image the
+		// site does not serve itself
+		"img-src 'self' data: https://i.ytimg.com",
 		"object-src 'none'",
 		"base-uri 'none'",
 		"form-action 'none'",
