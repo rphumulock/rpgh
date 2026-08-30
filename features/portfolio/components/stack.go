@@ -53,7 +53,6 @@ var Stack = []StackCategory{
 			{"REST", "lucide:webhook"},
 			{"Server-Sent Events", "lucide:radio"},
 			{"WebSockets", "lucide:plug-zap"},
-			{"OpenTelemetry", "simple-icons:opentelemetry"},
 		},
 	},
 	{
@@ -83,6 +82,14 @@ var Stack = []StackCategory{
 		},
 	},
 	{
+		Name: "observability",
+		Items: []StackItem{
+			{"Prometheus", "simple-icons:prometheus"},
+			{"Grafana", "simple-icons:grafana"},
+			{"OpenTelemetry", "simple-icons:opentelemetry"},
+		},
+	},
+	{
 		Name: "tooling",
 		Items: []StackItem{
 			{"Git", "simple-icons:git"},
@@ -96,6 +103,30 @@ var Stack = []StackCategory{
 			{"Selenium", "simple-icons:selenium"},
 		},
 	},
+}
+
+// SetupItem is one line in the "what I work in" panel beside the tree. That
+// panel is about the machine this all gets written on, which is a different
+// question from the Stack above -- nothing here is filterable, because none of
+// it is what a project was built with.
+type SetupItem struct {
+	Role string
+	Name string
+	Icon string
+	Note string
+}
+
+// SetupIntro sits above the list.
+const SetupIntro = "A fresh box gets here from one bash script -- same setup on every machine, " +
+	"rebuilt from scratch rather than carried around."
+
+var Setup = []SetupItem{
+	{"os", "Pop!_OS", "simple-icons:popos", "Ubuntu underneath, tiling on top."},
+	{"editor", "LazyVim", "simple-icons:lazyvim", "Neovim with LazyVim over it; where most of the day goes."},
+	{"editor", "VS Code", "simple-icons:visualstudiocode", "For stepping through a debugger, and diffs I'd rather click through."},
+	{"terminal", "WezTerm", "simple-icons:wezterm", "GPU-rendered, configured in Lua, same config everywhere."},
+	{"shell", "Oh My Zsh", "devicon-plain:ohmyzsh", "zsh with completions, syntax highlighting and a git-aware prompt."},
+	{"agents", "Herdr", "lucide:bot", "Keeps coding agents in sessions that outlive a disconnect."},
 }
 
 // TreeGlyph returns the box-drawing connector for a category at index i,

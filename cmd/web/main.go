@@ -51,6 +51,10 @@ func run(ctx context.Context) error {
 	r.Use(
 		httplog.RequestLogger(logger, nil),
 		middleware.Recoverer,
+		// Routes a HEAD to the GET handler that would have served it. Every
+		// route here is a GET, so without this a HEAD -- which is what uptime
+		// monitors, link-preview bots and `curl -I` send -- gets a 405.
+		middleware.GetHead,
 		router.SecurityHeaders,
 		// A page load costs about ten requests, so this leaves room for normal
 		// browsing while capping what a single address can pull. It protects

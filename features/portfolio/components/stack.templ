@@ -5,13 +5,46 @@ import (
 	common "rpgh/features/common/components"
 )
 
+// SetupPanel is the column beside the tree: the machine the work happens on,
+// rather than what any one project was built with. Nothing here is clickable
+// -- these are not filters, and dressing them up as buttons would imply a
+// project behind each one.
+templ SetupPanel() {
+	<aside class="flex flex-col gap-4">
+		<div class="flex flex-col gap-1">
+			<h2 class="text-2xl font-bold">
+				<span class="text-secondary">$ </span>cat ~/.setup
+			</h2>
+			<p class="text-xs opacity-40">{ SetupIntro }</p>
+		</div>
+		<ul class="flex flex-col gap-3 text-sm">
+			for _, item := range Setup {
+				<li class="flex gap-3 border-l border-base-300 pl-3">
+					<span class="text-primary pt-0.5 shrink-0">
+						@common.Icon(item.Icon, "width", "18", "height", "18")
+					</span>
+					<div class="flex flex-col gap-0.5 min-w-0">
+						<span class="flex items-baseline gap-2 flex-wrap">
+							<span class="font-bold">{ item.Name }</span>
+							<span class="text-xs opacity-30">{ item.Role }</span>
+						</span>
+						<span class="text-xs opacity-50">{ item.Note }</span>
+					</div>
+				</li>
+			}
+		</ul>
+	</aside>
+}
+
 // StackSection renders the toolbox as `tree` output: each category is a
 // directory line, its items the leaves indented beneath it. Items a project
 // was actually built with are clickable and jump back to the projects tab
 // with that tech applied as the filter; the rest are inert labels.
 templ StackSection() {
 	<section class="bg-base-100 py-6 px-4 h-full overflow-y-auto">
-		<div class="max-w-5xl mx-auto flex flex-col gap-4">
+		<div class="max-w-5xl mx-auto grid gap-8 lg:grid-cols-3 items-start">
+			@SetupPanel()
+			<div class="flex flex-col gap-4 min-w-0 lg:col-span-2">
 			<div class="flex flex-col gap-1">
 				<h2 class="text-2xl font-bold">
 					<span class="text-secondary">$ </span>tree ./stack
@@ -68,6 +101,7 @@ templ StackSection() {
 			<p class="opacity-30 text-xs">
 				{ fmt.Sprintf("%d directories, %d files", len(Stack), StackCount()) }
 			</p>
+			</div>
 		</div>
 	</section>
 }
