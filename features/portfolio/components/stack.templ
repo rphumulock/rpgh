@@ -1,0 +1,73 @@
+package components
+
+import (
+	"fmt"
+	common "rpgh/features/common/components"
+)
+
+// StackSection renders the toolbox as `tree` output: each category is a
+// directory line, its items the leaves indented beneath it. Items a project
+// was actually built with are clickable and jump back to the projects tab
+// with that tech applied as the filter; the rest are inert labels.
+templ StackSection() {
+	<section class="bg-base-100 py-6 px-4 h-full overflow-y-auto">
+		<div class="max-w-5xl mx-auto flex flex-col gap-4">
+			<div class="flex flex-col gap-1">
+				<h2 class="text-2xl font-bold">
+					<span class="text-secondary">$ </span>tree ./stack
+				</h2>
+				<p class="text-xs opacity-40">
+					Solid entries have a project behind them &mdash; click one to see it.
+				</p>
+			</div>
+			<div class="flex flex-col gap-3 text-sm">
+				for i, cat := range Stack {
+					<div class="flex flex-col gap-2">
+						<div class="flex items-baseline gap-2">
+							<span class="opacity-40 select-none" aria-hidden="true">{ TreeGlyph(i) }</span>
+							<span class="text-primary font-bold">{ cat.Name }/</span>
+							<span class="opacity-30">{ fmt.Sprintf("(%d)", len(cat.Items)) }</span>
+						</div>
+						<div class="flex">
+							<span class="opacity-40 select-none pr-3" aria-hidden="true">{ TreePipe(i) }</span>
+							<ul class="flex flex-wrap gap-2">
+								for _, item := range cat.Items {
+									{{ used := TechUseCount(item.Name) }}
+									<li>
+										if used > 0 {
+											<button
+												type="button"
+												title={ fmt.Sprintf("Show the %d project(s) built with %s", used, item.Name) }
+												class="flex items-center gap-1.5 border border-base-300 px-2 py-1 hover:border-primary hover:text-primary transition-colors"
+												data-on:click={ SetFilterExpr(item.Name) + "; $tab = 'projects'" }
+											>
+												if item.Icon != "" {
+													@common.Icon(item.Icon, "width", "16", "height", "16")
+												}
+												<span>{ item.Name }</span>
+												<span class="text-primary opacity-70">{ fmt.Sprintf("(%d)", used) }</span>
+											</button>
+										} else {
+											<span
+												title="Nothing on the projects tab uses this yet"
+												class="flex items-center gap-1.5 border border-base-300 border-dashed px-2 py-1 opacity-40"
+											>
+												if item.Icon != "" {
+													@common.Icon(item.Icon, "width", "16", "height", "16")
+												}
+												<span>{ item.Name }</span>
+											</span>
+										}
+									</li>
+								}
+							</ul>
+						</div>
+					</div>
+				}
+			</div>
+			<p class="opacity-30 text-xs">
+				{ fmt.Sprintf("%d directories, %d files", len(Stack), StackCount()) }
+			</p>
+		</div>
+	</section>
+}

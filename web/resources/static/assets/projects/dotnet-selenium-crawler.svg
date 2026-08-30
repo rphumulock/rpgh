@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img">
+  <defs>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" y="2" fill="#000" opacity="0.28"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="#0a0e0a"/>
+  <g font-family="Fira Code, ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="48" y="68" fill="#1f8f45" font-size="28" text-anchor="start" font-weight="normal" opacity="1">$ ACTION=Create dotnet run</text>
+    <rect x="976" y="18" width="176" height="88" fill="#0f150f" stroke="#1a231a" stroke-width="2"/>
+    <svg x="988" y="30" width="64" height="64" viewBox="0 0 24 24"><g fill="#33ff66"><path d="m23.174 3.468l-7.416 8.322a.23.23 0 0 1-.33 0l-3.786-3.9a.23.23 0 0 1 0-.282L12.872 6a.228.228 0 0 1 .366 0l2.106 2.346a.228.228 0 0 0 .342 0l5.94-8.094A.162.162 0 0 0 21.5 0H.716a.174.174 0 0 0-.174.174v23.652A.174.174 0 0 0 .716 24h22.566a.174.174 0 0 0 .174-.174V3.6a.162.162 0 0 0-.282-.132M6.932 21.366a5.7 5.7 0 0 1-4.05-1.44a.22.22 0 0 1 0-.288l.882-1.236a.222.222 0 0 1 .33-.036a4.34 4.34 0 0 0 2.964 1.158c1.158 0 1.722-.534 1.722-1.098c0-1.752-5.7-.552-5.7-4.278c0-1.65 1.428-3 3.756-3a5.57 5.57 0 0 1 3.708 1.242a.22.22 0 0 1 0 .3l-.906 1.2a.22.22 0 0 1-.318.036a4.3 4.3 0 0 0-2.706-.936c-.906 0-1.41.402-1.41.996c0 1.572 5.688.522 5.688 4.2c.006 1.812-1.284 3.18-3.96 3.18m12.438-3.432a.19.19 0 0 1-.192.192h-5.202a.06.06 0 0 0-.06.066a1.986 1.986 0 0 0 2.106 1.638a3.26 3.26 0 0 0 1.8-.6a.19.19 0 0 1 .276.042l.636.93a.2.2 0 0 1-.042.264a4.7 4.7 0 0 1-2.892.9a3.726 3.726 0 0 1-3.93-3.87a3.744 3.744 0 0 1 3.81-3.852c2.196 0 3.684 1.644 3.684 4.05zm-3.684-2.748a1.76 1.76 0 0 0-1.8 1.56a.06.06 0 0 0 .06.066h3.492a.06.06 0 0 0 .06-.066a1.7 1.7 0 0 0-1.812-1.56"/></g></svg>
+    <svg x="1076" y="30" width="64" height="64" viewBox="0 0 24 24"><g fill="#33ff66"><path d="M24 8.77h-2.468v7.565h-1.425V8.77h-2.462V7.53H24zm-6.852 7.565h-4.821V7.53h4.63v1.24h-3.205v2.494h2.953v1.234h-2.953v2.604h3.396zm-6.708 0H8.882L4.78 9.863a3 3 0 0 1-.258-.51h-.036q.048.283.048 1.21v5.772H3.157V7.53h1.659l3.965 6.32q.25.392.323.54h.024q-.06-.35-.06-1.185V7.529h1.372zm-8.703-.693a.868.829 0 0 1-.869.829a.868.829 0 0 1-.868-.83a.868.829 0 0 1 .868-.828a.868.829 0 0 1 .869.829"/></g></svg>
+    <rect x="48" y="120" width="240" height="120" fill="#0f150f" stroke="#1a231a" stroke-width="2"/>
+    <text x="168" y="178" fill="#7dff9e" font-size="30" text-anchor="middle" font-weight="bold" opacity="1">login</text>
+    <text x="168" y="214" fill="#1f8f45" font-size="20" text-anchor="middle" font-weight="normal" opacity="1">step 1</text>
+    <line x1="288" y1="180" x2="324" y2="180" stroke="#1f8f45" stroke-width="2"/>
+    <path d="M318 172 L332 180 L318 188 Z" fill="#1f8f45"/>
+    <rect x="333" y="120" width="240" height="120" fill="#0f150f" stroke="#1a231a" stroke-width="2"/>
+    <text x="453" y="178" fill="#7dff9e" font-size="30" text-anchor="middle" font-weight="bold" opacity="1">open form</text>
+    <text x="453" y="214" fill="#1f8f45" font-size="20" text-anchor="middle" font-weight="normal" opacity="1">step 2</text>
+    <line x1="573" y1="180" x2="609" y2="180" stroke="#1f8f45" stroke-width="2"/>
+    <path d="M603 172 L617 180 L603 188 Z" fill="#1f8f45"/>
+    <rect x="618" y="120" width="240" height="120" fill="#0f150f" stroke="#ff5f56" stroke-width="2" stroke-dasharray="8 6"/>
+    <text x="738" y="178" fill="#ff5f56" font-size="30" text-anchor="middle" font-weight="bold" opacity="1">six dates</text>
+    <text x="738" y="214" fill="#1f8f45" font-size="20" text-anchor="middle" font-weight="normal" opacity="1">step 3</text>
+    <line x1="858" y1="180" x2="894" y2="180" stroke="#1f8f45" stroke-width="2"/>
+    <path d="M888 172 L902 180 L888 188 Z" fill="#1f8f45"/>
+    <rect x="903" y="120" width="240" height="120" fill="#0f150f" stroke="#1a231a" stroke-width="2"/>
+    <text x="1023" y="178" fill="#7dff9e" font-size="30" text-anchor="middle" font-weight="bold" opacity="1">submit</text>
+    <text x="1023" y="214" fill="#1f8f45" font-size="20" text-anchor="middle" font-weight="normal" opacity="1">step 4</text>
+    <text x="618" y="286" fill="#ff5f56" font-size="24" text-anchor="middle" font-weight="normal" opacity="1">✕ stale element · session expired</text>
+    <path d="M618 300 C618 360, 300 350, 300 402" fill="none" stroke="#ff5f56" stroke-width="2" stroke-dasharray="8 6"/>
+    <path d="M292 394 L300 408 L308 394 Z" fill="#ff5f56"/>
+    <rect x="48" y="410" width="1104" height="180" fill="#0f150f" stroke="#1a231a" stroke-width="2"/>
+    <text x="72" y="456" fill="#7dff9e" font-size="28" text-anchor="start" font-weight="bold" opacity="1">checkpoint  ·  postgres</text>
+    <text x="72" y="512" fill="#1f8f45" font-size="22" text-anchor="start" font-weight="normal" opacity="1">2024-03-01</text>
+    <text x="72" y="548" fill="#33ff66" font-size="24" text-anchor="start" font-weight="normal" opacity="1">✓ filed</text>
+    <text x="344" y="512" fill="#1f8f45" font-size="22" text-anchor="start" font-weight="normal" opacity="1">2024-03-02</text>
+    <text x="344" y="548" fill="#33ff66" font-size="24" text-anchor="start" font-weight="normal" opacity="1">✓ filed</text>
+    <text x="616" y="512" fill="#1f8f45" font-size="22" text-anchor="start" font-weight="normal" opacity="1">2024-03-03</text>
+    <text x="616" y="548" fill="#b6ff00" font-size="24" text-anchor="start" font-weight="normal" opacity="1">· pending</text>
+    <text x="888" y="512" fill="#1f8f45" font-size="22" text-anchor="start" font-weight="normal" opacity="1">2024-03-04</text>
+    <text x="888" y="548" fill="#1f8f45" font-size="24" text-anchor="start" font-weight="normal" opacity="1">· pending</text>
+    <text x="48" y="640" fill="#1f8f45" font-size="22" text-anchor="start" font-weight="normal" opacity="1">a killed run resumes at the row it stopped on, not from the top</text>
+  </g>
+  <rect width="1200" height="675" fill="url(#scan)"/>
+  <rect x="1" y="1" width="1198" height="673" fill="none" stroke="#1a231a" stroke-width="2"/>
+</svg>

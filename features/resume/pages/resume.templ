@@ -1,0 +1,175 @@
+package pages
+
+import (
+	common "rpgh/features/common/components"
+	"rpgh/features/common/layouts"
+	portfolio "rpgh/features/portfolio/pages"
+	resume "rpgh/features/resume/components"
+	"rpgh/web/resources"
+)
+
+// heading is a section title in the shell-prompt voice the portfolio uses.
+templ heading(text string) {
+	<h2 class="text-xl font-bold">
+		<span class="text-secondary">$ </span>{ text }
+	</h2>
+}
+
+// ResumeContact is the name block: who, what, and how to reach him.
+templ ResumeContact() {
+	<section class="bg-base-100 py-8 px-4">
+		<div class="max-w-4xl mx-auto flex flex-col gap-3">
+			<div class="flex flex-wrap items-baseline justify-between gap-3">
+				<h1 class="text-2xl font-bold">
+					<span class="text-secondary">$ </span>cat resume.txt
+				</h1>
+				<a
+					href={ templ.SafeURL(resources.StaticPath(resume.PDFPath)) }
+					download="richard-humulock-resume.pdf"
+					class="btn btn-sm btn-outline hover:text-primary"
+				>
+					@common.Icon("lucide:download", "width", "16", "height", "16")
+					download pdf
+				</a>
+			</div>
+			<div class="border border-base-300 p-4 flex flex-col gap-2">
+				<p class="text-2xl font-bold text-primary">{ resume.Name }</p>
+				<p class="opacity-60">{ resume.Tagline }</p>
+				<ul class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+					<li class="flex items-center gap-1.5 opacity-60">
+						@common.Icon("lucide:map-pin", "width", "16", "height", "16")
+						{ resume.Location }
+					</li>
+					for _, c := range resume.Contact {
+						<li>
+							<a
+								href={ templ.SafeURL(c.Href) }
+								class="flex items-center gap-1.5 hover:text-primary"
+							>
+								@common.Icon(c.Icon, "width", "16", "height", "16")
+								{ c.Label }
+							</a>
+						</li>
+					}
+				</ul>
+				<p class="text-sm text-primary">{ resume.Clearance }</p>
+			</div>
+		</div>
+	</section>
+}
+
+templ ResumeSummary() {
+	<section class="bg-base-200 py-6 px-4">
+		<div class="max-w-4xl mx-auto flex flex-col gap-3">
+			@heading("summary")
+			<p class="opacity-60">{ resume.Summary }</p>
+		</div>
+	</section>
+}
+
+templ ResumeExperience() {
+	<section class="bg-base-100 py-6 px-4">
+		<div class="max-w-4xl mx-auto flex flex-col gap-5">
+			@heading("experience")
+			for _, r := range resume.Roles {
+				<article class="flex flex-col gap-2">
+					<div class="flex flex-wrap items-baseline justify-between gap-x-3">
+						<h3 class="font-bold">
+							{ r.Title }
+							<span class="opacity-40">|</span>
+							<span class="text-primary">{ r.Company }</span>
+						</h3>
+						<p class="text-sm opacity-40">{ r.Dates }</p>
+					</div>
+					<p class="text-sm opacity-40">{ r.Location }</p>
+					<ul class="flex flex-col gap-1.5">
+						for _, b := range r.Bullets {
+							<li class="flex gap-2 text-sm opacity-60">
+								<span class="text-secondary select-none" aria-hidden="true">&mdash;</span>
+								<span>{ b }</span>
+							</li>
+						}
+					</ul>
+				</article>
+			}
+			<p class="text-sm opacity-60">
+				<span class="font-bold opacity-100">Earlier&nbsp;&nbsp;</span>
+				{ resume.EarlierRoles }
+			</p>
+		</div>
+	</section>
+}
+
+templ ResumeProjects() {
+	<section class="bg-base-200 py-6 px-4">
+		<div class="max-w-4xl mx-auto flex flex-col gap-4">
+			@heading("selected projects")
+			for _, p := range resume.Projects {
+				<article class="flex flex-col gap-1">
+					<h3 class="font-bold flex flex-wrap items-baseline gap-x-2">
+						if p.Href != "" {
+							<a href={ templ.SafeURL(p.Href) } class="hover:text-primary">{ p.Name }</a>
+						} else {
+							{ p.Name }
+						}
+						<span class="text-sm font-normal text-primary opacity-70">{ p.Tech }</span>
+					</h3>
+					<p class="text-sm opacity-60">{ p.Blurb }</p>
+				</article>
+			}
+		</div>
+	</section>
+}
+
+templ ResumeSkills() {
+	<section class="bg-base-100 py-6 px-4">
+		<div class="max-w-4xl mx-auto flex flex-col gap-3">
+			@heading("technical skills")
+			<dl class="flex flex-col gap-2 text-sm">
+				for _, g := range resume.Skills {
+					<div class="flex flex-col sm:flex-row sm:gap-3">
+						<dt class="font-bold text-primary sm:w-40 shrink-0">{ g.Label }</dt>
+						<dd class="opacity-60">{ g.Items }</dd>
+					</div>
+				}
+			</dl>
+		</div>
+	</section>
+}
+
+templ ResumeEducation() {
+	<section class="bg-base-200 py-6 px-4">
+		<div class="max-w-4xl mx-auto flex flex-col gap-3">
+			@heading("education")
+			<ul class="flex flex-col gap-2 text-sm">
+				for _, s := range resume.Education {
+					<li class="flex flex-wrap items-baseline justify-between gap-x-3">
+						<span>
+							<span class="font-bold">{ s.Degree }</span>
+							<span class="opacity-40">|</span>
+							<span class="opacity-60">{ s.Name }</span>
+						</span>
+						<span class="opacity-40">{ s.Dates }</span>
+					</li>
+				}
+			</ul>
+		</div>
+	</section>
+}
+
+templ ResumePage() {
+	@layouts.Base("rpgh") {
+		<div data-theme="terminal" class="crt flex flex-col w-full flex-1 min-h-0 font-mono">
+			@portfolio.PortfolioHeader()
+			<main class="flex-1 overflow-y-auto">
+				@ResumeContact()
+				@ResumeSummary()
+				@ResumeExperience()
+				@ResumeProjects()
+				@ResumeSkills()
+				@ResumeEducation()
+			</main>
+			@portfolio.PortfolioFooter()
+		</div>
+	}
+}

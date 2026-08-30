@@ -1,0 +1,179 @@
+package pages
+
+import (
+	"rpgh/features/common/components"
+	"rpgh/features/common/layouts"
+	portfolio "rpgh/features/portfolio/components"
+	"rpgh/web/resources"
+)
+
+type PortfolioSignals struct {
+	Filter string `json:"filter"`
+	Tab    string `json:"tab"`
+}
+
+// portfolioTabs are the panels under the About section. The label is what the
+// visitor reads; the key is the value carried in the $tab signal.
+var portfolioTabs = []struct{ Key, Label string }{
+	{"projects", "projects"},
+	{"stack", "tech i've messed with"},
+}
+
+// aboutLine and strengthsLine are the two lines under `$ whoami`. Placeholder
+// copy for now -- swap in the real bio whenever.
+const (
+	aboutLine     = "Software engineer who likes small, fast, boring-in-a-good-way web apps -- mostly Go on the backend and hypermedia on the wire."
+	strengthsLine = "real-time systems · event-driven backends · server-rendered UIs · developer tooling"
+)
+
+// SocialLink is one icon link in the header. Icon names come from Iconify
+// (https://icon-sets.iconify.design) and render via components.Icon.
+type SocialLink struct {
+	Title string
+	Href  string
+	Icon  string
+}
+
+var socialLinks = []SocialLink{
+	{Title: "Email", Href: "mailto:rphumulock@gmail.com", Icon: "lucide:mail"},
+	{Title: "GitHub", Href: "https://github.com/rphumulock", Icon: "simple-icons:github"},
+	{Title: "LinkedIn", Href: "https://www.linkedin.com/in/richard-humulock/", Icon: "simple-icons:linkedin"},
+	{Title: "X", Href: "https://x.com/home", Icon: "simple-icons:x"},
+	{Title: "YouTube", Href: "https://www.youtube.com/@lockincode", Icon: "simple-icons:youtube"},
+}
+
+// cursor is the blinking block caret that trails a prompt heading. Its
+// animation lives in styles.css under [data-theme="terminal"].
+templ cursor() {
+	<span class="terminal-cursor" aria-hidden="true">&#9608;</span>
+}
+
+templ PortfolioHeader() {
+	<header class="bg-base-200 border-b border-base-300 shrink-0">
+		<div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+			<a href="/" title="Home" class="flex items-center gap-2 font-bold text-lg hover:text-primary">
+				<span aria-hidden="true">&gt;_</span>
+				<strong>rpgh</strong>
+			</a>
+			<ul class="flex items-center gap-1" id="external-links">
+				<li>
+					<a href="/resume" title="Resume" class="btn btn-ghost btn-sm hover:text-primary">resume</a>
+				</li>
+				for _, link := range socialLinks {
+					<li>
+						<a
+							href={ templ.SafeURL(link.Href) }
+							title={ link.Title }
+							aria-label={ link.Title }
+							class="btn btn-ghost btn-square hover:text-primary"
+						>
+							@components.Icon(link.Icon, "width", "22", "height", "22")
+						</a>
+					</li>
+				}
+			</ul>
+		</div>
+	</header>
+}
+
+templ PortfolioAbout() {
+	<section class="bg-base-100 py-8 px-4 shrink-0">
+		<div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center sm:items-start gap-6">
+			<img
+				src={ resources.StaticPath("assets/avatar.webp") }
+				alt="Portrait of rpgh"
+				width="160"
+				height="160"
+				class="w-20 h-20 sm:w-24 sm:h-24 shrink-0 rounded-full object-cover border-2 border-primary"
+			/>
+			<div class="flex flex-col gap-2">
+				<h1 class="text-2xl font-bold">
+					<span class="text-secondary">$ </span>whoami
+					@cursor()
+				</h1>
+				<p class="text-lg opacity-60" id="about">{ aboutLine }</p>
+				<p class="text-sm opacity-40" id="strengths">{ strengthsLine }</p>
+			</div>
+		</div>
+	</section>
+}
+
+// Filter buttons drive the `filter` signal; cards hide themselves via data-show.
+templ PortfolioProjects() {
+	<section class="bg-base-200 py-6 px-4 h-full overflow-y-auto">
+		<div class="max-w-5xl mx-auto flex flex-col gap-4">
+			<h2 class="text-xl font-bold flex items-baseline flex-wrap gap-x-1">
+				<span><span class="text-secondary">$ </span>ls ./projects --filter=</span>
+				<span class="text-primary" data-show="$filter === 'all'">all</span>
+				<button
+					type="button"
+					title="Clear the filter"
+					class="text-primary inline-flex items-baseline gap-1 border-b border-dotted border-primary hover:opacity-60 transition-opacity"
+					data-show="$filter !== 'all'"
+					data-on:click={ portfolio.SetFilterExpr("all") }
+				>
+					<span data-text="$filter"></span>
+					<span class="text-xs opacity-70" aria-hidden="true">&#10005;</span>
+				</button>
+			</h2>
+			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="projects">
+				for _, p := range portfolio.Projects {
+					@portfolio.ProjectCard(p)
+				}
+			</div>
+		</div>
+	</section>
+}
+
+// PortfolioTabs is the switcher between the projects grid and the stack tree.
+templ PortfolioTabs() {
+	<nav class="bg-base-200 border-t border-base-300 shrink-0" aria-label="Sections">
+		<ul class="max-w-5xl mx-auto px-4 flex flex-wrap gap-1" role="tablist">
+			for _, t := range portfolioTabs {
+				<li>
+					<button
+						type="button"
+						role="tab"
+						class="px-4 py-3 border-b-2 border-transparent hover:text-primary transition-colors"
+						data-class={ "{'border-primary': $tab === '" + t.Key + "', 'text-primary': $tab === '" + t.Key + "', 'opacity-50': $tab !== '" + t.Key + "'}" }
+						data-attr:aria-selected={ "$tab === '" + t.Key + "'" }
+						data-on:click={ "$tab = '" + t.Key + "'" }
+					>
+						{ t.Label }
+					</button>
+				</li>
+			}
+		</ul>
+	</nav>
+}
+
+templ PortfolioFooter() {
+	<footer class="bg-base-100 opacity-60 py-3 px-4 shrink-0 border-t border-base-300">
+		<div class="max-w-5xl mx-auto">
+			<p id="copyright"></p>
+		</div>
+	</footer>
+}
+
+templ PortfolioPage() {
+	@layouts.Base("rpgh") {
+		<div
+			data-theme="terminal"
+			class="crt flex flex-col w-full flex-1 min-h-0 overflow-hidden font-mono"
+			data-signals={ templ.JSONString(PortfolioSignals{Filter: "all", Tab: "projects"}) }
+		>
+			@PortfolioHeader()
+			<main class="flex flex-col flex-1 min-h-0">
+				@PortfolioAbout()
+				@PortfolioTabs()
+				<div class="flex-1 min-h-0" data-show="$tab === 'projects'">
+					@PortfolioProjects()
+				</div>
+				<div class="flex-1 min-h-0" data-show="$tab === 'stack'">
+					@portfolio.StackSection()
+				</div>
+			</main>
+			@PortfolioFooter()
+		</div>
+	}
+}

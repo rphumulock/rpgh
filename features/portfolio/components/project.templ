@@ -1,0 +1,55 @@
+package components
+
+import (
+	common "rpgh/features/common/components"
+	"rpgh/web/resources"
+)
+
+templ ProjectCard(p Project) {
+	<article
+		class="card bg-base-100 border border-base-300 overflow-hidden h-full"
+		data-show={ p.ShowExpr() }
+	>
+		if p.Image != "" {
+			<figure class="border-b border-base-300">
+				<img
+					src={ resources.StaticPath(p.Image) }
+					alt={ p.Title }
+					loading="lazy"
+					class="w-full aspect-video object-cover"
+				/>
+			</figure>
+		}
+		<div class="card-body gap-3">
+			<h3 class="card-title text-base">
+				<span class="text-secondary">$ </span>{ p.Title }
+			</h3>
+			<p class="text-sm opacity-60">{ p.Blurb }</p>
+			<div class="flex flex-wrap gap-1">
+				for _, t := range p.Tech {
+					<span class="badge badge-sm badge-outline" data-class={ FilterActiveExpr(t, "badge-primary") }>{ t }</span>
+				}
+			</div>
+			<div class="card-actions">
+				if p.Repo != "" {
+					<a
+						href={ templ.SafeURL(p.Repo) }
+						class="btn btn-xs btn-ghost hover:text-primary"
+					>
+						@common.Icon("simple-icons:github", "width", "16", "height", "16")
+						code
+					</a>
+				}
+				if p.Demo != "" {
+					<a
+						href={ templ.SafeURL(p.Demo) }
+						class="btn btn-xs btn-ghost hover:text-primary"
+					>
+						@common.Icon("lucide:external-link", "width", "16", "height", "16")
+						demo
+					</a>
+				}
+			</div>
+		</div>
+	</article>
+}
