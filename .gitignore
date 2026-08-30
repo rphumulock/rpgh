@@ -24,6 +24,7 @@
 # a fresh clone needs them listed explicitly or `git add -A` silently skips them.
 !Taskfile.yml
 !Dockerfile
+!/.dockerignore
 !staticcheck.conf
 !.vscode/*.json
 !.github/**

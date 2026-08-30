@@ -6,10 +6,10 @@ import (
 	"log/slog"
 	"net"
 	"net/http"
-	"rpgh/config"
-	"rpgh/router"
 	"os"
 	"os/signal"
+	"rpgh/config"
+	"rpgh/router"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -38,11 +38,14 @@ func run(ctx context.Context) error {
 
 	r := chi.NewMux()
 
-	// RealIP rewrites RemoteAddr from X-Forwarded-For, so it must only run when
-	// that header comes from a proxy we trust -- otherwise every client picks
-	// its own identity and the rate limiter below counts a spoofed key.
-	if config.Global.TrustProxy {
-		r.Use(middleware.RealIP)
+	// Where a request's client address comes from, decided once and explicitly.
+	// The TCP peer is the only source nothing can forge, so it is the default;
+	// a header is believed only when something in front is known to overwrite
+	// it. This has to be installed before the rate limiter, which keys off it.
+	if config.Global.TrustProxy && config.Global.ClientIPHeader != "" {
+		r.Use(middleware.ClientIPFromHeader(config.Global.ClientIPHeader))
+	} else {
+		r.Use(middleware.ClientIPFromRemoteAddr)
 	}
 
 	r.Use(
@@ -53,7 +56,7 @@ func run(ctx context.Context) error {
 		// browsing while capping what a single address can pull. It protects
 		// CPU against one noisy source; it is not a defence against a
 		// distributed flood, which has to be absorbed upstream.
-		httprate.LimitByIP(240, time.Minute),
+		httprate.LimitBy(240, time.Minute, clientIPKey),
 		middleware.Compress(5),
 	)
 
@@ -115,6 +118,13 @@ func run(ctx context.Context) error {
 	})
 
 	return eg.Wait()
+}
+
+// clientIPKey buckets the rate limiter by the address resolved above rather
+// than by a header read at limit time. CanonicalizeIP groups IPv6 by /64, so a
+// single client cannot walk its own prefix for a fresh bucket per request.
+func clientIPKey(r *http.Request) (string, error) {
+	return httprate.CanonicalizeIP(middleware.GetClientIP(r.Context())), nil
 }
 
 // writeTimeout bounds how long a response may take to write. It has to stay

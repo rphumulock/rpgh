@@ -16,7 +16,15 @@ templ Base(title string) {
 			<link rel="preconnect" href="https://fonts.googleapis.com"/>
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 			<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:wght@100..900&family=Gideon+Roman:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet"/>
-			<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+			// Pinned by content, not just by version: this is the one script on
+			// the page served by someone else, and integrity is what stops a
+			// compromised CDN swapping it for something that runs with the same
+			// privileges as our own code. Recompute the hash if the version moves.
+			<script
+				src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"
+				integrity="sha384-GPb5RlngihS9H0z1D137JsvzmeZ7tCpWEF4t5YDoTZyMsPP8S7h7vFDh4XhheU83"
+				crossorigin="anonymous"
+			></script>
 			<link rel="icon" type="image/x-icon" href={ resources.StaticPath("assets/favicon.ico") }/>
 			<script defer type="module" src={ resources.StaticPath("datastar/datastar.js") }></script>
 			<link href={ resources.StaticPath("index.css") } rel="stylesheet" type="text/css"/>

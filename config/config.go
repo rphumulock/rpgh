@@ -27,6 +27,17 @@ type Config struct {
 	// any value it likes in those headers, so trusting them on a directly
 	// exposed server hands out both IP spoofing and rate-limit evasion.
 	TrustProxy bool
+
+	// ClientIPHeader names the single header the proxy in front is known to
+	// *overwrite* -- CF-Connecting-IP behind a Cloudflare tunnel. It is read
+	// only when TrustProxy is on, so naming a header can never by itself make
+	// a directly exposed server believe one.
+	//
+	// The header has to be one the proxy replaces rather than appends to.
+	// X-Forwarded-For is the trap: Cloudflare appends the real address to
+	// whatever the client already put there, so its leftmost value is the
+	// client's own and trusting it is the same as trusting nothing.
+	ClientIPHeader string
 }
 
 var (
@@ -67,6 +78,7 @@ func loadBase() *Config {
 				return slog.LevelInfo
 			}
 		}(),
-		TrustProxy: getEnv("TRUST_PROXY", "") == "true",
+		TrustProxy:     getEnv("TRUST_PROXY", "") == "true",
+		ClientIPHeader: getEnv("CLIENT_IP_HEADER", "CF-Connecting-IP"),
 	}
 }

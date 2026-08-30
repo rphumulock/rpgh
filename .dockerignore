@@ -1,0 +1,14 @@
+# Never bake local runtime config into an image; .env holds whatever this
+# machine happened to be configured with.
+.env
+
+.git
+.github
+.vscode
+.task
+tmp
+bin
+
+# Generated during the build below rather than copied in. It is gitignored, so
+# copying it would make the image depend on whatever the build host last ran.
+web/resources/static/index.css
