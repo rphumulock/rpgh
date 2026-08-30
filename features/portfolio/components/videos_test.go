@@ -48,6 +48,16 @@ func TestPlaylistKeysAreUnique(t *testing.T) {
 	}
 }
 
+// TestEveryPlaylistHasAFeaturedVideo guards the one card each container
+// shows: an empty series renders a card with a dead link and a 404 still.
+func TestEveryPlaylistHasAFeaturedVideo(t *testing.T) {
+	for _, p := range PlaylistPanels() {
+		if p.Series.Featured().ID == "" {
+			t.Errorf("playlist %q has no episodes, so its container features nothing", p.Series.Name)
+		}
+	}
+}
+
 func TestEpisodesAreUniqueWithinASeries(t *testing.T) {
 	for _, c := range Channels {
 		if c.Handle == "" || len(c.Series) == 0 {

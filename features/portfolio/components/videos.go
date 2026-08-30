@@ -144,6 +144,24 @@ func (v Video) Label() string {
 	return fmt.Sprintf("Episode %s - %s", v.Episode, v.Title)
 }
 
+// Featured is the one episode a series puts on the page: the first in viewing
+// order, which is where someone arriving at the series should start. The rest
+// are reachable through PlaylistURL rather than rendered as cards.
+func (s VideoSeries) Featured() Video {
+	if len(s.Videos) == 0 {
+		return Video{}
+	}
+	return s.Videos[0]
+}
+
+// Rest is how many episodes the playlist holds beyond the featured one.
+func (s VideoSeries) Rest() int {
+	if len(s.Videos) == 0 {
+		return 0
+	}
+	return len(s.Videos) - 1
+}
+
 // PlaylistURL is the link to watch a series start to finish on YouTube.
 func (s VideoSeries) PlaylistURL() string {
 	return "https://www.youtube.com/playlist?list=" + s.Playlist

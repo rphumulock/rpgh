@@ -10,11 +10,12 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import common "rpgh/features/common/components"
 
-// VideoCard is one episode: YouTube's still, the episode number, and a link
-// out to the watch page. Nothing is embedded -- an iframe per card would pull
-// in YouTube's player on a tab most visitors never open, and the policy in
-// router/middleware.go allows i.ytimg.com for the still and nothing more.
-func VideoCard(v Video) templ.Component {
+// FeaturedVideoCard is the single episode a playlist puts on the page. It is
+// laid out wide rather than as a grid tile, since it is alone in its container.
+// Nothing is embedded -- an iframe would pull in YouTube's player on a tab most
+// visitors never open, and the policy in router/middleware.go allows
+// i.ytimg.com for the still and nothing more.
+func FeaturedVideoCard(v Video) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -35,14 +36,14 @@ func VideoCard(v Video) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<article class=\"card bg-base-100 border border-base-300 overflow-hidden h-full\"><a href=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<a href=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 templ.SafeURL
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(v.WatchURL()))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 12, Col: 37}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 12, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -55,20 +56,20 @@ func VideoCard(v Video) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.ResolveAttributeValue("Watch " + v.Label() + " on YouTube")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 13, Col: 47}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 13, Col: 46}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"group flex flex-col h-full hover:text-primary\"><figure class=\"relative border-b border-base-300\"><img src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"group border border-base-300 flex flex-col sm:flex-row hover:border-primary transition-colors\"><figure class=\"relative shrink-0 sm:w-2/5 border-b sm:border-b-0 sm:border-r border-base-300\"><img src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.ResolveAttributeValue(v.ThumbURL())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 18, Col: 23}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 18, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 		if templ_7745c5c3_Err != nil {
@@ -81,7 +82,7 @@ func VideoCard(v Video) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.ResolveAttributeValue(v.Label())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 19, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 19, Col: 19}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {
@@ -102,33 +103,33 @@ func VideoCard(v Video) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("ep " + v.Episode)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 33, Col: 24}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 33, Col: 23}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</span></figure><div class=\"card-body gap-3\"><h3 class=\"card-title text-base\"><span class=\"text-secondary\">$ </span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</span></figure><div class=\"p-4 flex flex-col gap-2 group-hover:text-primary transition-colors\"><h4 class=\"font-bold\"><span class=\"text-secondary\">$ </span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(v.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 38, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 38, Col: 51}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</h3><p class=\"text-sm opacity-60\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</h4><p class=\"text-sm opacity-60\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(v.Blurb)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 40, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 40, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -141,13 +142,13 @@ func VideoCard(v Video) templ.Component {
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(v.Published)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 41, Col: 55}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 41, Col: 54}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</p></div></a></article>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</p></div></a>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -190,7 +191,7 @@ func PlaylistTabs() templ.Component {
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.ResolveAttributeValue(PlaylistActiveExpr(p.Key()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 57, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 56, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var11)
 			if templ_7745c5c3_Err != nil {
@@ -203,7 +204,7 @@ func PlaylistTabs() templ.Component {
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.ResolveAttributeValue(PlaylistSelectedExpr(p.Key()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 58, Col: 60}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 57, Col: 60}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var12)
 			if templ_7745c5c3_Err != nil {
@@ -216,7 +217,7 @@ func PlaylistTabs() templ.Component {
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.ResolveAttributeValue(SetPlaylistExpr(p.Key()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 59, Col: 45}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 58, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var13)
 			if templ_7745c5c3_Err != nil {
@@ -229,7 +230,7 @@ func PlaylistTabs() templ.Component {
 			var templ_7745c5c3_Var14 string
 			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(p.Series.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 61, Col: 20}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 60, Col: 20}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
@@ -279,7 +280,7 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 		var templ_7745c5c3_Var16 string
 		templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.ResolveAttributeValue(PlaylistSelectedExpr(p.Key()))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 75, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 74, Col: 43}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var16)
 		if templ_7745c5c3_Err != nil {
@@ -292,7 +293,7 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 		var templ_7745c5c3_Var17 string
 		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(p.Series.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 80, Col: 64}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 79, Col: 64}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 		if templ_7745c5c3_Err != nil {
@@ -305,7 +306,7 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 		var templ_7745c5c3_Var18 string
 		templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(plural(len(p.Series.Videos), "episode"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 81, Col: 79}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 80, Col: 79}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 		if templ_7745c5c3_Err != nil {
@@ -318,7 +319,7 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 		var templ_7745c5c3_Var19 string
 		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(p.Series.Blurb)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 83, Col: 50}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 82, Col: 50}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 		if templ_7745c5c3_Err != nil {
@@ -331,7 +332,7 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 		var templ_7745c5c3_Var20 templ.SafeURL
 		templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(p.ChannelURL))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 85, Col: 39}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 84, Col: 39}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 		if templ_7745c5c3_Err != nil {
@@ -344,7 +345,7 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 		var templ_7745c5c3_Var21 string
 		templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.ResolveAttributeValue("Open " + p.Handle + " on YouTube")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 86, Col: 47}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 85, Col: 47}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var21)
 		if templ_7745c5c3_Err != nil {
@@ -357,7 +358,7 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 		var templ_7745c5c3_Var22 string
 		templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(p.Handle)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 89, Col: 15}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 88, Col: 15}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
 		if templ_7745c5c3_Err != nil {
@@ -370,7 +371,7 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 		var templ_7745c5c3_Var23 templ.SafeURL
 		templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(p.Series.PlaylistURL()))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 93, Col: 48}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 92, Col: 48}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 		if templ_7745c5c3_Err != nil {
@@ -384,17 +385,34 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "watch the playlist</a></header><div class=\"px-4 py-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "watch the playlist</a></header><div class=\"px-4 py-5 flex flex-col gap-3\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for _, v := range p.Series.Videos {
-			templ_7745c5c3_Err = VideoCard(v).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = FeaturedVideoCard(p.Series.Featured()).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if p.Series.Rest() > 0 {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "<p class=\"text-xs opacity-40\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var24 string
+			templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs("+ " + plural(p.Series.Rest(), "more episode") + " in the playlist")
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 103, Col: 74}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "</p>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "</div></article>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "</div></article>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -420,12 +438,12 @@ func VideosSection() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var24 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var24 == nil {
-			templ_7745c5c3_Var24 = templ.NopComponent
+		templ_7745c5c3_Var25 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var25 == nil {
+			templ_7745c5c3_Var25 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "<section class=\"bg-base-200 py-6 px-4 h-full overflow-y-auto\"><div class=\"max-w-5xl mx-auto flex flex-col gap-4\"><h2 class=\"text-xl font-bold\"><span class=\"text-secondary\">$ </span>ls ./videos</h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 31, "<section class=\"bg-base-200 py-6 px-4 h-full overflow-y-auto\"><div class=\"max-w-5xl mx-auto flex flex-col gap-4\"><h2 class=\"text-xl font-bold\"><span class=\"text-secondary\">$ </span>ls ./videos</h2>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -439,20 +457,20 @@ func VideosSection() templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "<p class=\"opacity-30 text-xs\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "<p class=\"opacity-30 text-xs\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var25 string
-		templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(plural(len(PlaylistPanels()), "playlist") + ", " + plural(TotalVideoCount(), "episode"))
+		var templ_7745c5c3_Var26 string
+		templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(plural(len(PlaylistPanels()), "playlist") + ", " + plural(TotalVideoCount(), "episode"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 121, Col: 93}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 123, Col: 93}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 31, "</p></div></section>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 33, "</p></div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
