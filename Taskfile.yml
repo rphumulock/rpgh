@@ -1,7 +1,6 @@
 version: "3"
 
 env:
-  NATS_PORT: 4222
   STATIC_DIR: "web/resources/static"
 
 tasks:
@@ -22,21 +21,12 @@ tasks:
     generates:
       - "{{.STATIC_DIR}}/index.css"
 
-  build:web:bundle:
-    cmds:
-      - go run cmd/web/build/main.go
-    sources:
-      - "./web/libs/**/**/*.{html,css,ts}"
-    generates:
-      - "{{.STATIC_DIR}}/libs/**"
-
   build:
     cmds:
       - go build -tags=prod -o bin/main ./cmd/web
     deps:
       - build:templ
       - build:web:styles
-      - build:web:bundle
 
   # Use this task to debug with the delve debugger
   debug:
@@ -59,10 +49,6 @@ tasks:
     cmds:
       - go tool gotailwind -i web/resources/styles/styles.css -o $STATIC_DIR/index.css -w
 
-  live:web:bundle:
-    cmds:
-      - go run cmd/web/build/main.go -watch
-
   live:server:
     cmds:
       - |
@@ -77,7 +63,6 @@ tasks:
     deps:
       - live:templ
       - live:web:styles
-      - live:web:bundle
       - live:server
 
   run:

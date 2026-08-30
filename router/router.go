@@ -1,27 +1,21 @@
 package router
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"net/http"
 	"sync"
 
 	"rpgh/config"
-	counterFeature "rpgh/features/counter"
-	indexFeature "rpgh/features/index"
-	monitorFeature "rpgh/features/monitor"
-	reverseFeature "rpgh/features/reverse"
-	sortableFeature "rpgh/features/sortable"
+	portfolioFeature "rpgh/features/portfolio"
+	resumeFeature "rpgh/features/resume"
 	"rpgh/web/resources"
 
-	"github.com/delaneyj/toolbelt/embeddednats"
 	"github.com/go-chi/chi/v5"
-	"github.com/gorilla/sessions"
 	"github.com/starfederation/datastar-go/datastar"
 )
 
-func SetupRoutes(ctx context.Context, router chi.Router, sessionStore *sessions.CookieStore, ns *embeddednats.Server) (err error) {
+func SetupRoutes(router chi.Router) (err error) {
 
 	if config.Global.Environment == config.Dev {
 		setupReload(router)
@@ -30,11 +24,8 @@ func SetupRoutes(ctx context.Context, router chi.Router, sessionStore *sessions.
 	router.Handle("/static/*", resources.Handler())
 
 	if err := errors.Join(
-		indexFeature.SetupRoutes(ctx, router, sessionStore, ns),
-		counterFeature.SetupRoutes(router, sessionStore),
-		monitorFeature.SetupRoutes(router),
-		sortableFeature.SetupRoutes(router),
-		reverseFeature.SetupRoutes(router),
+		portfolioFeature.SetupRoutes(router),
+		resumeFeature.SetupRoutes(router),
 	); err != nil {
 		return fmt.Errorf("error setting up routes: %w", err)
 	}

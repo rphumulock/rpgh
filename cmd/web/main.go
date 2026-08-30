@@ -7,7 +7,6 @@ import (
 	"net"
 	"net/http"
 	"rpgh/config"
-	"rpgh/nats"
 	"rpgh/router"
 	"os"
 	"os/signal"
@@ -16,7 +15,6 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/httplog/v3"
-	"github.com/gorilla/sessions"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -43,21 +41,9 @@ func run(ctx context.Context) error {
 		middleware.Recoverer,
 	)
 
-	sessionStore := sessions.NewCookieStore([]byte(config.Global.SessionSecret))
-	sessionStore.MaxAge(86400 * 30)
-	sessionStore.Options.Path = "/"
-	sessionStore.Options.HttpOnly = true
-	sessionStore.Options.Secure = false
-	sessionStore.Options.SameSite = http.SameSiteLaxMode
-
-	ns, err := nats.SetupNATS(ctx)
-	if err != nil {
-		return err
-	}
-
 	eg, egctx := errgroup.WithContext(ctx)
 
-	if err := router.SetupRoutes(egctx, r, sessionStore, ns); err != nil {
+	if err := router.SetupRoutes(r); err != nil {
 		return fmt.Errorf("error setting up routes: %w", err)
 	}
 

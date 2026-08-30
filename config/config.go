@@ -16,11 +16,10 @@ const (
 )
 
 type Config struct {
-	Environment   Environment
-	Host          string
-	Port          string
-	LogLevel      slog.Level
-	SessionSecret string
+	Environment Environment
+	Host        string
+	Port        string
+	LogLevel    slog.Level
 }
 
 var (
@@ -61,6 +60,5 @@ func loadBase() *Config {
 				return slog.LevelInfo
 			}
 		}(),
-		SessionSecret: getEnv("SESSION_SECRET", "session-secret"),
 	}
 }
