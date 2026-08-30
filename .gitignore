@@ -25,6 +25,7 @@
 !Taskfile.yml
 !Dockerfile
 !/.dockerignore
+!compose.yaml
 !staticcheck.conf
 !.vscode/*.json
 !.github/**

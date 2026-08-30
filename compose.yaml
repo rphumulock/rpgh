@@ -1,0 +1,34 @@
+# Deployment for a single LXC: the site and the tunnel that reaches it.
+#
+# There is deliberately no `ports:` anywhere here. The tunnel dials out to
+# Cloudflare, so nothing needs to listen on the host, and the two services find
+# each other by name on the internal network below.
+
+services:
+  rpgh:
+    image: ghcr.io/rphumulock/rpgh:latest
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: "9001"
+      # Believe CF-Connecting-IP -- but only because cloudflared is the only
+      # thing that can reach this container, and Cloudflare overwrites that
+      # header rather than appending to it.
+      TRUST_PROXY: "true"
+      CLIENT_IP_HEADER: CF-Connecting-IP
+      LOG_LEVEL: INFO
+    networks: [edge]
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      # From the tunnel's page in the Cloudflare dashboard. Lives in .env
+      # beside this file, which .dockerignore keeps out of any build context.
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?set TUNNEL_TOKEN in .env}
+    networks: [edge]
+    depends_on: [rpgh]
+
+networks:
+  edge:

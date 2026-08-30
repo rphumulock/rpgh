@@ -98,6 +98,37 @@ docker run --name rpgh -p 8080:9001 rpgh:latest
 
 [Dockerfile](./Dockerfile)
 
+## Continuous builds
+
+[build.yml](./.github/workflows/build.yml) runs `go vet` and the tests on every
+push and pull request, and fails if any committed `_templ.go` has drifted from
+the `.templ` it came from. Pushes to `master` then publish the image to
+`ghcr.io/rphumulock/rpgh`, tagged `latest` and with the commit sha alongside it
+to roll back to.
+
+The package is private until you make it public in the repository's Packages
+settings; until then a pull from the server is denied.
+
+## Running it
+
+[compose.yaml](./compose.yaml) runs the site next to a
+[Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/),
+which dials out to Cloudflare rather than listening for anything — so no port
+is published and no port is forwarded.
+
+```shell
+printf 'TUNNEL_TOKEN=...\n' > .env && chmod 600 .env
+docker compose up -d
+```
+
+Updating is `docker compose pull && docker compose up -d`.
+
+`TRUST_PROXY=true` tells the server to read the client address from
+`CLIENT_IP_HEADER` (`CF-Connecting-IP`) rather than from the connection. Set it
+only where something in front actually overwrites that header: it is what the
+rate limiter keys on, and a header a proxy *appends* to — `X-Forwarded-For`,
+notably — is the client's to forge.
+
 # References
 
 ## Server
