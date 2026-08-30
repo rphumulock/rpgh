@@ -20,6 +20,13 @@ type Config struct {
 	Host        string
 	Port        string
 	LogLevel    slog.Level
+
+	// TrustProxy says whether X-Forwarded-* headers on an inbound request can
+	// be believed. Only turn it on when something in front of this server
+	// (Cloudflare, Fly, a reverse proxy) actually sets them: a client can put
+	// any value it likes in those headers, so trusting them on a directly
+	// exposed server hands out both IP spoofing and rate-limit evasion.
+	TrustProxy bool
 }
 
 var (
@@ -60,5 +67,6 @@ func loadBase() *Config {
 				return slog.LevelInfo
 			}
 		}(),
+		TrustProxy: getEnv("TRUST_PROXY", "") == "true",
 	}
 }

@@ -2,12 +2,14 @@ package layouts
 
 import (
 	"rpgh/config"
+	"rpgh/web/csp"
 	"rpgh/web/resources"
 )
 
 templ Base(title string) {
 	<!DOCTYPE html>
-	<html lang="en">
+	// Datastar reads data-nonce off this element at startup, then removes it.
+	<html lang="en" data-nonce={ csp.Nonce(ctx) }>
 		<head>
 			<title>{ title }</title>
 			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
