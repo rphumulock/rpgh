@@ -9,8 +9,9 @@ import (
 )
 
 // policy allowlists exactly what a page here loads: the iconify web component
-// and its icon API, and Google Fonts' stylesheet plus the font files it points
-// at. Everything else -- the site's own CSS, JS and images -- is same-origin.
+// and its icon API, Google Fonts' stylesheet plus the font files it points at,
+// and the Cloudflare Web Analytics beacon. Everything else -- the site's own
+// CSS, JS and images -- is same-origin.
 //
 // The nonce is what lets script-src stay free of 'unsafe-eval'. Datastar reads
 // it from the html element and compiles every data-* expression into a script
@@ -20,7 +21,13 @@ import (
 // A host allowlist still applies alongside a nonce, so iconify keeps loading.
 // That would stop being true under 'strict-dynamic', which is why it is absent.
 func policy(nonce string) string {
-	script := "script-src 'self' https://code.iconify.design"
+	// The analytics beacon is injected by Cloudflare at the edge, after this
+	// policy has already been written, so it cannot carry a nonce of ours and
+	// has to be allowlisted by host. Under automatic injection it reports back
+	// to this origin's /cdn-cgi/rum, which connect-src 'self' already covers;
+	// installing the snippet by hand instead would post to
+	// https://cloudflareinsights.com and need that added there.
+	script := "script-src 'self' https://code.iconify.design https://static.cloudflareinsights.com"
 	if nonce != "" {
 		script += " 'nonce-" + nonce + "'"
 	} else {
