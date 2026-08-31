@@ -19,11 +19,12 @@ type PortfolioSignals struct {
 }
 
 // portfolioTabs are the panels under the About section. The label is what the
-// visitor reads; the key is the value carried in the $tab signal.
+// visitor reads; the key is the value carried in the $tab signal. Videos are
+// not one of these -- they sit under the project grid inside the projects
+// panel, so the landing view carries them without a click.
 var portfolioTabs = []struct{ Key, Label string }{
 	{"projects", "projects"},
 	{"stack", "tech i've messed with"},
-	{"videos", "videos"},
 }
 
 // aboutLine and strengthsLine are the two lines under `$ whoami`. Placeholder
@@ -107,7 +108,7 @@ templ PortfolioAbout() {
 
 // Filter buttons drive the `filter` signal; cards hide themselves via data-show.
 templ PortfolioProjects() {
-	<section class="bg-base-200 py-6 px-4 lg:h-full lg:overflow-y-auto">
+	<section class="bg-base-200 py-6 px-4">
 		<div class="max-w-5xl mx-auto flex flex-col gap-4">
 			<h2 class="text-xl font-bold flex items-baseline flex-wrap gap-x-1">
 				<span><span class="text-secondary">$ </span>ls ./projects --filter=</span>
@@ -179,14 +180,18 @@ templ PortfolioPage() {
 			<main class="flex flex-col flex-1 min-h-0">
 				@PortfolioAbout()
 				@PortfolioTabs()
-				<div class="flex-1 min-h-0" data-show="$tab === 'projects'">
+				// The projects panel holds two sections stacked, so it is the
+				// scroll container on lg rather than either section being one.
+				// Below lg nothing clips and the document scrolls, as before.
+				<div
+					class="flex-1 min-h-0 lg:overflow-y-auto bg-base-200"
+					data-show="$tab === 'projects'"
+				>
 					@PortfolioProjects()
+					@portfolio.VideosSection()
 				</div>
 				<div class="flex-1 min-h-0" data-show="$tab === 'stack'">
 					@portfolio.StackSection()
-				</div>
-				<div class="flex-1 min-h-0" data-show="$tab === 'videos'">
-					@portfolio.VideosSection()
 				</div>
 			</main>
 			@PortfolioFooter()

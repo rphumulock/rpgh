@@ -522,8 +522,10 @@ func PlaylistContainer(p PlaylistPanel) templ.Component {
 	})
 }
 
-// VideosSection is the playlist tab bar and, under it, one container per
-// playlist.
+// VideosSection sits under the project grid rather than in a tab of its own,
+// so it does not scroll itself -- the panel holding both owns that. The top
+// border is what separates it from the grid above, since the two sections
+// share a background and would otherwise read as one.
 func VideosSection() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -545,7 +547,7 @@ func VideosSection() templ.Component {
 			templ_7745c5c3_Var32 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 38, "<section class=\"bg-base-200 py-6 px-4 lg:h-full lg:overflow-y-auto\"><div class=\"max-w-5xl mx-auto flex flex-col gap-4\"><h2 class=\"text-xl font-bold\"><span class=\"text-secondary\">$ </span>ls ./videos</h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 38, "<section class=\"bg-base-200 py-6 px-4 border-t border-base-300\"><div class=\"max-w-5xl mx-auto flex flex-col gap-4\"><h2 class=\"text-xl font-bold\"><span class=\"text-secondary\">$ </span>ls ./videos</h2>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -566,7 +568,7 @@ func VideosSection() templ.Component {
 		var templ_7745c5c3_Var33 string
 		templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.JoinStringErrs(plural(len(PlaylistPanels()), "playlist") + ", " + plural(TotalVideoCount(), "episode"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 156, Col: 93}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/video.templ`, Line: 158, Col: 93}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var33))
 		if templ_7745c5c3_Err != nil {
