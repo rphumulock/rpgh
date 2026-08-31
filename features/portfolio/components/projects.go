@@ -21,6 +21,18 @@ type Project struct {
 // Projects is the source of truth for the grid. Order here is display order.
 var Projects = []Project{
 	{
+		Title: "xsym",
+		Blurb: "A cross-language structural code index, served over MCP. tree-sitter parses Go, Python and Rust into one SQLite index, so the same type spelled three ways collapses to a single lookup -- something grep cannot do, because the names genuinely differ.",
+		Tech: []string{
+			"Rust",
+			"SQLite",
+			"MCP", "tree-sitter",
+			"Git", "Cargo",
+		},
+		Image: "assets/projects/xsym.svg",
+		Repo:  "https://github.com/rphumulock/xsym",
+	},
+	{
 		Title: "Datastar NATS Tic Tac Toe",
 		Blurb: "Real-time multiplayer tic tac toe. Game state lives in NATS JetStream; moves stream to every player over SSE with no client-side framework.",
 		Tech: []string{
@@ -32,6 +44,20 @@ var Projects = []Project{
 		},
 		Image: "assets/projects/datastar-nats-tictactoe.svg",
 		Repo:  "https://github.com/rphumulock/datastar-nats-tictactoe",
+	},
+	{
+		Title: "Redis WebSockets Tic Tac Toe",
+		Blurb: "The same game a stack earlier: a React front end over raw WebSockets or Socket.IO, picked by one env var, with Redis pub/sub fanning every move out to both tabs and holding the board.",
+		Tech: []string{
+			"JavaScript", "HTML", "CSS",
+			"Node.js", "Express", "WebSockets", "Socket.IO",
+			"Redis",
+			"React", "Tailwind CSS",
+			"Docker",
+			"Git", "Vite",
+		},
+		Image: "assets/projects/redis-websockets-tictactoe.svg",
+		Repo:  "https://github.com/rphumulock/redis_websockets_tictactoe",
 	},
 	{
 		Title: "Vert.x Hazelcast Sensor Cluster",

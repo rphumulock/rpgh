@@ -20,6 +20,7 @@ var Stack = []StackCategory{
 		Items: []StackItem{
 			{"Go", "simple-icons:go"},
 			{"Java", "simple-icons:openjdk"},
+			{"Rust", "simple-icons:rust"},
 			{"TypeScript", "simple-icons:typescript"},
 			{"JavaScript", "simple-icons:javascript"},
 			{"Python", "simple-icons:python"},
@@ -46,13 +47,17 @@ var Stack = []StackCategory{
 		Name: "backend",
 		Items: []StackItem{
 			{"NATS", "simple-icons:natsdotio"},
+			{"Node.js", "simple-icons:nodedotjs"},
+			{"Express", "simple-icons:express"},
 			{"Vert.x", "simple-icons:eclipsevertdotx"},
 			{"Hazelcast", "lucide:network"},
 			{"chi", "lucide:route"},
 			{"gRPC", "simple-icons:grpc"},
 			{"REST", "lucide:webhook"},
+			{"MCP", "simple-icons:modelcontextprotocol"},
 			{"Server-Sent Events", "lucide:radio"},
 			{"WebSockets", "lucide:plug-zap"},
+			{"Socket.IO", "simple-icons:socketdotio"},
 		},
 	},
 	{
@@ -101,6 +106,9 @@ var Stack = []StackCategory{
 			{"Delve", "lucide:bug"},
 			{"Maven", "simple-icons:apachemaven"},
 			{"Selenium", "simple-icons:selenium"},
+			{"Cargo", "simple-icons:rust"},
+			{"tree-sitter", "lucide:list-tree"},
+			{"Vite", "simple-icons:vite"},
 		},
 	},
 }
