@@ -1,14 +1,14 @@
 // Package components holds the resume content. Everything here is transcribed
-// from web/resources/static/assets/richard-humulock-resume.pdf -- when the PDF
+// from web/resources/static/assets/peter-humulock-resume.pdf -- when the PDF
 // is regenerated, update this file to match so the page and the download agree.
 package components
 
 // PDFPath is the downloadable copy of this resume, relative to the static dir.
-const PDFPath = "assets/richard-humulock-resume.pdf"
+const PDFPath = "assets/peter-humulock-resume.pdf"
 
 // Header is the block above the fold: name, title, and how to reach him.
 const (
-	Name      = "Richard Humulock"
+	Name      = "Peter Humulock"
 	Tagline   = "Senior Software Engineer · Distributed Systems & Platform Engineering"
 	Location  = "Baltimore, MD"
 	Clearance = "Active Top Secret Clearance"
@@ -27,7 +27,7 @@ type ContactLink struct {
 
 var Contact = []ContactLink{
 	{"rphumulock@gmail.com", "mailto:rphumulock@gmail.com", "lucide:mail"},
-	{"richardhumulock.fly.dev", "https://richardhumulock.fly.dev/", "lucide:globe"},
+	{"rpgh.dev", "https://rpgh.dev/", "lucide:globe"},
 	{"linkedin.com/in/richard-humulock", "https://www.linkedin.com/in/richard-humulock/", "simple-icons:linkedin"},
 	{"github.com/rphumulock", "https://github.com/rphumulock", "simple-icons:github"},
 }
@@ -42,27 +42,23 @@ type Role struct {
 }
 
 // Roles is in reverse-chronological order, matching the PDF.
-//
-// NOTE: the source PDF carries literal "[START DATE]" and "[END DATE]"
-// placeholders for the two most recent roles; the known halves are kept here
-// and the missing halves are left out rather than guessed.
 var Roles = []Role{
 	{
 		Title:    "Technical Marketing Engineer",
 		Company:  "Synadia",
 		Location: "Baltimore, MD (Remote)",
-		Dates:    "Present",
+		Dates:    "April 2025 – August 2026",
 		Bullets: []string{
-			"Design and build reference architectures and production-grade demo applications on NATS.io and Synadia Cloud, demonstrating event-driven patterns including pub/sub, JetStream persistence, and key-value and object stores.",
-			"Author developer documentation, technical guides, and tutorials for adopting NATS in production.",
-			"Work across the stack in Go, TypeScript, and hypermedia frameworks to demonstrate low-latency application patterns from broker to browser.",
+			"Designed and built reference architectures and production-grade demo applications on NATS.io and Synadia Cloud, demonstrating event-driven patterns including pub/sub, JetStream persistence, and key-value and object stores.",
+			"Produced the developer documentation, technical guides, and video demos teams used to adopt NATS in production.",
+			"Worked across the stack in Go, TypeScript, and hypermedia frameworks to demonstrate low-latency application patterns from broker to browser.",
 		},
 	},
 	{
 		Title:    "Senior Research Engineer",
 		Company:  "Two Six Technologies",
 		Location: "Baltimore, MD (Remote)",
-		Dates:    "September 2020",
+		Dates:    "September 2020 – April 2025",
 		Bullets: []string{
 			"Architected scalable backend services with Vert.x and HyperExpress, deploying a Hazelcast-backed Vert.x cluster for resilience, redundancy, and distributed state management.",
 			"Implemented secure authentication workflows using OAuth2 and PKCE, and designed and enforced Role-Based Access Control for granular, auditable access to protected resources.",
@@ -99,22 +95,24 @@ type Project struct {
 
 var Projects = []Project{
 	{
-		Name:  "Distributed Sensor Cluster",
-		Tech:  "Vert.x · Hazelcast · Datastar · Docker Compose",
-		Blurb: "Three-node Vert.x cluster where virtual sensors are deployed and torn down at runtime. Nodes coordinate over the clustered event bus with Hazelcast managing membership; readings stream to the UI over SSE rather than polling.",
-		Href:  "https://richardhumulock.fly.dev/projects/vertx_hazelcast_cluster",
+		Name:  "Vert.x Hazelcast Sensor Cluster",
+		Tech:  "Java 21 · Vert.x · Hazelcast · Datastar · Docker",
+		Blurb: "A single clustered event bus spanning three JVMs, with a Hazelcast AsyncMap as the only data store behind cluster-wide locks. Sensors deploy and tear down at runtime; readings reach the browser over SSE.",
+		Href:  "https://github.com/rphumulock/vertx-ds-hazelcast",
 	},
 	{
-		Name:  "Real-Time Multiplayer over Redis Pub/Sub",
-		Tech:  "Node.js · WebSockets · Redis",
-		Blurb: "Implemented the WebSocket handshake by hand rather than using a library, broadcasting moves through Redis Pub/Sub; game state persists so matches survive a server restart.",
-		Href:  "https://github.com/rphumulock/redis_websockets_tictactoe",
+		Name:  "Datastar NATS Tic-Tac-Toe",
+		Tech:  "Go · NATS JetStream KV · SSE · CQRS",
+		Blurb: "The server owns all state: moves are validated into JetStream KV and rendered markup is pushed to both players over SSE — no client-side application logic, no JSON API. CQRS separates writes from KV-watch reads; presence heartbeats expire orphaned games.",
+		Href:  "https://github.com/rphumulock/datastar-nats-tictactoe",
 	},
 	{
-		Name:  "ECS Game Server",
-		Tech:  "Go · entity-component-system",
-		Blurb: "ECS design separating data from behavior; systems iterate contiguous component arrays for cache locality.",
-		Href:  "https://richardhumulock.fly.dev/projects/go_ecs_roguelike",
+		// The PDF gives this one a descriptor where the others carry a tech
+		// list, and no blurb under it -- Tech is the line after the name in
+		// both cases, so it holds the descriptor here.
+		Name: "Datastar Video Series",
+		Tech: "Eleven-episode YouTube series on hypermedia application patterns",
+		Href: "https://www.youtube.com/playlist?list=PLbqyjFEQew904tnpc7dtc6VuyX7HikBfR",
 	},
 }
 
@@ -125,12 +123,12 @@ type SkillGroup struct {
 }
 
 var Skills = []SkillGroup{
-	{"Languages", "Go, TypeScript, JavaScript, Java, C#, SQL"},
+	{"Languages", "Go, Java, JavaScript, TypeScript, C#, SQL"},
 	{"Messaging", "NATS.io / JetStream, RabbitMQ, Redis Streams, Hazelcast, WebSockets, gRPC"},
 	{"Architecture", "Event-driven systems, microservices, event sourcing, CQRS, SAGA, serverless"},
 	{"Backend", "Vert.x, Spring Boot, Node.js (Express, Fastify), ASP.NET Core, REST, GraphQL"},
 	{"Data", "PostgreSQL, Redis, MongoDB, MySQL, schema design, query and index optimization"},
-	{"Frontend", "React, Vue.js, Svelte, Angular, Ember.js, Datastar, TailwindCSS"},
+	{"Frontend & Mobile", "React, Vue.js, Svelte, Angular, Ember.js, Datastar, TailwindCSS, Swift / iOS, Android"},
 	{"Cloud & DevOps", "AWS (Lambda, S3), Docker, Kubernetes / K3s, Fly.io, GitHub Actions, GitLab CI"},
 	{"Security", "OAuth2 / PKCE, JWT, Role-Based Access Control, ISM compliance"},
 	{"Testing", "Playwright, k6, Jest, JUnit"},
