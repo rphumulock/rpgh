@@ -10,6 +10,14 @@ import common "rpgh/features/common/components"
 // reaches YouTube. Only i.ytimg.com is contacted before that click, which is
 // all the still needs and all router/middleware.go allowed before the
 // frame-src that landed with this card.
+//
+// The two referrer policies here disagree on purpose. The still is served to
+// anyone, so it goes out with no referrer. The player is not: YouTube reads
+// the embedding origin off the Referer header and answers a request without
+// one with a configuration error, so the iframe has to send at least an
+// origin. strict-origin-when-cross-origin is what YouTube's own oEmbed markup
+// uses and what the site already sends by header -- it is named here anyway,
+// so the requirement is visible next to the thing that depends on it.
 templ FeaturedVideoCard(v Video) {
 	<div class="group border border-base-300 flex flex-col sm:flex-row hover:border-primary transition-colors">
 		<div class="relative shrink-0 sm:w-2/5 border-b sm:border-b-0 sm:border-r border-base-300">
@@ -44,7 +52,7 @@ templ FeaturedVideoCard(v Video) {
 				title={ v.Label() }
 				class="w-full aspect-video"
 				loading="lazy"
-				referrerpolicy="no-referrer"
+				referrerpolicy="strict-origin-when-cross-origin"
 				allow="autoplay; encrypted-media; picture-in-picture"
 				allowfullscreen
 				data-show={ v.PlayingExpr() }
