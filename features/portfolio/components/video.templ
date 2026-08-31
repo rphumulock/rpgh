@@ -2,8 +2,9 @@ package components
 
 import common "rpgh/features/common/components"
 
-// FeaturedVideoCard is the single episode a playlist puts on the page. It is
-// laid out wide rather than as a grid tile, since it is alone in its container.
+// VideoCard is one video on the page: the featured episode of a playlist, or
+// one of the one-offs on a series that has no playlist behind it. It is laid
+// out wide rather than as a grid tile, since a container holds few of them.
 //
 // The still is a facade, not the player: the iframe carries no src attribute
 // until $playing names this episode, so a visitor who never clicks never
@@ -18,7 +19,7 @@ import common "rpgh/features/common/components"
 // origin. strict-origin-when-cross-origin is what YouTube's own oEmbed markup
 // uses and what the site already sends by header -- it is named here anyway,
 // so the requirement is visible next to the thing that depends on it.
-templ FeaturedVideoCard(v Video) {
+templ VideoCard(v Video) {
 	<div class="group border border-base-300 flex flex-col sm:flex-row hover:border-primary transition-colors">
 		<div class="relative shrink-0 sm:w-2/5 border-b sm:border-b-0 sm:border-r border-base-300">
 			<button
@@ -44,9 +45,11 @@ templ FeaturedVideoCard(v Video) {
 				>
 					@common.Icon("lucide:play", "width", "40", "height", "40")
 				</span>
-				<span class="absolute bottom-2 right-2 bg-base-100 border border-base-300 px-1.5 py-0.5 text-xs">
-					{ "ep " + v.Episode }
-				</span>
+				if v.Episode != "" {
+					<span class="absolute bottom-2 right-2 bg-base-100 border border-base-300 px-1.5 py-0.5 text-xs">
+						{ "ep " + v.Episode }
+					</span>
+				}
 			</button>
 			<iframe
 				title={ v.Label() }
@@ -97,9 +100,9 @@ templ PlaylistTabs() {
 	</ul>
 }
 
-// PlaylistContainer is the one container a playlist gets: which channel it is
-// from and where to watch it whole, then its episodes in viewing order. It
-// shows only while its own tab is the selected one.
+// PlaylistContainer is the one container a series gets: which channel it is
+// from and where to watch more, then whatever cards the series puts on the
+// page. It shows only while its own tab is the selected one.
 templ PlaylistContainer(p PlaylistPanel) {
 	<article
 		class="border border-base-300 bg-base-100 flex flex-col"
@@ -110,7 +113,7 @@ templ PlaylistContainer(p PlaylistPanel) {
 			<div class="flex flex-col gap-1">
 				<h3 class="text-lg font-bold flex flex-wrap items-baseline gap-x-2">
 					<span><span class="text-secondary">$ </span>{ p.Series.Name }</span>
-					<span class="opacity-30 text-sm">{ plural(len(p.Series.Videos), "episode") }</span>
+					<span class="opacity-30 text-sm">{ plural(len(p.Series.Videos), "video") }</span>
 				</h3>
 				<p class="text-sm opacity-60">{ p.Series.Blurb }</p>
 				<a
@@ -121,17 +124,29 @@ templ PlaylistContainer(p PlaylistPanel) {
 					{ p.Handle }
 				</a>
 			</div>
-			<a
-				href={ templ.SafeURL(p.Series.PlaylistURL()) }
-				class="btn btn-sm btn-outline hover:text-primary"
-			>
-				@common.Icon("simple-icons:youtube", "width", "16", "height", "16")
-				watch the playlist
-			</a>
+			if p.Series.HasPlaylist() {
+				<a
+					href={ templ.SafeURL(p.Series.PlaylistURL()) }
+					class="btn btn-sm btn-outline hover:text-primary"
+				>
+					@common.Icon("simple-icons:youtube", "width", "16", "height", "16")
+					watch the playlist
+				</a>
+			} else {
+				<a
+					href={ templ.SafeURL(p.ChannelURL) }
+					class="btn btn-sm btn-outline hover:text-primary"
+				>
+					@common.Icon("simple-icons:youtube", "width", "16", "height", "16")
+					visit the channel
+				</a>
+			}
 		</header>
 		<div class="px-4 py-5 flex flex-col gap-3">
-			@FeaturedVideoCard(p.Series.Featured())
-			if p.Series.Rest() > 0 {
+			for _, v := range p.Series.Cards() {
+				@VideoCard(v)
+			}
+			if p.Series.HasPlaylist() && p.Series.Rest() > 0 {
 				<p class="text-xs opacity-40">
 					{ "+ " + plural(p.Series.Rest(), "more episode") + " in the playlist" }
 				</p>
@@ -155,7 +170,7 @@ templ VideosSection() {
 				@PlaylistContainer(p)
 			}
 			<p class="opacity-30 text-xs">
-				{ plural(len(PlaylistPanels()), "playlist") + ", " + plural(TotalVideoCount(), "episode") }
+				{ plural(len(Channels), "channel") + ", " + plural(TotalVideoCount(), "video") }
 			</p>
 		</div>
 	</section>

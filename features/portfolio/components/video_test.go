@@ -13,7 +13,7 @@ var iframeTag = regexp.MustCompile(`(?s)<iframe.*?>`)
 func renderCard(t *testing.T, v Video) string {
 	t.Helper()
 	var b strings.Builder
-	if err := FeaturedVideoCard(v).Render(context.Background(), &b); err != nil {
+	if err := VideoCard(v).Render(context.Background(), &b); err != nil {
 		t.Fatalf("rendering the card: %v", err)
 	}
 	return b.String()

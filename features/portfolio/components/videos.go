@@ -6,6 +6,9 @@ import "fmt"
 // all that is needed to build the thumbnail, the watch link and the embed --
 // storing any of those verbatim would just be the same id spelled longer.
 //
+// Episode is the position in a run, and is empty for a one-off, which has no
+// run to hold a position in.
+//
 // Featured marks the episode its series puts on the page. At most one episode
 // per series may set it; a series that sets none features its first.
 type Video struct {
@@ -18,7 +21,9 @@ type Video struct {
 }
 
 // VideoSeries is a run of episodes that belong together, mirroring how Stack
-// groups items into categories. Playlist is the YouTube playlist id.
+// groups items into categories. Playlist is the YouTube playlist id, and is
+// empty for a grouping YouTube has no playlist for -- a shelf of one-offs is
+// still a series here, since that is what the tab switcher switches between.
 type VideoSeries struct {
 	Name     string
 	Blurb    string
@@ -130,6 +135,24 @@ var Channels = []Channel{
 			},
 		},
 	},
+	{
+		Handle: "@SynadiaCommunications",
+		Blurb:  "Explainers from the NATS team at Synadia.",
+		Series: []VideoSeries{
+			{
+				Name:  "one-offs",
+				Blurb: "Standalone talks that are not part of a run, so each one stands on its own card.",
+				Videos: []Video{
+					{
+						Title:     "Message Tracing",
+						Blurb:     "NATS 2.11 follows a message across clusters, leaf nodes and JetStream from one CLI command -- no instrumentation, no external collector.",
+						ID:        "pkvlPq3nWUM",
+						Published: "2026-01-30",
+					},
+				},
+			},
+		},
+	},
 }
 
 // WatchURL is the canonical link to an episode.
@@ -152,8 +175,12 @@ func (v Video) EmbedURL() string {
 	return "https://www.youtube-nocookie.com/embed/" + v.ID + "?autoplay=1&rel=0"
 }
 
-// Label is how an episode is announced on its card.
+// Label is how an episode is announced on its card. A one-off carries no
+// episode number, so it is announced by title alone rather than as "Episode -".
 func (v Video) Label() string {
+	if v.Episode == "" {
+		return v.Title
+	}
 	return fmt.Sprintf("Episode %s - %s", v.Episode, v.Title)
 }
 
@@ -171,6 +198,26 @@ func (s VideoSeries) Featured() Video {
 		return Video{}
 	}
 	return s.Videos[0]
+}
+
+// HasPlaylist reports whether YouTube has a playlist behind the series. A
+// shelf of one-offs does not, so it has no playlist link and nothing held back
+// behind one.
+func (s VideoSeries) HasPlaylist() bool {
+	return s.Playlist != ""
+}
+
+// Cards is what the container puts on the page. A series with a playlist shows
+// its featured episode alone, since the playlist link carries the rest; one
+// without has nowhere else to send anyone, so every video it holds gets a card.
+func (s VideoSeries) Cards() []Video {
+	if !s.HasPlaylist() {
+		return s.Videos
+	}
+	if len(s.Videos) == 0 {
+		return nil
+	}
+	return []Video{s.Featured()}
 }
 
 // Rest is how many episodes the playlist holds beyond the featured one.
@@ -202,9 +249,13 @@ type PlaylistPanel struct {
 }
 
 // Key is the value carried in the $playlist signal. YouTube playlist ids are
-// globally unique, so two channels can never collide on one.
+// globally unique, and so is the watch id a playlist-less series falls back
+// to, so two panels can never collide on one.
 func (p PlaylistPanel) Key() string {
-	return p.Series.Playlist
+	if p.Series.HasPlaylist() {
+		return p.Series.Playlist
+	}
+	return p.Series.Featured().ID
 }
 
 // PlaylistPanels flattens Channels in declaration order: every playlist of the
