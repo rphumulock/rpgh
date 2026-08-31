@@ -50,6 +50,7 @@ var Roles = []Role{
 		Dates:    "April 2025 – August 2026",
 		Bullets: []string{
 			"Designed and built reference architectures and production-grade demo applications on NATS.io and Synadia Cloud, demonstrating event-driven patterns including pub/sub, JetStream persistence, and key-value and object stores.",
+			"Built AI-assisted developer tooling and agent integrations — MCP servers and custom skills across Claude and OpenAI Codex — applying working knowledge of LLM architecture and context management to real workflows.",
 			"Produced the developer documentation, technical guides, and video demos teams used to adopt NATS in production.",
 			"Worked across the stack in Go, TypeScript, and hypermedia frameworks to demonstrate low-latency application patterns from broker to browser.",
 		},
@@ -60,11 +61,11 @@ var Roles = []Role{
 		Location: "Baltimore, MD (Remote)",
 		Dates:    "September 2020 – April 2025",
 		Bullets: []string{
-			"Architected scalable backend services with Vert.x and HyperExpress, deploying a Hazelcast-backed Vert.x cluster for resilience, redundancy, and distributed state management.",
+			"Architected scalable backend services with Vert.x and HyperExpress on a Hazelcast-backed cluster, bringing up live data streams with CDC to propagate database changes in real time across services for resilient, distributed state.",
 			"Implemented secure authentication workflows using OAuth2 and PKCE, and designed and enforced Role-Based Access Control for granular, auditable access to protected resources.",
 			"Established data governance practices in compliance with ISM standards, defining the controls the team built against.",
 			"Optimized PostgreSQL schemas and query performance; integrated WebSockets into Ember.js for real-time updates.",
-			"Mentored junior engineers and raised the team baseline on security and scalability practices.",
+			"Mentored junior engineers and raised the team baseline on security and API design — consistent HTTP semantics, versioning, and error handling.",
 		},
 	},
 	{
@@ -107,12 +108,10 @@ var Projects = []Project{
 		Href:  "https://github.com/rphumulock/datastar-nats-tictactoe",
 	},
 	{
-		// The PDF gives this one a descriptor where the others carry a tech
-		// list, and no blurb under it -- Tech is the line after the name in
-		// both cases, so it holds the descriptor here.
-		Name: "Datastar Video Series",
-		Tech: "Eleven-episode YouTube series on hypermedia application patterns",
-		Href: "https://www.youtube.com/playlist?list=PLbqyjFEQew904tnpc7dtc6VuyX7HikBfR",
+		Name:  "xsym",
+		Tech:  "Rust · tree-sitter · SQLite · MCP",
+		Blurb: "A cross-language structural code index served over MCP: normalization collapses ConsumerConfig, consumer_config and jsConsumerConfig to one key, so an agent can ask where a concept lives across Go, Rust and Python. Adding a language is a tree-sitter query file, not a visitor; 52,251 symbols across 40 repos, no-op re-index in 0.7s.",
+		Href:  "https://github.com/rphumulock/xsym",
 	},
 }
 
@@ -128,6 +127,7 @@ var Skills = []SkillGroup{
 	{"Architecture", "Event-driven systems, microservices, event sourcing, CQRS, SAGA, serverless"},
 	{"Backend", "Vert.x, Spring Boot, Node.js (Express, Fastify), ASP.NET Core, REST, GraphQL"},
 	{"Data", "PostgreSQL, Redis, MongoDB, MySQL, schema design, query and index optimization"},
+	{"AI & Agents", "LLM integration, MCP servers, agent skills and tooling, prompt and context design"},
 	{"Frontend & Mobile", "React, Vue.js, Svelte, Angular, Ember.js, Datastar, TailwindCSS, Swift / iOS, Android"},
 	{"Cloud & DevOps", "AWS (Lambda, S3), Docker, Kubernetes / K3s, Fly.io, GitHub Actions, GitLab CI"},
 	{"Security", "OAuth2 / PKCE, JWT, Role-Based Access Control, ISM compliance"},
