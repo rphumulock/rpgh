@@ -9,22 +9,32 @@ import (
 // a namespaced /proc and labelled as such rather than passed off as the box's.
 templ Strip() {
 	<div
-		class="flex flex-col gap-0.5 text-xs"
+		class="flex flex-col gap-1.5 text-sm"
 		data-signals={ templ.JSONString(host.Pending()) }
 		data-init="@get('/host/events', {retryMaxCount: Infinity, retryInterval: 1000, retryMaxWaitMs: 30000})"
 	>
-		<p>
-			<span class="text-secondary">$ </span>uptime
+		<p class="flex items-center gap-2 font-bold">
+			<span><span class="text-secondary">$ </span>uptime</span>
+			<span class="live-dot text-primary text-[0.6rem]" aria-hidden="true">&#9679;</span>
 		</p>
-		<p class="opacity-60">
+		<p class="opacity-80">
 			{ host.Chassis } · { host.Hardware() } &mdash; at home, under my roof
 		</p>
-		<p class="opacity-40 flex flex-wrap gap-x-3">
-			<span>up <span class="text-primary" data-text="$hostUptime"></span></span>
-			<span>load <span class="text-primary" data-text="$hostLoad"></span></span>
-			<span>mem <span class="text-primary" data-text="$hostMem"></span></span>
-			<span>cpu <span class="text-primary" data-text="$hostCpu"></span></span>
-			<span class="opacity-60">(this container, not the whole box)</span>
+		<p class="flex flex-wrap items-center gap-2">
+			@metric("up", "$hostUptime")
+			@metric("load", "$hostLoad")
+			@metric("mem", "$hostMem")
+			@metric("cpu", "$hostCpu")
+			<span class="text-xs opacity-40">(this container, not the whole box)</span>
 		</p>
 	</div>
+}
+
+// metric is one reading: a dim label with the live value beside it, boxed so
+// the row reads as a status bar rather than a sentence.
+templ metric(label string, signal string) {
+	<span class="inline-flex items-baseline gap-1.5 border border-base-300 px-2 py-0.5">
+		<span class="text-xs opacity-50">{ label }</span>
+		<span class="text-primary font-bold" data-text={ signal }></span>
+	</span>
 }

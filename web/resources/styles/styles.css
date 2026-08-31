@@ -76,6 +76,17 @@
     animation: terminal-blink 1.1s step-end infinite;
 }
 
+/* Slow pulse on the footer's live indicator, so the readings beside it read
+   as a stream rather than a snapshot. */
+@keyframes terminal-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+[data-theme="terminal"] .live-dot {
+    animation: terminal-pulse 2s ease-in-out infinite;
+}
+
 /* CRT scanline overlay, painted above the page but click-through. */
 [data-theme="terminal"].crt::after {
     content: "";
@@ -90,7 +101,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    [data-theme="terminal"] .terminal-cursor {
+    [data-theme="terminal"] .terminal-cursor,
+    [data-theme="terminal"] .live-dot {
         animation: none;
     }
 
