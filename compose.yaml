@@ -17,6 +17,10 @@ services:
       TRUST_PROXY: "true"
       CLIENT_IP_HEADER: CF-Connecting-IP
       LOG_LEVEL: INFO
+      # The box this LXC runs on. Named here rather than in the binary so it
+      # stays with the deployment: run the same image anywhere else and the
+      # footer simply omits the chassis instead of misnaming the machine.
+      HOST_CHASSIS: Dell OptiPlex 7080
     networks: [edge]
 
   cloudflared:

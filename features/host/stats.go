@@ -14,16 +14,21 @@ import (
 	"sync"
 	"time"
 
+	"rpgh/config"
+
 	"github.com/shirou/gopsutil/v4/cpu"
 	gohost "github.com/shirou/gopsutil/v4/host"
 	"github.com/shirou/gopsutil/v4/load"
 	"github.com/shirou/gopsutil/v4/mem"
 )
 
-// Chassis is the machine under the stairs. Nothing readable from inside an
-// unprivileged container identifies it -- dmidecode needs hardware access the
-// container does not have -- so it is stated rather than detected.
-const Chassis = "Dell OptiPlex 7080"
+// Chassis is the machine under the stairs, as named by the deployment. It is
+// stated rather than detected because dmidecode needs hardware access an
+// unprivileged container does not have -- so it is only true where it is set,
+// and the footer leaves the segment out entirely when it is not.
+func Chassis() string {
+	return config.Global.HostChassis
+}
 
 // unknown is what a field shows when its collector failed. A stat that cannot
 // be read should look absent, not look like zero.
@@ -134,21 +139,22 @@ var (
 	hardware     string
 )
 
-// Hardware is the CPU line beside Chassis. lxcfs virtualises the core count to
-// what the container was given, but leaves the model string alone, so this
-// names the real silicon and the share of it this container can use.
+// Hardware is the CPU line beside Chassis. lxcfs virtualises the count to what
+// the container was given but leaves the model string alone, so this names the
+// real silicon and the share of it this container can use. The count is of
+// logical CPUs -- threads, not cores, which is what cpu.Counts(true) returns.
 func Hardware() string {
 	hardwareOnce.Do(func() {
 		model := unknown
 		if info, err := cpu.Info(); err == nil && len(info) > 0 && info[0].ModelName != "" {
 			model = info[0].ModelName
 		}
-		cores, err := cpu.Counts(true)
-		if err != nil || cores <= 0 {
+		threads, err := cpu.Counts(true)
+		if err != nil || threads <= 0 {
 			hardware = model
 			return
 		}
-		hardware = fmt.Sprintf("%s · %d cores", model, cores)
+		hardware = fmt.Sprintf("%s · %d threads", model, threads)
 	})
 	return hardware
 }

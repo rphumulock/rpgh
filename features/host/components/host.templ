@@ -18,7 +18,10 @@ templ Strip() {
 			<span class="live-dot text-primary text-[0.6rem]" aria-hidden="true">&#9679;</span>
 		</p>
 		<p class="opacity-80">
-			{ host.Chassis } · { host.Hardware() } &mdash; at home, under my roof
+			if host.Chassis() != "" {
+				{ host.Chassis() } ·
+			}
+			{ host.Hardware() } &mdash; at home, under my roof
 		</p>
 		<p class="flex flex-wrap items-center gap-2">
 			@metric("up", "$hostUptime")

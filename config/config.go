@@ -38,6 +38,15 @@ type Config struct {
 	// whatever the client already put there, so its leftmost value is the
 	// client's own and trusting it is the same as trusting nothing.
 	ClientIPHeader string
+
+	// HostChassis is the machine named in the footer beside the CPU the
+	// process actually reads from /proc. Nothing inside an unprivileged
+	// container can identify the box, so it has to be stated -- but stating it
+	// in the binary means it follows that binary onto every other machine it
+	// ever runs on, and a hardcoded chassis beside a live CPU model is exactly
+	// the pairing nobody checks. Setting it per deployment keeps it true where
+	// it is set and absent where it is not; empty drops the segment.
+	HostChassis string
 }
 
 var (
@@ -80,5 +89,6 @@ func loadBase() *Config {
 		}(),
 		TrustProxy:     getEnv("TRUST_PROXY", "") == "true",
 		ClientIPHeader: getEnv("CLIENT_IP_HEADER", "CF-Connecting-IP"),
+		HostChassis:    getEnv("HOST_CHASSIS", ""),
 	}
 }
