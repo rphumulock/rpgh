@@ -12,6 +12,10 @@ type PortfolioSignals struct {
 	Filter   string `json:"filter"`
 	Tab      string `json:"tab"`
 	Playlist string `json:"playlist"`
+	// Playing is the watch id of the episode being watched, empty until a
+	// card is clicked. One signal for the page, so starting one card stops
+	// any other.
+	Playing string `json:"playing"`
 }
 
 // portfolioTabs are the panels under the About section. The label is what the
@@ -168,6 +172,7 @@ templ PortfolioPage() {
 				Filter:   "all",
 				Tab:      "projects",
 				Playlist: portfolio.DefaultPlaylist(),
+				Playing:  "",
 			}) }
 		>
 			@PortfolioHeader()

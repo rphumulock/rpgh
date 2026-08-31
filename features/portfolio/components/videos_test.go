@@ -2,6 +2,7 @@ package components
 
 import (
 	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -74,6 +75,60 @@ func TestEpisodesAreUniqueWithinASeries(t *testing.T) {
 				}
 				seen[v.Episode] = true
 			}
+		}
+	}
+}
+
+// TestAtMostOneFeaturedPerSeries guards the flag Featured() reads: two flagged
+// episodes would silently render the earlier one and quietly ignore the other.
+func TestAtMostOneFeaturedPerSeries(t *testing.T) {
+	for _, c := range Channels {
+		for _, s := range c.Series {
+			var flagged []string
+			for _, v := range s.Videos {
+				if v.Featured {
+					flagged = append(flagged, v.Label())
+				}
+			}
+			if len(flagged) > 1 {
+				t.Errorf("series %q flags %d episodes as featured, but only one renders: %v",
+					s.Name, len(flagged), flagged)
+			}
+		}
+	}
+}
+
+// TestFeaturedHonoursTheFlag pins the fallback as well as the flag: an
+// unflagged series must still feature its first episode rather than nothing.
+func TestFeaturedHonoursTheFlag(t *testing.T) {
+	flagged := VideoSeries{Videos: []Video{
+		{Episode: "01", Title: "first", ID: "aaaaaaaaaaa"},
+		{Episode: "X", Title: "flagged", ID: "bbbbbbbbbbb", Featured: true},
+	}}
+	if got := flagged.Featured(); got.Title != "flagged" {
+		t.Errorf("Featured() = %q, want the flagged episode", got.Title)
+	}
+
+	unflagged := VideoSeries{Videos: []Video{
+		{Episode: "01", Title: "first", ID: "aaaaaaaaaaa"},
+		{Episode: "02", Title: "second", ID: "bbbbbbbbbbb"},
+	}}
+	if got := unflagged.Featured(); got.Title != "first" {
+		t.Errorf("Featured() = %q, want the first episode", got.Title)
+	}
+}
+
+// TestEmbedIsAllowedByThePolicy ties the embed host to the CSP that has to
+// allow it: changing one without the other renders a card whose player is
+// blocked, and only the browser console would say so.
+func TestEmbedIsAllowedByThePolicy(t *testing.T) {
+	for _, p := range PlaylistPanels() {
+		v := p.Series.Featured()
+		if !strings.HasPrefix(v.EmbedURL(), "https://www.youtube-nocookie.com/embed/") {
+			t.Errorf("%s: embed URL %q is not on the frame-src host", v.Label(), v.EmbedURL())
+		}
+		if !strings.Contains(v.EmbedURL(), v.ID) {
+			t.Errorf("%s: embed URL %q does not carry the watch id", v.Label(), v.EmbedURL())
 		}
 	}
 }

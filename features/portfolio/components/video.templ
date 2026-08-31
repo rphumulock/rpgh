@@ -4,43 +4,68 @@ import common "rpgh/features/common/components"
 
 // FeaturedVideoCard is the single episode a playlist puts on the page. It is
 // laid out wide rather than as a grid tile, since it is alone in its container.
-// Nothing is embedded -- an iframe would pull in YouTube's player on a tab most
-// visitors never open, and the policy in router/middleware.go allows
-// i.ytimg.com for the still and nothing more.
+//
+// The still is a facade, not the player: the iframe carries no src attribute
+// until $playing names this episode, so a visitor who never clicks never
+// reaches YouTube. Only i.ytimg.com is contacted before that click, which is
+// all the still needs and all router/middleware.go allowed before the
+// frame-src that landed with this card.
 templ FeaturedVideoCard(v Video) {
-	<a
-		href={ templ.SafeURL(v.WatchURL()) }
-		title={ "Watch " + v.Label() + " on YouTube" }
-		class="group border border-base-300 flex flex-col sm:flex-row hover:border-primary transition-colors"
-	>
-		<figure class="relative shrink-0 sm:w-2/5 border-b sm:border-b-0 sm:border-r border-base-300">
-			<img
-				src={ v.ThumbURL() }
-				alt={ v.Label() }
-				width="320"
-				height="180"
+	<div class="group border border-base-300 flex flex-col sm:flex-row hover:border-primary transition-colors">
+		<div class="relative shrink-0 sm:w-2/5 border-b sm:border-b-0 sm:border-r border-base-300">
+			<button
+				type="button"
+				title={ "Play " + v.Label() }
+				aria-label={ "Play " + v.Label() }
+				class="block w-full cursor-pointer"
+				data-show={ "!(" + v.PlayingExpr() + ")" }
+				data-on:click={ v.PlayExpr() }
+			>
+				<img
+					src={ v.ThumbURL() }
+					alt={ v.Label() }
+					width="320"
+					height="180"
+					loading="lazy"
+					referrerpolicy="no-referrer"
+					class="w-full aspect-video object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+				/>
+				<span
+					class="absolute inset-0 flex items-center justify-center text-primary opacity-70 group-hover:opacity-100 transition-opacity"
+					aria-hidden="true"
+				>
+					@common.Icon("lucide:play", "width", "40", "height", "40")
+				</span>
+				<span class="absolute bottom-2 right-2 bg-base-100 border border-base-300 px-1.5 py-0.5 text-xs">
+					{ "ep " + v.Episode }
+				</span>
+			</button>
+			<iframe
+				title={ v.Label() }
+				class="w-full aspect-video"
 				loading="lazy"
 				referrerpolicy="no-referrer"
-				class="w-full aspect-video object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-			/>
-			<span
-				class="absolute inset-0 flex items-center justify-center text-primary opacity-70 group-hover:opacity-100 transition-opacity"
-				aria-hidden="true"
-			>
-				@common.Icon("lucide:play", "width", "40", "height", "40")
-			</span>
-			<span class="absolute bottom-2 right-2 bg-base-100 border border-base-300 px-1.5 py-0.5 text-xs">
-				{ "ep " + v.Episode }
-			</span>
-		</figure>
-		<div class="p-4 flex flex-col gap-2 group-hover:text-primary transition-colors">
+				allow="autoplay; encrypted-media; picture-in-picture"
+				allowfullscreen
+				data-show={ v.PlayingExpr() }
+				data-attr:src={ v.EmbedSrcExpr() }
+			></iframe>
+		</div>
+		<div class="p-4 flex flex-col gap-2">
 			<h4 class="font-bold">
-				<span class="text-secondary">$ </span>{ v.Title }
+				<span class="text-secondary">$ </span>
+				<a
+					href={ templ.SafeURL(v.WatchURL()) }
+					title={ "Watch " + v.Label() + " on YouTube" }
+					class="hover:text-primary transition-colors"
+				>
+					{ v.Title }
+				</a>
 			</h4>
 			<p class="text-sm opacity-60">{ v.Blurb }</p>
 			<p class="text-xs opacity-30 mt-auto">{ v.Published }</p>
 		</div>
-	</a>
+	</div>
 }
 
 // PlaylistTabs is the switcher across the section: one tab per playlist,

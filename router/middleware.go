@@ -42,6 +42,10 @@ func policy(nonce string) string {
 		// the videos tab shows YouTube's stills; they are the one image the
 		// site does not serve itself
 		"img-src 'self' data: https://i.ytimg.com",
+		// the videos tab's featured card swaps in YouTube's player, but only
+		// once someone clicks it; nocookie is the host that sets nothing
+		// before playback starts
+		"frame-src https://www.youtube-nocookie.com",
 		"object-src 'none'",
 		"base-uri 'none'",
 		"form-action 'none'",

@@ -3,14 +3,18 @@ package components
 import "fmt"
 
 // Video is one episode on the YouTube channel. ID is the watch id, which is
-// all that is needed to build both the thumbnail and the watch link -- storing
-// either of those verbatim would just be the same id spelled longer.
+// all that is needed to build the thumbnail, the watch link and the embed --
+// storing any of those verbatim would just be the same id spelled longer.
+//
+// Featured marks the episode its series puts on the page. At most one episode
+// per series may set it; a series that sets none features its first.
 type Video struct {
 	Episode   string
 	Title     string
 	Blurb     string
 	ID        string
 	Published string
+	Featured  bool
 }
 
 // VideoSeries is a run of episodes that belong together, mirroring how Stack
@@ -120,6 +124,7 @@ var Channels = []Channel{
 						Blurb:     "A side trip through HTTP and SSE theory -- why Datastar rides on it, and why it is simpler than it sounds.",
 						ID:        "xq1dVQ-isb4",
 						Published: "2025-11-17",
+						Featured:  true,
 					},
 				},
 			},
@@ -139,15 +144,29 @@ func (v Video) ThumbURL() string {
 	return "https://i.ytimg.com/vi/" + v.ID + "/mqdefault.jpg"
 }
 
+// EmbedURL is the player the card swaps in once someone clicks it. The
+// nocookie host is the one YouTube offers that sets nothing until playback
+// starts, and it is the only frame source router/middleware.go allows.
+// Autoplay is on because reaching this URL already took a deliberate click.
+func (v Video) EmbedURL() string {
+	return "https://www.youtube-nocookie.com/embed/" + v.ID + "?autoplay=1&rel=0"
+}
+
 // Label is how an episode is announced on its card.
 func (v Video) Label() string {
 	return fmt.Sprintf("Episode %s - %s", v.Episode, v.Title)
 }
 
-// Featured is the one episode a series puts on the page: the first in viewing
-// order, which is where someone arriving at the series should start. The rest
-// are reachable through PlaylistURL rather than rendered as cards.
+// Featured is the one episode a series puts on the page: the one flagged for
+// it, or the first in viewing order when nothing is flagged, which is where
+// someone arriving at an unflagged series should start. The rest are reachable
+// through PlaylistURL rather than rendered as cards.
 func (s VideoSeries) Featured() Video {
+	for _, v := range s.Videos {
+		if v.Featured {
+			return v
+		}
+	}
 	if len(s.Videos) == 0 {
 		return Video{}
 	}
@@ -251,4 +270,24 @@ func PlaylistSelectedExpr(key string) string {
 func PlaylistActiveExpr(key string) string {
 	sel := PlaylistSelectedExpr(key)
 	return "{'border-primary': " + sel + ", 'text-primary': " + sel + ", 'opacity-50': !(" + sel + ")}"
+}
+
+// PlayExpr starts an episode. $playing carries a watch id rather than a bool
+// because it is one signal for the whole page: setting it stops whatever else
+// was playing, which is what a visitor switching cards expects anyway.
+func (v Video) PlayExpr() string {
+	return "$playing = '" + jsQuote(v.ID) + "'"
+}
+
+// PlayingExpr is true while this episode is the one being watched.
+func (v Video) PlayingExpr() string {
+	return "$playing === '" + jsQuote(v.ID) + "'"
+}
+
+// EmbedSrcExpr is what the card's iframe binds its src to. It resolves to
+// false, not to an empty string, until the episode is playing: data-attr drops
+// an attribute whose value is false, and an iframe with no src attribute
+// fetches nothing, whereas src="" resolves against the page's own URL.
+func (v Video) EmbedSrcExpr() string {
+	return v.PlayingExpr() + " ? '" + jsQuote(v.EmbedURL()) + "' : false"
 }
