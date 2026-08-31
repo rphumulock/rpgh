@@ -53,12 +53,12 @@ templ cursor() {
 
 templ PortfolioHeader() {
 	<header class="bg-base-200 border-b border-base-300 shrink-0">
-		<div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+		<div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
 			<a href="/" title="Home" class="flex items-center gap-2 font-bold text-lg hover:text-primary">
 				<span aria-hidden="true">&gt;_</span>
 				<strong>rpgh</strong>
 			</a>
-			<ul class="flex items-center gap-1" id="external-links">
+			<ul class="flex flex-wrap items-center gap-1" id="external-links">
 				<li>
 					<a href="/resume" title="Resume" class="btn btn-ghost btn-sm hover:text-primary">resume</a>
 				</li>
@@ -68,7 +68,7 @@ templ PortfolioHeader() {
 							href={ templ.SafeURL(link.Href) }
 							title={ link.Title }
 							aria-label={ link.Title }
-							class="btn btn-ghost btn-square hover:text-primary"
+							class="btn btn-ghost btn-square btn-sm sm:btn-md hover:text-primary"
 						>
 							@components.Icon(link.Icon, "width", "22", "height", "22")
 						</a>
@@ -103,7 +103,7 @@ templ PortfolioAbout() {
 
 // Filter buttons drive the `filter` signal; cards hide themselves via data-show.
 templ PortfolioProjects() {
-	<section class="bg-base-200 py-6 px-4 h-full overflow-y-auto">
+	<section class="bg-base-200 py-6 px-4 lg:h-full lg:overflow-y-auto">
 		<div class="max-w-5xl mx-auto flex flex-col gap-4">
 			<h2 class="text-xl font-bold flex items-baseline flex-wrap gap-x-1">
 				<span><span class="text-secondary">$ </span>ls ./projects --filter=</span>
@@ -163,7 +163,7 @@ templ PortfolioPage() {
 	@layouts.Base("rpgh") {
 		<div
 			data-theme="terminal"
-			class="crt flex flex-col w-full flex-1 min-h-0 overflow-hidden font-mono"
+			class="crt flex flex-col w-full flex-1 min-h-0 lg:overflow-hidden font-mono"
 			data-signals={ templ.JSONString(PortfolioSignals{
 				Filter:   "all",
 				Tab:      "projects",

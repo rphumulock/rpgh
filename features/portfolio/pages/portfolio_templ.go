@@ -105,7 +105,7 @@ func PortfolioHeader() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<header class=\"bg-base-200 border-b border-base-300 shrink-0\"><div class=\"max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4\"><a href=\"/\" title=\"Home\" class=\"flex items-center gap-2 font-bold text-lg hover:text-primary\"><span aria-hidden=\"true\">&gt;_</span> <strong>rpgh</strong></a><ul class=\"flex items-center gap-1\" id=\"external-links\"><li><a href=\"/resume\" title=\"Resume\" class=\"btn btn-ghost btn-sm hover:text-primary\">resume</a></li>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<header class=\"bg-base-200 border-b border-base-300 shrink-0\"><div class=\"max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2\"><a href=\"/\" title=\"Home\" class=\"flex items-center gap-2 font-bold text-lg hover:text-primary\"><span aria-hidden=\"true\">&gt;_</span> <strong>rpgh</strong></a><ul class=\"flex flex-wrap items-center gap-1\" id=\"external-links\"><li><a href=\"/resume\" title=\"Resume\" class=\"btn btn-ghost btn-sm hover:text-primary\">resume</a></li>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -149,7 +149,7 @@ func PortfolioHeader() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" class=\"btn btn-ghost btn-square hover:text-primary\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" class=\"btn btn-ghost btn-square btn-sm sm:btn-md hover:text-primary\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -268,7 +268,7 @@ func PortfolioProjects() templ.Component {
 			templ_7745c5c3_Var10 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<section class=\"bg-base-200 py-6 px-4 h-full overflow-y-auto\"><div class=\"max-w-5xl mx-auto flex flex-col gap-4\"><h2 class=\"text-xl font-bold flex items-baseline flex-wrap gap-x-1\"><span><span class=\"text-secondary\">$ </span>ls ./projects --filter=</span> <span class=\"text-primary\" data-show=\"$filter === 'all'\">all</span> <button type=\"button\" title=\"Clear the filter\" class=\"text-primary inline-flex items-baseline gap-1 border-b border-dotted border-primary hover:opacity-60 transition-opacity\" data-show=\"$filter !== 'all'\" data-on:click=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<section class=\"bg-base-200 py-6 px-4 lg:h-full lg:overflow-y-auto\"><div class=\"max-w-5xl mx-auto flex flex-col gap-4\"><h2 class=\"text-xl font-bold flex items-baseline flex-wrap gap-x-1\"><span><span class=\"text-secondary\">$ </span>ls ./projects --filter=</span> <span class=\"text-primary\" data-show=\"$filter === 'all'\">all</span> <button type=\"button\" title=\"Clear the filter\" class=\"text-primary inline-flex items-baseline gap-1 border-b border-dotted border-primary hover:opacity-60 transition-opacity\" data-show=\"$filter !== 'all'\" data-on:click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -461,7 +461,7 @@ func PortfolioPage() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "<div data-theme=\"terminal\" class=\"crt flex flex-col w-full flex-1 min-h-0 overflow-hidden font-mono\" data-signals=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "<div data-theme=\"terminal\" class=\"crt flex flex-col w-full flex-1 min-h-0 lg:overflow-hidden font-mono\" data-signals=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
