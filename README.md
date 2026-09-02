@@ -59,6 +59,10 @@ keeps one out of the listing and off its URL until you drop the line.
 Each feature owns its own `routes.go`, `handlers.go`, and `pages/`; they are
 registered together in [router/router.go](./router/router.go).
 
+Why any of it is shaped this way is in [docs](./docs/README.md) — the decisions
+behind the routing, the blog pipeline, the package layout and the CSP, with the
+reasoning that is not obvious from the code alone.
+
 # Setup
 
 Install dependencies:
