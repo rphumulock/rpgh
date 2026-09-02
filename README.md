@@ -29,6 +29,10 @@ a panel's path bar are plain anchors, and the four directory routes are
 registered from the same `Dirs()` the listing renders, so adding a directory
 there serves it. The older `/?cd=blogs` links redirect to `/blogs`.
 
+A path nothing serves gets the shell's answer to it and the directory listing
+underneath, so a wrong turn ends somewhere with a way on. `/blog/<slug>` keeps
+its own 404, which names the file it went looking for.
+
 # Writing a post
 
 Posts are Markdown files under

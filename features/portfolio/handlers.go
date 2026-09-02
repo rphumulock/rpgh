@@ -42,3 +42,16 @@ func (h *Handlers) PortfolioPage(tab string) http.HandlerFunc {
 		}
 	}
 }
+
+// NotFoundHandler is the site's answer to a path nothing serves. It lives with
+// the portfolio because the answer is the front page's listing -- what a
+// visitor needs after a wrong turn is the set of directories that do exist,
+// and that is the one page that has it.
+func NotFoundHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotFound)
+		if err := pages.NotFound(components.NotFoundPath(r.URL.Path)).Render(r.Context(), w); err != nil {
+			return
+		}
+	}
+}

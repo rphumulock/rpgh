@@ -25,6 +25,12 @@ func SetupRoutes(router chi.Router) (err error) {
 
 	router.Handle("/static/*", resources.Handler())
 
+	// Wired here rather than inside a feature because it answers for the whole
+	// router: every directory is a URL now, so a wrong one is a page a visitor
+	// reaches, and chi's bare 404 would be the one page on the site with none
+	// of the site on it.
+	router.NotFound(portfolioFeature.NotFoundHandler())
+
 	if err := errors.Join(
 		portfolioFeature.SetupRoutes(router),
 		resumeFeature.SetupRoutes(router),

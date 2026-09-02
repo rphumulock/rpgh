@@ -2,6 +2,7 @@ package components
 
 import (
 	"net/url"
+	"strings"
 
 	"rpgh/features/blog/content"
 )
@@ -57,6 +58,21 @@ func (d Dir) Path() string {
 		return Root
 	}
 	return Root + "/" + d.Name
+}
+
+// NotFoundPath writes a URL that leads nowhere the way the path bar writes the
+// ones that lead somewhere, so the 404 reads as the same shell answering. The
+// argument is a request path, which is whatever a visitor typed -- it is only
+// ever printed, and templ escapes it on the way out.
+func NotFoundPath(urlPath string) string {
+	trimmed := strings.TrimSuffix(urlPath, "/")
+	if trimmed == "" || trimmed == "/" {
+		return Root
+	}
+	if !strings.HasPrefix(trimmed, "/") {
+		trimmed = "/" + trimmed
+	}
+	return Root + trimmed
 }
 
 // Href is the route the directory is served at. It is the name a visitor sees

@@ -117,6 +117,26 @@ func TestFilterLinksOpenTheProjectsPage(t *testing.T) {
 	}
 }
 
+// TestNotFoundListsWhatIsThere covers the page a mistyped directory lands on.
+// The shell's answer alone would be a dead end, so the listing comes with it --
+// which is the whole reason the 404 lives with the front page.
+func TestNotFoundListsWhatIsThere(t *testing.T) {
+	var b strings.Builder
+	if err := NotFound(portfolio.NotFoundPath("/nope")).Render(context.Background(), &b); err != nil {
+		t.Fatalf("rendering the 404: %v", err)
+	}
+	page := html.UnescapeString(b.String())
+
+	if !strings.Contains(page, portfolio.Root+"/nope: No such file or directory") {
+		t.Error("the 404 does not say which path it could not find")
+	}
+	for _, d := range portfolio.Dirs() {
+		if !strings.Contains(page, `href="`+d.Href()+`"`) {
+			t.Errorf("the 404 offers no way to %q", d.Name)
+		}
+	}
+}
+
 // TestEmptyDirectoriesStillSaySo covers the blogs shelf as it stands today: a
 // directory with nothing in it is still a directory, and a page that rendered
 // nothing at all for it would read as a bug rather than as an honest answer.
