@@ -41,7 +41,7 @@ templ SetupPanel() {
 // was actually built with are clickable and jump back to the projects tab
 // with that tech applied as the filter; the rest are inert labels.
 templ StackSection() {
-	<section class="bg-base-100 py-6 px-4 lg:h-full lg:overflow-y-auto">
+	<section class="bg-base-100 py-6 px-4 lg:flex-1 lg:min-h-0 lg:overflow-y-auto">
 		<div class="max-w-5xl mx-auto grid gap-8 lg:grid-cols-3 items-start">
 			@SetupPanel()
 			<div class="flex flex-col gap-4 min-w-0 lg:col-span-2">
@@ -72,7 +72,7 @@ templ StackSection() {
 												type="button"
 												title={ fmt.Sprintf("Show the %d project(s) built with %s", used, item.Name) }
 												class="flex items-center gap-1.5 border border-base-300 px-2 py-1 hover:border-primary hover:text-primary transition-colors"
-												data-on:click={ SetFilterExpr(item.Name) + "; $tab = 'projects'" }
+												data-on:click={ SetFilterExpr(item.Name) + "; " + SetTabExpr(TabProjects) }
 											>
 												if item.Icon != "" {
 													@common.Icon(item.Icon, "width", "16", "height", "16")

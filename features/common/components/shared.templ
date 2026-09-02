@@ -14,3 +14,9 @@ func KVPairsAttrs(kvPairs ...string) templ.Attributes {
 templ Icon(icon string, attrs ...string) {
 	<iconify-icon icon={ icon } { KVPairsAttrs(attrs...)... } noobserver></iconify-icon>
 }
+
+// Cursor is the blinking block caret that trails a prompt heading. Its
+// animation lives in styles.css under [data-theme="terminal"].
+templ Cursor() {
+	<span class="terminal-cursor" aria-hidden="true">&#9608;</span>
+}

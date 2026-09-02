@@ -3,7 +3,6 @@ package pages
 import (
 	common "rpgh/features/common/components"
 	"rpgh/features/common/layouts"
-	portfolio "rpgh/features/portfolio/pages"
 	resume "rpgh/features/resume/components"
 	"rpgh/web/resources"
 )
@@ -162,7 +161,7 @@ templ ResumeEducation() {
 templ ResumePage() {
 	@layouts.Base("rpgh") {
 		<div data-theme="terminal" class="crt flex flex-col w-full flex-1 min-h-0 font-mono">
-			@portfolio.PortfolioHeader()
+			@common.SiteHeader()
 			<main class="flex-1 lg:overflow-y-auto">
 				@ResumeContact()
 				@ResumeSummary()
@@ -171,7 +170,7 @@ templ ResumePage() {
 				@ResumeSkills()
 				@ResumeEducation()
 			</main>
-			@portfolio.PortfolioFooter()
+			@common.SiteFooter()
 		</div>
 	}
 }

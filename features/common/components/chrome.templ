@@ -1,0 +1,62 @@
+package components
+
+import (
+	hostcomponents "rpgh/features/host/components"
+)
+
+// The header and footer every page here wears. They live in common rather than
+// with the portfolio because three features render them now, and the portfolio
+// is not the one they belong to any more than the resume is.
+
+// SocialLink is one icon link in the header. Icon names come from Iconify
+// (https://icon-sets.iconify.design) and render via Icon.
+type SocialLink struct {
+	Title string
+	Href  string
+	Icon  string
+}
+
+var socialLinks = []SocialLink{
+	{Title: "Email", Href: "mailto:rphumulock@gmail.com", Icon: "lucide:mail"},
+	{Title: "GitHub", Href: "https://github.com/rphumulock", Icon: "simple-icons:github"},
+	{Title: "LinkedIn", Href: "https://www.linkedin.com/in/richard-humulock/", Icon: "simple-icons:linkedin"},
+	{Title: "X", Href: "https://x.com/home", Icon: "simple-icons:x"},
+	{Title: "YouTube", Href: "https://www.youtube.com/@lockincode", Icon: "simple-icons:youtube"},
+}
+
+templ SiteHeader() {
+	<header class="bg-base-200 border-b border-base-300 shrink-0">
+		<div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+			<a href="/" title="Home" class="flex items-center gap-2 font-bold text-lg hover:text-primary">
+				<span aria-hidden="true">&gt;_</span>
+				<strong>rpgh</strong>
+			</a>
+			<ul class="flex flex-wrap items-center gap-1" id="external-links">
+				<li>
+					<a href="/resume" title="Resume" class="btn btn-ghost btn-sm hover:text-primary">resume</a>
+				</li>
+				for _, link := range socialLinks {
+					<li>
+						<a
+							href={ templ.SafeURL(link.Href) }
+							title={ link.Title }
+							aria-label={ link.Title }
+							class="btn btn-ghost btn-square btn-sm sm:btn-md hover:text-primary"
+						>
+							@Icon(link.Icon, "width", "22", "height", "22")
+						</a>
+					</li>
+				}
+			</ul>
+		</div>
+	</header>
+}
+
+templ SiteFooter() {
+	<footer class="bg-base-100 py-3 px-4 shrink-0 border-t border-base-300">
+		<div class="max-w-5xl mx-auto flex flex-col gap-1">
+			@hostcomponents.Strip()
+			<p id="copyright"></p>
+		</div>
+	</footer>
+}

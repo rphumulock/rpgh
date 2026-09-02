@@ -30,6 +30,13 @@
 !.vscode/*.json
 !.github/**
 
+# The blog's posts, and the .gitkeep holding the directory open until the first
+# one is written. features/blog/content embeds that directory, so a clone
+# missing it does not build -- and *.md is not otherwise allowlisted here, so a
+# post written without these lines would silently never be committed.
+!/features/blog/content/posts/*.md
+!/features/blog/content/posts/.gitkeep
+
 !web/**/*
 
 web/resources/static/libs/*

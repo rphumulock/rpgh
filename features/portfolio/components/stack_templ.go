@@ -141,7 +141,7 @@ func StackSection() templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<section class=\"bg-base-100 py-6 px-4 lg:h-full lg:overflow-y-auto\"><div class=\"max-w-5xl mx-auto grid gap-8 lg:grid-cols-3 items-start\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<section class=\"bg-base-100 py-6 px-4 lg:flex-1 lg:min-h-0 lg:overflow-y-auto\"><div class=\"max-w-5xl mx-auto grid gap-8 lg:grid-cols-3 items-start\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -235,9 +235,9 @@ func StackSection() templ.Component {
 						return templ_7745c5c3_Err
 					}
 					var templ_7745c5c3_Var12 string
-					templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.ResolveAttributeValue(SetFilterExpr(item.Name) + "; $tab = 'projects'")
+					templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.ResolveAttributeValue(SetFilterExpr(item.Name) + "; " + SetTabExpr(TabProjects))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/stack.templ`, Line: 75, Col: 76}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/stack.templ`, Line: 75, Col: 85}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var12)
 					if templ_7745c5c3_Err != nil {

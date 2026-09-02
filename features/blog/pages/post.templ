@@ -1,0 +1,70 @@
+package pages
+
+import (
+	"rpgh/features/blog/content"
+	common "rpgh/features/common/components"
+	"rpgh/features/common/layouts"
+)
+
+// PostPage is one post on its own page, wearing the same chrome as the rest of
+// the site. The way back is the listing it came from, which is a directory on
+// the front page rather than a route of its own -- so the link goes home and
+// the page opens on blogs, the same as clicking the row would.
+templ PostPage(p content.Post) {
+	@layouts.Base(p.Title + " -- rpgh") {
+		<div data-theme="terminal" class="crt flex flex-col w-full flex-1 min-h-0 font-mono">
+			@common.SiteHeader()
+			<main class="flex-1 lg:overflow-y-auto">
+				<article class="bg-base-100 py-8 px-4">
+					<div class="max-w-3xl mx-auto flex flex-col gap-6">
+						<div class="flex flex-col gap-3">
+							<a
+								href="/?cd=blogs"
+								title="Back to the blog listing"
+								class="flex items-baseline gap-2 text-primary hover:opacity-60 transition-opacity w-fit"
+							>
+								<span class="opacity-40 select-none" aria-hidden="true">&#8593;</span>
+								<span class="border-b border-dotted border-primary">../</span>
+								<span class="text-xs opacity-30">{ content.Path }</span>
+							</a>
+							<h1 class="text-2xl font-bold">
+								<span class="text-secondary">$ </span>{ p.Title }
+							</h1>
+							<p class="opacity-60">{ p.Blurb }</p>
+							<p class="text-xs opacity-30">{ p.Date() }</p>
+						</div>
+						<div class="prose-terminal border-t border-base-300 pt-6">
+							@p.HTML
+						</div>
+					</div>
+				</article>
+			</main>
+			@common.SiteFooter()
+		</div>
+	}
+}
+
+// NotFound is what a slug nobody wrote gets: the shell's own answer to it,
+// rather than a stock 404 page in a different voice.
+templ NotFound(slug string) {
+	@layouts.Base("not found -- rpgh") {
+		<div data-theme="terminal" class="crt flex flex-col w-full flex-1 min-h-0 font-mono">
+			@common.SiteHeader()
+			<main class="flex-1 flex items-center justify-center px-4 py-16">
+				<div class="max-w-3xl w-full flex flex-col gap-4">
+					<h1 class="text-xl font-bold">
+						<span class="text-secondary">$ </span>{ "cat " + content.Path + "/" + slug + ".md" }
+					</h1>
+					<p class="opacity-60">
+						{ "cat: " + content.Path + "/" + slug + ".md: No such file or directory" }
+					</p>
+					<a href="/?cd=blogs" class="btn btn-sm btn-outline hover:text-primary w-fit">
+						@common.Icon("lucide:corner-up-left", "width", "16", "height", "16")
+						{ "cd " + content.Path }
+					</a>
+				</div>
+			</main>
+			@common.SiteFooter()
+		</div>
+	}
+}

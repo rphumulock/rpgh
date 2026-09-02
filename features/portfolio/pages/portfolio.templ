@@ -3,7 +3,6 @@ package pages
 import (
 	"rpgh/features/common/components"
 	"rpgh/features/common/layouts"
-	hostcomponents "rpgh/features/host/components"
 	portfolio "rpgh/features/portfolio/components"
 	"rpgh/web/resources"
 )
@@ -18,71 +17,12 @@ type PortfolioSignals struct {
 	Playing string `json:"playing"`
 }
 
-// portfolioTabs are the panels under the About section. The label is what the
-// visitor reads; the key is the value carried in the $tab signal. Videos are
-// not one of these -- they sit under the project grid inside the projects
-// panel, so the landing view carries them without a click.
-var portfolioTabs = []struct{ Key, Label string }{
-	{"projects", "projects"},
-	{"stack", "tech i've messed with"},
-}
-
 // aboutLine and strengthsLine are the two lines under `$ whoami`. Placeholder
 // copy for now -- swap in the real bio whenever.
 const (
 	aboutLine     = "Software engineer who likes small, fast, boring-in-a-good-way web apps -- mostly Go on the backend and hypermedia on the wire."
 	strengthsLine = "real-time systems · event-driven backends · server-rendered UIs · developer tooling"
 )
-
-// SocialLink is one icon link in the header. Icon names come from Iconify
-// (https://icon-sets.iconify.design) and render via components.Icon.
-type SocialLink struct {
-	Title string
-	Href  string
-	Icon  string
-}
-
-var socialLinks = []SocialLink{
-	{Title: "Email", Href: "mailto:rphumulock@gmail.com", Icon: "lucide:mail"},
-	{Title: "GitHub", Href: "https://github.com/rphumulock", Icon: "simple-icons:github"},
-	{Title: "LinkedIn", Href: "https://www.linkedin.com/in/richard-humulock/", Icon: "simple-icons:linkedin"},
-	{Title: "X", Href: "https://x.com/home", Icon: "simple-icons:x"},
-	{Title: "YouTube", Href: "https://www.youtube.com/@lockincode", Icon: "simple-icons:youtube"},
-}
-
-// cursor is the blinking block caret that trails a prompt heading. Its
-// animation lives in styles.css under [data-theme="terminal"].
-templ cursor() {
-	<span class="terminal-cursor" aria-hidden="true">&#9608;</span>
-}
-
-templ PortfolioHeader() {
-	<header class="bg-base-200 border-b border-base-300 shrink-0">
-		<div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-			<a href="/" title="Home" class="flex items-center gap-2 font-bold text-lg hover:text-primary">
-				<span aria-hidden="true">&gt;_</span>
-				<strong>rpgh</strong>
-			</a>
-			<ul class="flex flex-wrap items-center gap-1" id="external-links">
-				<li>
-					<a href="/resume" title="Resume" class="btn btn-ghost btn-sm hover:text-primary">resume</a>
-				</li>
-				for _, link := range socialLinks {
-					<li>
-						<a
-							href={ templ.SafeURL(link.Href) }
-							title={ link.Title }
-							aria-label={ link.Title }
-							class="btn btn-ghost btn-square btn-sm sm:btn-md hover:text-primary"
-						>
-							@components.Icon(link.Icon, "width", "22", "height", "22")
-						</a>
-					</li>
-				}
-			</ul>
-		</div>
-	</header>
-}
 
 templ PortfolioAbout() {
 	<section class="bg-base-100 py-8 px-4 shrink-0">
@@ -97,7 +37,7 @@ templ PortfolioAbout() {
 			<div class="flex flex-col gap-2">
 				<h1 class="text-2xl font-bold">
 					<span class="text-secondary">$ </span>whoami
-					@cursor()
+					@components.Cursor()
 				</h1>
 				<p class="text-lg opacity-60" id="about">{ aboutLine }</p>
 				<p class="text-sm opacity-40" id="strengths">{ strengthsLine }</p>
@@ -108,7 +48,7 @@ templ PortfolioAbout() {
 
 // Filter buttons drive the `filter` signal; cards hide themselves via data-show.
 templ PortfolioProjects() {
-	<section class="bg-base-200 py-6 px-4">
+	<section class="bg-base-200 py-6 px-4 lg:flex-1 lg:min-h-0 lg:overflow-y-auto">
 		<div class="max-w-5xl mx-auto flex flex-col gap-4">
 			<h2 class="text-xl font-bold flex items-baseline flex-wrap gap-x-1">
 				<span><span class="text-secondary">$ </span>ls ./projects --filter=</span>
@@ -133,68 +73,50 @@ templ PortfolioProjects() {
 	</section>
 }
 
-// PortfolioTabs is the switcher between the panels below the About section.
-templ PortfolioTabs() {
-	<nav class="bg-base-200 border-t border-base-300 shrink-0" aria-label="Sections">
-		<ul class="max-w-5xl mx-auto px-4 flex flex-wrap gap-1" role="tablist">
-			for _, t := range portfolioTabs {
-				<li>
-					<button
-						type="button"
-						role="tab"
-						class="px-4 py-3 border-b-2 border-transparent hover:text-primary transition-colors"
-						data-class={ "{'border-primary': $tab === '" + t.Key + "', 'text-primary': $tab === '" + t.Key + "', 'opacity-50': $tab !== '" + t.Key + "'}" }
-						data-attr:aria-selected={ "$tab === '" + t.Key + "'" }
-						data-on:click={ "$tab = '" + t.Key + "'" }
-					>
-						{ t.Label }
-					</button>
-				</li>
-			}
-		</ul>
-	</nav>
+// openOn is the state the page opens in. The tab is whichever directory the
+// request named, so a link can land someone inside one -- a post page sends
+// its reader back to ./blogs that way, rather than to the root listing they
+// may never have come through.
+func openOn(tab string) PortfolioSignals {
+	return PortfolioSignals{
+		Filter:   "all",
+		Tab:      tab,
+		Playlist: portfolio.DefaultPlaylist(),
+		Playing:  "",
+	}
 }
 
-templ PortfolioFooter() {
-	<footer class="bg-base-100 py-3 px-4 shrink-0 border-t border-base-300">
-		<div class="max-w-5xl mx-auto flex flex-col gap-1">
-			@hostcomponents.Strip()
-			<p id="copyright"></p>
-		</div>
-	</footer>
-}
-
-templ PortfolioPage() {
+templ PortfolioPage(tab string) {
 	@layouts.Base("rpgh") {
 		<div
 			data-theme="terminal"
 			class="crt flex flex-col w-full flex-1 min-h-0 lg:overflow-hidden font-mono"
-			data-signals={ templ.JSONString(PortfolioSignals{
-				Filter:   "all",
-				Tab:      "projects",
-				Playlist: portfolio.DefaultPlaylist(),
-				Playing:  "",
-			}) }
+			data-signals={ templ.JSONString(openOn(tab)) }
 		>
-			@PortfolioHeader()
+			@components.SiteHeader()
 			<main class="flex flex-col flex-1 min-h-0">
 				@PortfolioAbout()
-				@PortfolioTabs()
-				// The projects panel holds two sections stacked, so it is the
-				// scroll container on lg rather than either section being one.
-				// Below lg nothing clips and the document scrolls, as before.
-				<div
-					class="flex-1 min-h-0 lg:overflow-y-auto bg-base-200"
-					data-show="$tab === 'projects'"
-				>
-					@PortfolioProjects()
-					@portfolio.VideosSection()
+				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabHome) }>
+					@portfolio.DirectorySection()
 				</div>
-				<div class="flex-1 min-h-0" data-show="$tab === 'stack'">
+				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabProjects) }>
+					@portfolio.PanelPath(portfolio.TabProjects)
+					@PortfolioProjects()
+				</div>
+				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabStack) }>
+					@portfolio.PanelPath(portfolio.TabStack)
 					@portfolio.StackSection()
 				</div>
+				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabBlogs) }>
+					@portfolio.PanelPath(portfolio.TabBlogs)
+					@portfolio.BlogsSection()
+				</div>
+				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabVideos) }>
+					@portfolio.PanelPath(portfolio.TabVideos)
+					@portfolio.VideosSection()
+				</div>
 			</main>
-			@PortfolioFooter()
+			@components.SiteFooter()
 		</div>
 	}
 }

@@ -12,10 +12,38 @@ with everything embedded.
 
 # Pages
 
-| Route     | Feature              | What it is                                                    |
-| --------- | -------------------- | ------------------------------------------------------------- |
-| `/`       | `features/portfolio` | Terminal theme, social links, project grid, stack tree         |
-| `/resume` | `features/resume`    | The resume, plus the PDF it was transcribed from              |
+| Route          | Feature              | What it is                                                        |
+| -------------- | -------------------- | ----------------------------------------------------------------- |
+| `/`            | `features/portfolio` | A directory listing into projects, tech, blogs and videos          |
+| `/blog/<slug>` | `features/blog`      | One post, rendered from the Markdown it is written in              |
+| `/resume`      | `features/resume`    | The resume, plus the PDF it was transcribed from                   |
+
+The front page is one document: every directory is a panel in it, switched by a
+`$tab` signal rather than by a route. `/?cd=blogs` opens on one, which is how a
+post page sends its reader back to the listing it came from.
+
+# Writing a post
+
+Posts are Markdown files under
+[features/blog/content/posts](./features/blog/content/posts), embedded into the
+binary like everything else — publishing is a commit. The filename is the slug,
+so `why-sse.md` is served at `/blog/why-sse`.
+
+```markdown
+---
+title: Why SSE
+published: 2026-09-02
+blurb: One line, shown on the listing.
+draft: true
+---
+
+The post itself.
+```
+
+Those four keys are the only ones recognised; anything else is an error rather
+than a field that quietly does nothing. A post that does not parse fails the
+tests and refuses to boot, with the filename in the message. `draft: true`
+keeps one out of the listing and off its URL until you drop the line.
 
 Each feature owns its own `routes.go`, `handlers.go`, and `pages/`; they are
 registered together in [router/router.go](./router/router.go).

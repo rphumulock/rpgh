@@ -15,6 +15,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/shirou/gopsutil/v4 v4.26.7
 	github.com/starfederation/datastar-go v1.2.2
+	github.com/yuin/goldmark v1.8.5
 )
 
 require (
