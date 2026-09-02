@@ -17,6 +17,12 @@ import (
 // sm up so they line up down the page the way real `ls -l` output does; below
 // that they wrap, and the permission column drops, since it is the one column
 // that says nothing a visitor needs.
+//
+// A row grows to share out whatever height the listing has left, which on a
+// desktop is most of the page -- four thin strips under a heading left the
+// screen mostly empty and the rows looking like an afterthought. The min-height
+// is what stops that going the other way on a short window, where flex-1 would
+// otherwise squeeze them thinner than their own padding.
 func DirectoryRow(d Dir) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -38,14 +44,14 @@ func DirectoryRow(d Dir) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<li><a href=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<li class=\"flex lg:flex-1\"><a href=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 templ.SafeURL
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(d.Href()))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 15, Col: 33}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 21, Col: 33}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -58,43 +64,43 @@ func DirectoryRow(d Dir) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.ResolveAttributeValue("Open " + d.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 16, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 22, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"group w-full text-left border border-base-300 px-4 py-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 hover:border-primary transition-colors\"><span class=\"hidden sm:inline text-xs opacity-30 shrink-0\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"group w-full text-left border border-base-300 px-5 py-5 lg:min-h-24 flex flex-wrap items-center content-center gap-x-5 gap-y-2 hover:border-primary hover:bg-base-100 transition-colors\"><span class=\"hidden sm:inline text-xs opacity-30 shrink-0\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(Mode)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 19, Col: 68}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 25, Col: 68}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</span> <span class=\"text-xs opacity-30 shrink-0 sm:w-24\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</span> <span class=\"text-xs opacity-30 shrink-0 sm:w-28\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(d.Size())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 20, Col: 63}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 26, Col: 63}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</span> <span class=\"font-bold text-primary flex items-center gap-2 shrink-0 sm:w-40\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</span> <span class=\"text-lg font-bold text-primary flex items-center gap-2.5 shrink-0 sm:w-44\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = common.Icon(d.Icon, "width", "18", "height", "18").Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = common.Icon(d.Icon, "width", "22", "height", "22").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -105,7 +111,7 @@ func DirectoryRow(d Dir) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(d.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 23, Col: 18}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 29, Col: 18}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -118,7 +124,7 @@ func DirectoryRow(d Dir) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(d.Blurb)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 25, Col: 60}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 31, Col: 60}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -131,7 +137,7 @@ func DirectoryRow(d Dir) templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("cd " + d.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 30, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 36, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -170,7 +176,7 @@ func DirectorySection() templ.Component {
 			templ_7745c5c3_Var9 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<section class=\"bg-base-200 py-8 px-4 border-t border-base-300 lg:flex-1 lg:min-h-0 lg:overflow-y-auto\"><div class=\"max-w-5xl mx-auto flex flex-col gap-4\"><div class=\"flex flex-col gap-1\"><h2 class=\"text-xl font-bold\"><span class=\"text-secondary\">$ </span>ls -l ~/rpgh")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<section class=\"bg-base-200 py-8 px-4 border-t border-base-300 flex flex-col lg:flex-1 lg:min-h-0 lg:overflow-y-auto\"><div class=\"max-w-5xl w-full mx-auto flex flex-col gap-4 lg:flex-1 lg:min-h-0\"><div class=\"flex flex-col gap-1\"><h2 class=\"text-xl font-bold\"><span class=\"text-secondary\">$ </span>ls -l ~/rpgh")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -185,13 +191,13 @@ func DirectorySection() templ.Component {
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("total %d", len(Dirs())))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 49, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 55, Col: 43}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, " &mdash; pick one to cd into.</p></div><ul class=\"flex flex-col gap-2\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, " &mdash; pick one to cd into.</p></div><ul class=\"flex flex-col gap-3 lg:flex-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -243,7 +249,7 @@ func PanelPath(key string) templ.Component {
 		var templ_7745c5c3_Var12 templ.SafeURL
 		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(HomeHref))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 71, Col: 34}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 77, Col: 34}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 		if templ_7745c5c3_Err != nil {
@@ -256,7 +262,7 @@ func PanelPath(key string) templ.Component {
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.ResolveAttributeValue("Back to " + Root)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 72, Col: 29}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 78, Col: 29}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var13)
 		if templ_7745c5c3_Err != nil {
@@ -269,7 +275,7 @@ func PanelPath(key string) templ.Component {
 		var templ_7745c5c3_Var14 string
 		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(d.Path())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 78, Col: 55}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `features/portfolio/components/directory.templ`, Line: 84, Col: 55}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 		if templ_7745c5c3_Err != nil {
