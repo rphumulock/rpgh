@@ -12,15 +12,22 @@ with everything embedded.
 
 # Pages
 
-| Route          | Feature              | What it is                                                        |
-| -------------- | -------------------- | ----------------------------------------------------------------- |
-| `/`            | `features/portfolio` | A directory listing into projects, tech, blogs and videos          |
-| `/blog/<slug>` | `features/blog`      | One post, rendered from the Markdown it is written in              |
-| `/resume`      | `features/resume`    | The resume, plus the PDF it was transcribed from                   |
+| Route          | Feature              | What it is                                                |
+| -------------- | -------------------- | --------------------------------------------------------- |
+| `/`            | `features/portfolio` | A directory listing into projects, tech, blogs and videos  |
+| `/projects`    | `features/portfolio` | Things built end to end, filterable by `?filter=<tech>`    |
+| `/tech`        | `features/portfolio` | The toolbox as a tree                                      |
+| `/blogs`       | `features/portfolio` | The posts, listed                                          |
+| `/videos`      | `features/portfolio` | Recorded walkthroughs, grouped by series                   |
+| `/blog/<slug>` | `features/blog`      | One post, rendered from the Markdown it is written in      |
+| `/resume`      | `features/resume`    | The resume, plus the PDF it was transcribed from           |
 
-The front page is one document: every directory is a panel in it, switched by a
-`$tab` signal rather than by a route. `/?cd=blogs` opens on one, which is how a
-post page sends its reader back to the listing it came from.
+Every directory on the front page is its own page at its own URL, so cd-ing
+into one is a real navigation — the back button leaves it, and the address is a
+link someone else can open on the same view. The listing rows and the `../` in
+a panel's path bar are plain anchors, and the four directory routes are
+registered from the same `Dirs()` the listing renders, so adding a directory
+there serves it. The older `/?cd=blogs` links redirect to `/blogs`.
 
 # Writing a post
 

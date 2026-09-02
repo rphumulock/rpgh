@@ -19,7 +19,7 @@ templ PostPage(p content.Post) {
 					<div class="max-w-3xl mx-auto flex flex-col gap-6">
 						<div class="flex flex-col gap-3">
 							<a
-								href="/?cd=blogs"
+								href={ templ.SafeURL(content.Href) }
 								title="Back to the blog listing"
 								class="flex items-baseline gap-2 text-primary hover:opacity-60 transition-opacity w-fit"
 							>
@@ -58,7 +58,7 @@ templ NotFound(slug string) {
 					<p class="opacity-60">
 						{ "cat: " + content.Path + "/" + slug + ".md: No such file or directory" }
 					</p>
-					<a href="/?cd=blogs" class="btn btn-sm btn-outline hover:text-primary w-fit">
+					<a href={ templ.SafeURL(content.Href) } class="btn btn-sm btn-outline hover:text-primary w-fit">
 						@common.Icon("lucide:corner-up-left", "width", "16", "height", "16")
 						{ "cd " + content.Path }
 					</a>

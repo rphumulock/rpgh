@@ -1,10 +1,15 @@
 package components
 
-import "rpgh/features/blog/content"
+import (
+	"net/url"
 
-// The panels the site is made of. A key is the value carried in the $tab
-// signal, and is what both the front page listing and the tab bar set -- they
-// are two ways into the same panel, not two places.
+	"rpgh/features/blog/content"
+)
+
+// The panels the site is made of. A key names a panel in Go; what a visitor
+// travels by is the route under Href, one per directory. The two are separate
+// because the key is an identifier and the route is part of the address bar --
+// `tech/` is spelled `stack` here and has been since before it was a route.
 const (
 	TabHome     = "home"
 	TabProjects = "projects"
@@ -37,7 +42,12 @@ func (d Dir) Size() string {
 }
 
 // Root is the directory the listing lists, and the one `../` climbs back to.
-const Root = "~/rpgh"
+// HomeHref is that same place as a URL: the front page is the root directory,
+// so climbing out of a panel is a link to it rather than a signal change.
+const (
+	Root     = "~/rpgh"
+	HomeHref = "/"
+)
 
 // Path is where a panel says you are, written the way you got there. A Dir
 // with no name is the root itself, which is the listing rather than a row in
@@ -47,6 +57,16 @@ func (d Dir) Path() string {
 		return Root
 	}
 	return Root + "/" + d.Name
+}
+
+// Href is the route the directory is served at. It is the name a visitor sees
+// in the path bar, so `~/rpgh/tech` is at /tech -- one spelling, in the URL
+// and on the page both.
+func (d Dir) Href() string {
+	if d.Name == "" {
+		return HomeHref
+	}
+	return "/" + d.Name
 }
 
 // DirByTab finds the row that opens a panel, so a panel can name itself from
@@ -99,19 +119,14 @@ func Dirs() []Dir {
 	}
 }
 
-// SetTabExpr is the Datastar expression that opens a panel.
-func SetTabExpr(key string) string {
-	return "$tab = '" + jsQuote(key) + "'"
-}
-
-// TabSelectedExpr is true while a panel is the one on show.
-func TabSelectedExpr(key string) string {
-	return "$tab === '" + jsQuote(key) + "'"
-}
-
-// TabActiveExpr is the class expression marking the open tab, matching how the
-// playlist tabs inside the videos panel are styled.
-func TabActiveExpr(key string) string {
-	sel := TabSelectedExpr(key)
-	return "{'border-primary': " + sel + ", 'text-primary': " + sel + ", 'opacity-50': !(" + sel + ")}"
+// ProjectsFilterHref opens the projects directory with one filter already
+// applied, which is what a tech chip does: it is a link to the same panel the
+// listing links to, carrying the answer to "built with what" in the query
+// rather than in a signal a page load would forget.
+func ProjectsFilterHref(name string) string {
+	d := DirByTab(TabProjects)
+	if name == "" || name == FilterAll {
+		return d.Href()
+	}
+	return d.Href() + "?filter=" + url.QueryEscape(name)
 }

@@ -68,18 +68,17 @@ templ StackSection() {
 									{{ used := TechUseCount(item.Name) }}
 									<li>
 										if used > 0 {
-											<button
-												type="button"
+											<a
+												href={ templ.SafeURL(ProjectsFilterHref(item.Name)) }
 												title={ fmt.Sprintf("Show the %d project(s) built with %s", used, item.Name) }
 												class="flex items-center gap-1.5 border border-base-300 px-2 py-1 hover:border-primary hover:text-primary transition-colors"
-												data-on:click={ SetFilterExpr(item.Name) + "; " + SetTabExpr(TabProjects) }
 											>
 												if item.Icon != "" {
 													@common.Icon(item.Icon, "width", "16", "height", "16")
 												}
 												<span>{ item.Name }</span>
 												<span class="text-primary opacity-70">{ fmt.Sprintf("(%d)", used) }</span>
-											</button>
+											</a>
 										} else {
 											<span
 												title="Nothing on the projects tab uses this yet"

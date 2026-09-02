@@ -9,7 +9,6 @@ import (
 
 type PortfolioSignals struct {
 	Filter   string `json:"filter"`
-	Tab      string `json:"tab"`
 	Playlist string `json:"playlist"`
 	// Playing is the watch id of the episode being watched, empty until a
 	// card is clicked. One signal for the page, so starting one card stops
@@ -52,13 +51,13 @@ templ PortfolioProjects() {
 		<div class="max-w-5xl mx-auto flex flex-col gap-4">
 			<h2 class="text-xl font-bold flex items-baseline flex-wrap gap-x-1">
 				<span><span class="text-secondary">$ </span>ls ./projects --filter=</span>
-				<span class="text-primary" data-show="$filter === 'all'">all</span>
+				<span class="text-primary" data-show={ "$filter === '" + portfolio.FilterAll + "'" }>all</span>
 				<button
 					type="button"
 					title="Clear the filter"
 					class="text-primary inline-flex items-baseline gap-1 border-b border-dotted border-primary hover:opacity-60 transition-opacity"
-					data-show="$filter !== 'all'"
-					data-on:click={ portfolio.SetFilterExpr("all") }
+					data-show={ "$filter !== '" + portfolio.FilterAll + "'" }
+					data-on:click={ portfolio.SetFilterExpr(portfolio.FilterAll) }
 				>
 					<span data-text="$filter"></span>
 					<span class="text-xs opacity-70" aria-hidden="true">&#10005;</span>
@@ -73,47 +72,57 @@ templ PortfolioProjects() {
 	</section>
 }
 
-// openOn is the state the page opens in. The tab is whichever directory the
-// request named, so a link can land someone inside one -- a post page sends
-// its reader back to ./blogs that way, rather than to the root listing they
-// may never have come through.
-func openOn(tab string) PortfolioSignals {
+// openOn is the state the page opens in. Which directory a visitor is standing
+// in is the route now, not a signal, so what is left here is the state inside
+// one panel -- and the filter starts wherever the link that brought them here
+// asked for, which is how a tech chip lands someone on the projects it named.
+func openOn(filter string) PortfolioSignals {
 	return PortfolioSignals{
-		Filter:   "all",
-		Tab:      tab,
+		Filter:   portfolio.FilterOrAll(filter),
 		Playlist: portfolio.DefaultPlaylist(),
 		Playing:  "",
 	}
 }
 
-templ PortfolioPage(tab string) {
+// Panel is the one directory this request is standing in. Every page here
+// wears the same chrome and the same `whoami`, so what a route decides is only
+// what goes under it -- and a key nothing matches falls through to the
+// listing, which is the page a visitor can get anywhere from.
+templ Panel(tab string) {
+	switch tab {
+		case portfolio.TabProjects:
+			@portfolio.PanelPath(tab)
+			@PortfolioProjects()
+		case portfolio.TabStack:
+			@portfolio.PanelPath(tab)
+			@portfolio.StackSection()
+		case portfolio.TabBlogs:
+			@portfolio.PanelPath(tab)
+			@portfolio.BlogsSection()
+		case portfolio.TabVideos:
+			@portfolio.PanelPath(tab)
+			@portfolio.VideosSection()
+		default:
+			@portfolio.DirectorySection()
+	}
+}
+
+// PortfolioPage is one directory of the site: the listing at the root, or the
+// panel the route named. Each is its own document at its own URL, so cd-ing
+// into one is a real navigation -- the back button leaves it, and the address
+// is a link someone else can open on the same view.
+templ PortfolioPage(tab, filter string) {
 	@layouts.Base("rpgh") {
 		<div
 			data-theme="terminal"
 			class="crt flex flex-col w-full flex-1 min-h-0 lg:overflow-hidden font-mono"
-			data-signals={ templ.JSONString(openOn(tab)) }
+			data-signals={ templ.JSONString(openOn(filter)) }
 		>
 			@components.SiteHeader()
 			<main class="flex flex-col flex-1 min-h-0">
 				@PortfolioAbout()
-				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabHome) }>
-					@portfolio.DirectorySection()
-				</div>
-				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabProjects) }>
-					@portfolio.PanelPath(portfolio.TabProjects)
-					@PortfolioProjects()
-				</div>
-				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabStack) }>
-					@portfolio.PanelPath(portfolio.TabStack)
-					@portfolio.StackSection()
-				</div>
-				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabBlogs) }>
-					@portfolio.PanelPath(portfolio.TabBlogs)
-					@portfolio.BlogsSection()
-				</div>
-				<div class="flex flex-col flex-1 min-h-0" data-show={ portfolio.TabSelectedExpr(portfolio.TabVideos) }>
-					@portfolio.PanelPath(portfolio.TabVideos)
-					@portfolio.VideosSection()
+				<div class="flex flex-col flex-1 min-h-0">
+					@Panel(tab)
 				</div>
 			</main>
 			@components.SiteFooter()

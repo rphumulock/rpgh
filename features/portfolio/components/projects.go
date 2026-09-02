@@ -85,6 +85,21 @@ var Projects = []Project{
 	},
 }
 
+// FilterAll is the filter that hides nothing, and the value the page opens on
+// unless a link asked for something narrower.
+const FilterAll = "all"
+
+// FilterOrAll answers what a page should open filtered by. A filter arrives in
+// a URL, so it is whatever someone typed there: a name no project was built
+// with would hide every card and read as an empty directory, and showing them
+// all is the truer answer to a name that means nothing here.
+func FilterOrAll(name string) string {
+	if name == "" || name == FilterAll || TechUseCount(name) == 0 {
+		return FilterAll
+	}
+	return name
+}
+
 // ShowExpr is the Datastar expression that keeps a card visible for the
 // current $filter signal.
 func (p Project) ShowExpr() string {
@@ -92,7 +107,7 @@ func (p Project) ShowExpr() string {
 	if err != nil {
 		return "true"
 	}
-	return "$filter === 'all' || " + string(tech) + ".includes($filter)"
+	return "$filter === '" + FilterAll + "' || " + string(tech) + ".includes($filter)"
 }
 
 // TechUseCount is how many projects were built with a given tech. The stack

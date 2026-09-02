@@ -42,13 +42,15 @@ import (
 //go:embed all:posts
 var files embed.FS
 
-// Name is the directory the front page lists this feature under, and Path is
-// that directory written out, which is what a post page shows above its title.
-// The front page builds the same string from its own root; TestPathMatchesTheListing
-// in features/portfolio/pages is what keeps the two spellings equal.
+// Name is the directory the front page lists this feature under, Path is that
+// directory written out -- what a post page shows above its title -- and Href
+// is the page it is served at, which is where a post sends its reader back to.
+// The front page builds all three from its own root; TestPathMatchesTheListing
+// in features/portfolio/pages is what keeps the spellings equal.
 const (
 	Name = "blogs"
 	Path = "~/rpgh/" + Name
+	Href = "/" + Name
 )
 
 // DateLayout is how a published date is written in frontmatter and rendered on
